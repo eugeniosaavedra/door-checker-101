@@ -146,13 +146,24 @@
   .day:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
   .day .dow { font-size: 0.62rem; color: var(--sub); text-transform: uppercase; letter-spacing: .06em; }
   .day .dnum { font-size: 1.05rem; font-weight: 700; line-height: 1.15; font-variant-numeric: tabular-nums; }
-  .day .bar { height: 4px; border-radius: 2px; margin-top: 5px; background: var(--border); }
-  .day .cnt { font-size: 0.62rem; font-weight: 600; margin-top: 3px; color: var(--sub); }
+  .day .bar {
+    height: 4px; border-radius: 2px; margin-top: 5px;
+    background: var(--border); display: flex; overflow: hidden;
+  }
+  .day .bar i { display: block; height: 100%; }
+  .day .bar .good { background: var(--sev0); }
+  .day .cnt {
+    font-size: 0.62rem; font-weight: 700; margin-top: 3px;
+    display: flex; justify-content: center; gap: 3px;
+    font-variant-numeric: tabular-nums;
+  }
+  .day .cnt .good { color: var(--sev0); }
+  .day .cnt .bad  { color: var(--sub); }
+  .day .cnt .sep  { color: var(--border); font-weight: 400; }
   .day.active { border-color: var(--text); box-shadow: 0 0 0 1px var(--text); }
-  .day.s0 .bar { background: var(--sev0); } .day.s0 .cnt { color: var(--sev0); }
-  .day.s1 .bar { background: var(--sev1); } .day.s1 .cnt { color: var(--sev1); }
-  .day.s2 .bar { background: var(--sev2); } .day.s2 .cnt { color: var(--sev2); }
-  .day.s3 .bar { background: var(--sev3); } .day.s3 .cnt { color: var(--sev3); }
+  .day.s1 .bar .bad { background: var(--sev1); } .day.s1 .cnt .bad { color: var(--sev1); }
+  .day.s2 .bar .bad { background: var(--sev2); } .day.s2 .cnt .bad { color: var(--sev2); }
+  .day.s3 .bar .bad { background: var(--sev3); } .day.s3 .cnt .bad { color: var(--sev3); }
 
   /* ── Main ─────────────────────────────────── */
   .main { max-width: 1100px; margin: 0 auto; padding: 24px; }
@@ -460,15 +471,18 @@ function buildTimeline() {
   // cronológico de izquierda a derecha
   [...dates].reverse().forEach(d => {
     const sev = severity(cache[d]);
+    const ok = countByStatus(cache[d]).ok;
+    const total = ok + sev.n;
+    const okPct = total ? Math.round((ok / total) * 100) : 100;
     const btn = document.createElement('button');
     btn.className = `day s${sev.tier}`;
     btn.dataset.date = d;
-    btn.title = `${fmtDateLong(d)} — ${sev.n} inconsistencia${sev.n === 1 ? '' : 's'}`;
+    btn.title = `${fmtDateLong(d)} — ${ok} OK · ${sev.n} inconsistencia${sev.n === 1 ? '' : 's'}`;
     btn.innerHTML = `
       <div class="dow">${dowShort(d)}</div>
       <div class="dnum">${Number(d.split('-')[2])}</div>
-      <div class="bar"></div>
-      <div class="cnt">${sev.n === 0 ? 'OK' : sev.n}</div>`;
+      <div class="bar"><i class="good" style="width:${okPct}%"></i><i class="bad" style="width:${100 - okPct}%"></i></div>
+      <div class="cnt"><span class="good">${ok}</span><span class="sep">·</span><span class="bad">${sev.n}</span></div>`;
     btn.addEventListener('click', () => show(dates.indexOf(d)));
     el.appendChild(btn);
   });
