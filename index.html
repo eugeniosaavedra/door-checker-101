@@ -4,7 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Door Checker — Motel 101</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232563eb'/%3E%3Crect x='19' y='13' width='26' height='38' rx='3' fill='white'/%3E%3Ccircle cx='39' cy='33' r='2.6' fill='%232563eb'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 <style>
   :root {
@@ -25,12 +27,13 @@
     --info:      #2563eb;
     --info-bg:   #eff6ff;
     --info-bdr:  #bfdbfe;
-    --express:   #ea580c;
-    --express-bg:#fff7ed;
-    --express-b: #fed7aa;
+    --sev0:      #059669;
+    --sev1:      #d97706;
+    --sev2:      #ea580c;
+    --sev3:      #dc2626;
     --shadow:    0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.05);
     --radius:    10px;
-    --font:      'Inter', -apple-system, sans-serif;
+    --font:      'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
@@ -51,9 +54,10 @@
       --info:      #60a5fa;
       --info-bg:   #0f1e3d;
       --info-bdr:  #1e3a8a;
-      --express:   #fb923c;
-      --express-bg:#1c0a00;
-      --express-b: #7c2d12;
+      --sev0:      #34d399;
+      --sev1:      #fbbf24;
+      --sev2:      #fb923c;
+      --sev3:      #f87171;
       --shadow:    0 1px 3px rgba(0,0,0,.4);
     }
   }
@@ -63,7 +67,7 @@
     --alert:#f87171; --alert-bg:#2d0a0a; --alert-bdr:#7f1d1d;
     --warn:#fbbf24; --warn-bg:#1c1204; --warn-bdr:#78350f;
     --info:#60a5fa; --info-bg:#0f1e3d; --info-bdr:#1e3a8a;
-    --express:#fb923c; --express-bg:#1c0a00; --express-b:#7c2d12;
+    --sev0:#34d399; --sev1:#fbbf24; --sev2:#fb923c; --sev3:#f87171;
     --shadow:0 1px 3px rgba(0,0,0,.4);
   }
 
@@ -96,15 +100,14 @@
   .header-title { font-weight: 700; font-size: 1rem; }
   .header-sub { font-size: 0.75rem; color: var(--sub); }
 
-  /* ── Date nav ─────────────────────────────── */
-  .date-nav {
+  /* ── Timeline de días ─────────────────────── */
+  .timeline {
     background: var(--surface);
     border-bottom: 1px solid var(--border);
     padding: 12px 24px;
     display: flex;
     align-items: center;
     gap: 12px;
-    flex-wrap: wrap;
   }
   .nav-btn {
     background: var(--bg);
@@ -114,50 +117,49 @@
     cursor: pointer;
     font-family: var(--font);
     font-size: 0.85rem;
-    padding: 6px 12px;
+    padding: 8px 12px;
     transition: background .15s;
+    flex-shrink: 0;
   }
   .nav-btn:hover:not(:disabled) { background: var(--border); }
-  .nav-btn:disabled { opacity: .4; cursor: default; }
-  .date-label {
-    font-weight: 600;
-    font-size: 0.95rem;
-    min-width: 130px;
-    text-align: center;
-  }
-  .date-dots {
+  .nav-btn:disabled { opacity: .35; cursor: default; }
+  .days {
     display: flex;
-    gap: 4px;
-    flex-wrap: wrap;
-    margin-left: auto;
+    gap: 6px;
+    overflow-x: auto;
+    padding: 2px;
+    flex: 1;
   }
-  .dot {
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
+  .day {
+    flex-shrink: 0;
+    width: 62px;
     border: 1.5px solid var(--border);
+    border-radius: 8px;
     background: var(--bg);
-    color: var(--sub);
-    font-size: 0.7rem;
-    font-weight: 600;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all .15s;
+    padding: 6px 4px 5px;
+    text-align: center;
+    font-family: var(--font);
+    color: var(--text);
+    transition: transform .12s, box-shadow .12s;
   }
-  .dot:hover { border-color: var(--info); color: var(--info); }
-  .dot.active { background: var(--text); color: var(--bg); border-color: var(--text); }
-  .dot.has-alert { border-color: var(--alert); color: var(--alert); }
-  .dot.has-alert.active { background: var(--alert); color: #fff; }
-  .dot.has-ok { border-color: var(--ok); color: var(--ok); }
-  .dot.has-ok.active { background: var(--ok); color: #fff; }
-  .dot.no-data { opacity: .3; cursor: default; }
+  .day:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
+  .day .dow { font-size: 0.62rem; color: var(--sub); text-transform: uppercase; letter-spacing: .06em; }
+  .day .dnum { font-size: 1.05rem; font-weight: 700; line-height: 1.15; font-variant-numeric: tabular-nums; }
+  .day .bar { height: 4px; border-radius: 2px; margin-top: 5px; background: var(--border); }
+  .day .cnt { font-size: 0.62rem; font-weight: 600; margin-top: 3px; color: var(--sub); }
+  .day.active { border-color: var(--text); box-shadow: 0 0 0 1px var(--text); }
+  .day.s0 .bar { background: var(--sev0); } .day.s0 .cnt { color: var(--sev0); }
+  .day.s1 .bar { background: var(--sev1); } .day.s1 .cnt { color: var(--sev1); }
+  .day.s2 .bar { background: var(--sev2); } .day.s2 .cnt { color: var(--sev2); }
+  .day.s3 .bar { background: var(--sev3); } .day.s3 .cnt { color: var(--sev3); }
 
-  /* ── Main content ─────────────────────────── */
+  /* ── Main ─────────────────────────────────── */
   .main { max-width: 1100px; margin: 0 auto; padding: 24px; }
 
-  /* ── Status bar ───────────────────────────── */
+  .date-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 4px; }
+  .date-sub { font-size: 0.78rem; color: var(--sub); margin-bottom: 18px; }
+
   .status-bar {
     padding: 12px 18px;
     border-radius: var(--radius);
@@ -169,12 +171,66 @@
   .status-ok    { background: var(--ok-bg);    color: var(--ok);    border-color: var(--ok-border); }
   .status-alert { background: var(--alert-bg); color: var(--alert); border-color: var(--alert-bdr); }
 
+  /* ── Filtros ──────────────────────────────── */
+  .filters {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 18px;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 6px 13px;
+    font-family: var(--font);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text);
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .chip:hover { border-color: var(--sub); }
+  .chip .n {
+    font-size: 0.72rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    opacity: .75;
+  }
+  .chip.on { border-width: 1.5px; font-weight: 600; }
+  .chip.on.f-all   { background: var(--text); color: var(--bg); border-color: var(--text); }
+  .chip.on.f-ok    { background: var(--ok-bg);    color: var(--ok);    border-color: var(--ok-border); }
+  .chip.on.f-door  { background: var(--alert-bg); color: var(--alert); border-color: var(--alert-bdr); }
+  .chip.on.f-occ   { background: var(--warn-bg);  color: var(--warn);  border-color: var(--warn-bdr); }
+  .chip.on.f-co    { background: var(--info-bg);  color: var(--info);  border-color: var(--info-bdr); }
+  .chip:disabled { opacity: .4; cursor: default; }
+
+  .room-select {
+    margin-left: auto;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 6px 12px;
+    font-family: var(--font);
+    font-size: 0.8rem;
+    color: var(--text);
+    cursor: pointer;
+  }
+  .room-select:focus-visible, .chip:focus-visible, .nav-btn:focus-visible, .day:focus-visible {
+    outline: 2px solid var(--info);
+    outline-offset: 2px;
+  }
+
   /* ── Cards ────────────────────────────────── */
   .cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     gap: 14px;
-    margin-bottom: 24px;
+    margin-bottom: 22px;
   }
   .card {
     background: var(--surface);
@@ -183,14 +239,14 @@
     padding: 16px 20px;
     box-shadow: var(--shadow);
   }
-  .card .num  { font-size: 2.2rem; font-weight: 700; line-height: 1; }
+  .card .num  { font-size: 2.2rem; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
   .card .lbl  { font-size: 0.75rem; color: var(--sub); margin-top: 4px; font-weight: 500; }
-  .card.c-ok   .num { color: var(--ok); }
+  .card.c-ok    .num { color: var(--ok); }
   .card.c-alert .num { color: var(--alert); }
   .card.c-warn  .num { color: var(--warn); }
   .card.c-info  .num { color: var(--info); }
 
-  /* ── Table ────────────────────────────────── */
+  /* ── Tabla ────────────────────────────────── */
   .table-wrap { overflow-x: auto; border-radius: var(--radius); box-shadow: var(--shadow); }
   table {
     width: 100%;
@@ -220,11 +276,11 @@
     vertical-align: middle;
     white-space: nowrap;
   }
-  tr.r-ok       { background: var(--surface); }
-  tr.r-door     { background: var(--alert-bg); }
-  tr.r-occ      { background: var(--warn-bg); }
-  tr.r-co       { background: var(--info-bg); }
-  tr:hover td   { filter: brightness(.97); }
+  tr.r-ok   { background: var(--surface); }
+  tr.r-door { background: var(--alert-bg); }
+  tr.r-occ  { background: var(--warn-bg); }
+  tr.r-co   { background: var(--info-bg); }
+  tr:hover td { filter: brightness(.97); }
 
   .badge {
     display: inline-block;
@@ -239,14 +295,12 @@
   .b-alert { background: var(--alert-bg); color: var(--alert); border-color: var(--alert-bdr); }
   .b-warn  { background: var(--warn-bg);  color: var(--warn);  border-color: var(--warn-bdr); }
   .b-info  { background: var(--info-bg);  color: var(--info);  border-color: var(--info-bdr); }
-  .b-exp   { background: var(--express-bg); color: var(--express); border-color: var(--express-b); }
-  .b-sinr  { background: var(--ok-bg);    color: var(--ok);    border-color: var(--ok-border); }
 
   .alert-msg { color: var(--sub); font-style: italic; font-size: 0.82rem; }
   .diff-ok   { color: var(--sub); }
   .diff-bad  { color: var(--warn); font-weight: 600; }
+  .long      { font-weight: 600; }
 
-  /* ── Empty / loading ──────────────────────── */
   .placeholder {
     text-align: center;
     padding: 60px 20px;
@@ -255,7 +309,6 @@
   }
   .placeholder .icon { font-size: 2.5rem; margin-bottom: 12px; }
 
-  /* ── Legend ───────────────────────────────── */
   .legend {
     margin-top: 20px;
     font-size: 0.78rem;
@@ -266,12 +319,15 @@
     gap: 4px 20px;
   }
 
-  /* ── Mobile ───────────────────────────────── */
   @media (max-width: 640px) {
     .header { padding: 0 14px; }
-    .date-nav { padding: 10px 14px; }
+    .timeline { padding: 10px 14px; gap: 8px; }
     .main { padding: 14px; }
-    .date-dots { display: none; }
+    .room-select { margin-left: 0; width: 100%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+    .day:hover { transform: none; }
   }
 </style>
 </head>
@@ -287,279 +343,267 @@
   </div>
 </header>
 
-<nav class="date-nav">
-  <button class="nav-btn" id="btnPrev">◀ Anterior</button>
-  <span class="date-label" id="dateLabel">—</span>
-  <button class="nav-btn" id="btnNext">Siguiente ▶</button>
-  <div class="date-dots" id="dateDots"></div>
+<nav class="timeline">
+  <button class="nav-btn" id="btnPrev" title="Día anterior">◀</button>
+  <div class="days" id="days"></div>
+  <button class="nav-btn" id="btnNext" title="Día siguiente">▶</button>
 </nav>
 
 <main class="main" id="main">
-  <div class="placeholder">
-    <div class="icon">⏳</div>
-    Cargando datos…
-  </div>
+  <div class="placeholder"><div class="icon">⏳</div>Cargando datos…</div>
 </main>
 
 <script>
-// ────────────────────────────────────────────────────────────
-//  Estado global
-// ────────────────────────────────────────────────────────────
-let availableDates = [];   // ['2026-08-01', ...]
+// ─────────────────────────────────────────────────────────────
+//  Estado
+// ─────────────────────────────────────────────────────────────
+let dates = [];          // más reciente primero
+let cache = {};          // date -> data
 let currentIdx = 0;
-let cache = {};
+let filterStatus = 'all';
+let filterRoom = 'all';
 
-// ────────────────────────────────────────────────────────────
-//  Bootstrap
-// ────────────────────────────────────────────────────────────
+const STATUSES = [
+  { key: 'ok',        cls: 'f-ok',    label: '✅ Emparejadas',    rowCls: 'r-ok',   badge: '<span class="badge b-ok">✅ OK</span>' },
+  { key: 'door_only', cls: 'f-door',  label: '🚨 Cierre sin venta', rowCls: 'r-door', badge: '<span class="badge b-alert">🚨 Sin venta</span>' },
+  { key: 'co_alert',  cls: 'f-co',    label: '🟡 Sobrequedadas',   rowCls: 'r-co',   badge: '<span class="badge b-info">🟡 Sobrequedada</span>' },
+  { key: 'occ_only',  cls: 'f-occ',   label: '⚠️ Venta sin cierre', rowCls: 'r-occ',  badge: '<span class="badge b-warn">⚠️ Sin cierre</span>' },
+];
+const BY_KEY = Object.fromEntries(STATUSES.map(s => [s.key, s]));
+
+// ─────────────────────────────────────────────────────────────
+//  Utilidades
+// ─────────────────────────────────────────────────────────────
+function fmtDur(min) {
+  if (min == null) return '—';
+  const m = Math.round(min);
+  if (m < 60) return `${m} min`;
+  const h = Math.floor(m / 60);
+  const r = m % 60;
+  return r === 0 ? `${h} h` : `${h} h ${r} min`;
+}
+
+function fmtDateLong(ds) {
+  const [y, m, d] = ds.split('-').map(Number);
+  const days = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+  const months = ['','enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  const dt = new Date(y, m - 1, d);
+  const name = days[dt.getDay()];
+  return `${name.charAt(0).toUpperCase() + name.slice(1)} ${d} de ${months[m]}, ${y}`;
+}
+
+function dowShort(ds) {
+  const [y, m, d] = ds.split('-').map(Number);
+  return ['dom','lun','mar','mié','jue','vie','sáb'][new Date(y, m - 1, d).getDay()];
+}
+
+function countByStatus(data) {
+  const c = { ok: 0, door_only: 0, occ_only: 0, co_alert: 0 };
+  (data.rows || []).forEach(r => { if (r.status in c) c[r.status]++; });
+  c.all = (data.rows || []).length;
+  return c;
+}
+
+function severity(data) {
+  const c = countByStatus(data);
+  const n = c.door_only + c.occ_only + c.co_alert;
+  if (n === 0) return { n, tier: 0 };
+  if (n <= 2)  return { n, tier: 1 };
+  if (n <= 5)  return { n, tier: 2 };
+  return { n, tier: 3 };
+}
+
+function roomKey(r) {
+  const n = parseInt(r, 10);
+  return isNaN(n) ? [9999, r] : [n, r];
+}
+
+// ─────────────────────────────────────────────────────────────
+//  Arranque: precarga todos los días para el semáforo
+// ─────────────────────────────────────────────────────────────
 async function init() {
+  let idx;
   try {
     const res = await fetch('data/index.json?t=' + Date.now());
-    if (!res.ok) throw new Error('No index');
-    const idx = await res.json();
-    availableDates = idx.dates.sort().reverse();  // newest first
-    buildDots();
-    currentIdx = 0;
-    loadDate(availableDates[0]);
-  } catch(e) {
+    if (!res.ok) throw new Error();
+    idx = await res.json();
+  } catch (e) {
     document.getElementById('main').innerHTML =
-      '<div class="placeholder"><div class="icon">⚠️</div>No se encontraron datos. Asegúrate de haber publicado al menos un reporte.</div>';
+      '<div class="placeholder"><div class="icon">⚠️</div>No se encontraron datos publicados.</div>';
+    return;
   }
+
+  dates = idx.dates.slice().sort().reverse();
+
+  await Promise.all(dates.map(async d => {
+    try {
+      const r = await fetch(`data/${d}.json?t=` + Date.now());
+      if (r.ok) cache[d] = await r.json();
+    } catch (e) { /* día sin datos */ }
+  }));
+
+  dates = dates.filter(d => cache[d]);
+  if (!dates.length) {
+    document.getElementById('main').innerHTML =
+      '<div class="placeholder"><div class="icon">📭</div>No hay reportes disponibles.</div>';
+    return;
+  }
+
+  buildTimeline();
+  currentIdx = 0;
+  show(0);
 }
 
-// ────────────────────────────────────────────────────────────
-//  Dots (calendar mini-picker)
-// ────────────────────────────────────────────────────────────
-function buildDots() {
-  const container = document.getElementById('dateDots');
-  container.innerHTML = '';
-  // Show only the current month
-  const month = availableDates[0].substring(0,7);
-  // Days 1..31 of that month
-  const [y, m] = month.split('-').map(Number);
-  const daysInMonth = new Date(y, m, 0).getDate();
-  for (let d = 1; d <= daysInMonth; d++) {
-    const ds = `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    const dot = document.createElement('div');
-    dot.className = 'dot';
-    dot.textContent = d;
-    dot.dataset.date = ds;
-    const idx = availableDates.indexOf(ds);
-    if (idx === -1) {
-      dot.classList.add('no-data');
-    } else {
-      dot.addEventListener('click', () => { currentIdx = idx; loadDate(ds); });
-    }
-    container.appendChild(dot);
-  }
-}
-
-function updateDotActive(date) {
-  document.querySelectorAll('.dot').forEach(d => {
-    d.classList.remove('active');
-    if (d.dataset.date === date) d.classList.add('active');
+function buildTimeline() {
+  const el = document.getElementById('days');
+  el.innerHTML = '';
+  // cronológico de izquierda a derecha
+  [...dates].reverse().forEach(d => {
+    const sev = severity(cache[d]);
+    const btn = document.createElement('button');
+    btn.className = `day s${sev.tier}`;
+    btn.dataset.date = d;
+    btn.title = `${fmtDateLong(d)} — ${sev.n} inconsistencia${sev.n === 1 ? '' : 's'}`;
+    btn.innerHTML = `
+      <div class="dow">${dowShort(d)}</div>
+      <div class="dnum">${Number(d.split('-')[2])}</div>
+      <div class="bar"></div>
+      <div class="cnt">${sev.n === 0 ? 'OK' : sev.n}</div>`;
+    btn.addEventListener('click', () => show(dates.indexOf(d)));
+    el.appendChild(btn);
   });
 }
 
-function colorDot(date, alertCount) {
-  const dot = document.querySelector(`.dot[data-date="${date}"]`);
-  if (!dot) return;
-  dot.classList.remove('has-alert','has-ok','no-data');
-  if (alertCount > 0) dot.classList.add('has-alert');
-  else dot.classList.add('has-ok');
+function show(i) {
+  currentIdx = i;
+  const date = dates[i];
+  document.getElementById('btnPrev').disabled = i >= dates.length - 1;
+  document.getElementById('btnNext').disabled = i <= 0;
+  document.querySelectorAll('.day').forEach(el => {
+    el.classList.toggle('active', el.dataset.date === date);
+  });
+  const active = document.querySelector('.day.active');
+  if (active) active.scrollIntoView({ block: 'nearest', inline: 'center' });
+  filterStatus = 'all';
+  filterRoom = 'all';
+  render();
 }
 
-// ────────────────────────────────────────────────────────────
-//  Load + render
-// ────────────────────────────────────────────────────────────
-async function loadDate(date) {
-  document.getElementById('dateLabel').textContent = formatDate(date);
-  document.getElementById('btnPrev').disabled = currentIdx >= availableDates.length - 1;
-  document.getElementById('btnNext').disabled = currentIdx <= 0;
-  updateDotActive(date);
+// ─────────────────────────────────────────────────────────────
+//  Render
+// ─────────────────────────────────────────────────────────────
+function render() {
+  const date = dates[currentIdx];
+  const data = cache[date];
+  const rows = data.rows || [];
+  const counts = countByStatus(data);
+  const alerts = counts.door_only + counts.occ_only + counts.co_alert;
 
-  if (cache[date]) { render(cache[date]); return; }
+  const rooms = [...new Set(rows.map(r => r.room))]
+    .sort((a, b) => { const ka = roomKey(a), kb = roomKey(b); return ka[0] - kb[0] || String(ka[1]).localeCompare(String(kb[1])); });
 
-  document.getElementById('main').innerHTML =
-    '<div class="placeholder"><div class="icon">⏳</div>Cargando reporte…</div>';
+  const statusHtml = alerts > 0
+    ? `<div class="status-bar status-alert">🔴 ${alerts} inconsistencia${alerts > 1 ? 's' : ''} — revisar</div>`
+    : `<div class="status-bar status-ok">✅ Sin inconsistencias — todo cuadra</div>`;
 
-  try {
-    const res = await fetch(`data/${date}.json?t=` + Date.now());
-    if (!res.ok) throw new Error('Not found');
-    const data = await res.json();
-    cache[date] = data;
-    colorDot(date, data.summary.alert_count);
-    render(data);
-  } catch(e) {
-    document.getElementById('main').innerHTML =
-      `<div class="placeholder"><div class="icon">📭</div>No hay datos para ${date}</div>`;
-  }
-}
+  const chips = [
+    `<button class="chip f-all ${filterStatus === 'all' ? 'on' : ''}" data-f="all">Todas <span class="n">${counts.all}</span></button>`,
+    ...STATUSES.map(st =>
+      `<button class="chip ${st.cls} ${filterStatus === st.key ? 'on' : ''}" data-f="${st.key}" ${counts[st.key] === 0 ? 'disabled' : ''}>${st.label} <span class="n">${counts[st.key]}</span></button>`)
+  ].join('');
 
-function formatDate(ds) {
-  const [y,m,d] = ds.split('-');
-  const days = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
-  const months = ['','Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
-  const dt = new Date(+y, +m-1, +d);
-  return `${days[dt.getDay()]} ${+d} ${months[+m]} ${y}`;
-}
+  const roomOpts = ['<option value="all">Todas las habitaciones</option>',
+    ...rooms.map(r => `<option value="${r}" ${filterRoom === r ? 'selected' : ''}>${r}</option>`)].join('');
 
-function render(data) {
-  const s = data.summary;
-  const alerts = s.total_door_only + s.total_occ_only;
-  const statusClass = alerts > 0 ? 'status-alert' : 'status-ok';
-  const statusMsg = alerts > 0
-    ? `🔴 ${alerts} alerta${alerts>1?'s':''} — revisar`
-    : '✅ Sin alertas — todo OK';
+  const visible = rows.filter(r =>
+    (filterStatus === 'all' || r.status === filterStatus) &&
+    (filterRoom === 'all' || r.room === filterRoom));
 
-  let html = `
-    <div class="status-bar ${statusClass}">${statusMsg}</div>
+  document.getElementById('main').innerHTML = `
+    <div class="date-title">${fmtDateLong(date)}</div>
+    <div class="date-sub">Generado ${data.generated || '—'}</div>
+    ${statusHtml}
     <div class="cards">
-      <div class="card c-ok">
-        <div class="num">${s.total_matched}</div>
-        <div class="lbl">Emparejados ✅</div>
-      </div>
-      <div class="card c-alert">
-        <div class="num">${s.total_door_only}</div>
-        <div class="lbl">Cierre sin venta 🚨</div>
-      </div>
-      <div class="card c-warn">
-        <div class="num">${s.total_occ_only}</div>
-        <div class="lbl">Venta sin cierre ⚠️</div>
-      </div>
-      <div class="card c-info">
-        <div class="num">${s.total_co_alert ?? 0}</div>
-        <div class="lbl">Sobrequedada 🟡</div>
-      </div>
+      <div class="card c-ok"><div class="num">${counts.ok}</div><div class="lbl">Emparejadas ✅</div></div>
+      <div class="card c-alert"><div class="num">${counts.door_only}</div><div class="lbl">Cierre sin venta 🚨</div></div>
+      <div class="card c-info"><div class="num">${counts.co_alert}</div><div class="lbl">Sobrequedadas 🟡</div></div>
+      <div class="card c-warn"><div class="num">${counts.occ_only}</div><div class="lbl">Venta sin cierre ⚠️</div></div>
+    </div>
+    <div class="filters">
+      ${chips}
+      <select class="room-select" id="roomSel">${roomOpts}</select>
     </div>
     <div class="table-wrap"><table>
       <thead><tr>
-        <th>Habitación</th>
-        <th>Estado</th>
-        <th>Puerta cerrada</th>
-        <th>Duración</th>
-        <th>Venta (PMS)</th>
-        <th>Tipo</th>
-        <th>Pago</th>
-        <th>CI Δ / CO Δ</th>
+        <th>Habitación</th><th>Estado</th><th>Puerta cerrada</th><th>Duración</th>
+        <th>Venta (PMS)</th><th>Pago</th><th>CI Δ / CO Δ</th>
       </tr></thead>
-      <tbody>
-  `;
-
-  for (const row of data.rows) {
-    html += renderRow(row);
-  }
-
-  html += `</tbody></table></div>
+      <tbody>${visible.length ? visible.map(renderRow).join('') :
+        '<tr><td colspan="7" class="placeholder" style="padding:36px">Ningún registro con estos filtros</td></tr>'}</tbody>
+    </table></div>
     <div class="legend">
-      <span>✅ <strong>Emparejado</strong>: cierre ≥15 min coincide con venta (±30 min)</span>
-      <span>🚨 <strong>Sin venta</strong>: puerta cerrada ≥15 min sin registro PMS</span>
-      <span>⚠️ <strong>Sin cierre</strong>: venta PMS sin cierre de puerta detectado</span>
-      <span>🟡 <strong>Sobrequedada</strong>: puerta abierta mucho después del cierre PMS</span>
-    </div>
-    <div class="legend" style="margin-top:6px">Generado: ${data.generated}</div>
-  `;
+      <span>✅ <strong>Emparejada</strong>: cierre ≥15 min coincide con venta (±30 min)</span>
+      <span>🚨 <strong>Cierre sin venta</strong>: puerta cerrada ≥15 min sin registro en PMS</span>
+      <span>🟡 <strong>Sobrequedada</strong>: puerta sigue cerrada mucho después del check-out</span>
+      <span>⚠️ <strong>Venta sin cierre</strong>: venta en PMS sin cierre de puerta detectado</span>
+    </div>`;
 
-  document.getElementById('main').innerHTML = html;
+  document.querySelectorAll('.chip').forEach(c =>
+    c.addEventListener('click', () => { filterStatus = c.dataset.f; render(); }));
+  document.getElementById('roomSel').addEventListener('change', e => {
+    filterRoom = e.target.value; render();
+  });
 }
 
 function renderRow(row) {
-  // Status badge
-  let rowClass, badge;
-  if (row.status === 'ok') {
-    rowClass = 'r-ok';
-    badge = '<span class="badge b-ok">✅ OK</span>';
-  } else if (row.status === 'door_only') {
-    rowClass = 'r-door';
-    badge = '<span class="badge b-alert">🚨 Sin venta</span>';
-  } else if (row.status === 'occ_only') {
-    rowClass = 'r-occ';
-    badge = '<span class="badge b-warn">⚠️ Sin cierre</span>';
-  } else if (row.status === 'co_alert') {
-    rowClass = 'r-co';
-    badge = '<span class="badge b-info">🟡 Sobrequedada</span>';
-  } else {
-    rowClass = 'r-ok';
-    badge = `<span class="badge b-ok">${row.status}</span>`;
-  }
+  const st = BY_KEY[row.status];
+  const rowCls = st ? st.rowCls : 'r-ok';
+  const badge = st ? st.badge : `<span class="badge b-ok">${row.status}</span>`;
 
-  // Type badge
-  let tipoBadge = '';
-  if (row.tipo === 'Express') {
-    tipoBadge = '<span class="badge b-exp">Express</span>';
-  } else if (row.tipo === 'Sin Reserva') {
-    tipoBadge = '<span class="badge b-sinr">Sin Reserva</span>';
-  } else if (row.tipo) {
-    tipoBadge = `<span class="badge b-info">${row.tipo}</span>`;
-  }
-
-  // Door times
-  const doorStr = row.door_start
-    ? `${row.door_start} – ${row.door_end || '—'}`
+  const doorStr = row.door_start ? `${row.door_start} – ${row.door_end || '—'}` : '—';
+  const durMin = row.duration_min;
+  const durStr = durMin != null
+    ? `<span class="${durMin >= 60 ? 'long' : ''}">${fmtDur(durMin)}</span>`
     : '—';
-  const durStr = row.duration_min != null
-    ? `${row.duration_min.toFixed(0)} min`
-    : '—';
+  const pmsStr = row.occ_start ? `${row.occ_start} – ${row.occ_end || '—'}` : '—';
 
-  // PMS times
-  const pmsStr = row.occ_start
-    ? `${row.occ_start} – ${row.occ_end || '—'}`
-    : '—';
-
-  // Diffs
   let diffStr = '—';
   if (row.ci_diff != null && row.co_diff != null) {
-    const ci = row.ci_diff >= 0 ? `+${row.ci_diff.toFixed(0)}` : row.ci_diff.toFixed(0);
-    const co = row.co_diff >= 0 ? `+${row.co_diff.toFixed(0)}` : row.co_diff.toFixed(0);
-    const badCi = Math.abs(row.ci_diff) > 30;
-    const badCo = Math.abs(row.co_diff) > 60;
-    diffStr = `<span class="${badCi?'diff-bad':'diff-ok'}">${ci} min</span> / <span class="${badCo?'diff-bad':'diff-ok'}">${co} min</span>`;
+    const f = v => (v >= 0 ? '+' : '') + Math.round(v);
+    diffStr = `<span class="${Math.abs(row.ci_diff) > 30 ? 'diff-bad' : 'diff-ok'}">${f(row.ci_diff)} min</span>` +
+              ` / <span class="${Math.abs(row.co_diff) > 60 ? 'diff-bad' : 'diff-ok'}">${f(row.co_diff)} min</span>`;
   } else if (row.status === 'occ_only') {
-    diffStr = '<span class="alert-msg">Venta sin cierre de puerta</span>';
+    diffStr = '<span class="alert-msg">Sin cierre de puerta</span>';
   }
 
-  // For door_only rows, collapse PMS cols
   if (row.status === 'door_only') {
-    return `<tr class="${rowClass}">
-      <td>${row.room}</td>
-      <td>${badge}</td>
-      <td>${doorStr}</td>
-      <td>${durStr}</td>
-      <td colspan="4" class="alert-msg">Puerta cerrada ${durStr} — sin venta registrada</td>
+    return `<tr class="${rowCls}">
+      <td>${row.room}</td><td>${badge}</td><td>${doorStr}</td><td>${durStr}</td>
+      <td colspan="3" class="alert-msg">Puerta cerrada ${fmtDur(durMin)} — sin venta registrada</td>
     </tr>`;
   }
 
-  return `<tr class="${rowClass}">
-    <td>${row.room}</td>
-    <td>${badge}</td>
-    <td>${doorStr}</td>
-    <td>${durStr}</td>
-    <td>${pmsStr}</td>
-    <td>${tipoBadge}</td>
-    <td>${row.payment || '—'}</td>
-    <td>${diffStr}</td>
+  return `<tr class="${rowCls}">
+    <td>${row.room}</td><td>${badge}</td><td>${doorStr}</td><td>${durStr}</td>
+    <td>${pmsStr}</td><td>${row.payment || '—'}</td><td>${diffStr}</td>
   </tr>`;
 }
 
-// ────────────────────────────────────────────────────────────
-//  Navigation
-// ────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
+//  Navegación
+// ─────────────────────────────────────────────────────────────
 document.getElementById('btnPrev').addEventListener('click', () => {
-  if (currentIdx < availableDates.length - 1) {
-    currentIdx++;
-    loadDate(availableDates[currentIdx]);
-  }
+  if (currentIdx < dates.length - 1) show(currentIdx + 1);
 });
 document.getElementById('btnNext').addEventListener('click', () => {
-  if (currentIdx > 0) {
-    currentIdx--;
-    loadDate(availableDates[currentIdx]);
-  }
+  if (currentIdx > 0) show(currentIdx - 1);
+});
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'SELECT') return;
+  if (e.key === 'ArrowLeft'  && currentIdx < dates.length - 1) show(currentIdx + 1);
+  if (e.key === 'ArrowRight' && currentIdx > 0) show(currentIdx - 1);
 });
 
-// ────────────────────────────────────────────────────────────
-//  Start
-// ────────────────────────────────────────────────────────────
 init();
 </script>
 </body>
