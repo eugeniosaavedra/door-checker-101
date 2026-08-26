@@ -3,219 +3,564 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Door Checker — 2026-08-25</title>
+<title>Door Checker — Motel 101</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 <style>
   :root {
-    --bg: #f7f8fa; --card: #ffffff; --border: #e2e6ea;
-    --ok: #1a9e5c; --ok-bg: #e8f7ef;
-    --alert: #d93025; --alert-bg: #fdecea;
-    --warn: #e08000; --warn-bg: #fff8e1;
-    --text: #1a1a2e; --sub: #6b7280;
-    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --bg:        #f4f6f9;
+    --surface:   #ffffff;
+    --border:    #e2e6ea;
+    --text:      #111827;
+    --sub:       #6b7280;
+    --ok:        #059669;
+    --ok-bg:     #ecfdf5;
+    --ok-border: #a7f3d0;
+    --alert:     #dc2626;
+    --alert-bg:  #fef2f2;
+    --alert-bdr: #fecaca;
+    --warn:      #d97706;
+    --warn-bg:   #fffbeb;
+    --warn-bdr:  #fde68a;
+    --info:      #2563eb;
+    --info-bg:   #eff6ff;
+    --info-bdr:  #bfdbfe;
+    --express:   #ea580c;
+    --express-bg:#fff7ed;
+    --express-b: #fed7aa;
+    --shadow:    0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.05);
+    --radius:    10px;
+    --font:      'Inter', -apple-system, sans-serif;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: var(--font); background: var(--bg); color: var(--text); padding: 24px; }
-  h1 { font-size: 1.4rem; font-weight: 700; margin-bottom: 4px; }
-  .sub { color: var(--sub); font-size: 0.9rem; margin-bottom: 24px; }
-  .cards { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 28px; }
-  .card {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 10px; padding: 18px 24px; min-width: 150px; flex: 1;
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg:        #0f1117;
+      --surface:   #1a1d27;
+      --border:    #2d3148;
+      --text:      #f1f5f9;
+      --sub:       #94a3b8;
+      --ok:        #34d399;
+      --ok-bg:     #022c22;
+      --ok-border: #065f46;
+      --alert:     #f87171;
+      --alert-bg:  #2d0a0a;
+      --alert-bdr: #7f1d1d;
+      --warn:      #fbbf24;
+      --warn-bg:   #1c1204;
+      --warn-bdr:  #78350f;
+      --info:      #60a5fa;
+      --info-bg:   #0f1e3d;
+      --info-bdr:  #1e3a8a;
+      --express:   #fb923c;
+      --express-bg:#1c0a00;
+      --express-b: #7c2d12;
+      --shadow:    0 1px 3px rgba(0,0,0,.4);
+    }
   }
-  .card .num { font-size: 2rem; font-weight: 700; line-height: 1; }
-  .card .label { font-size: 0.8rem; color: var(--sub); margin-top: 4px; }
-  .card.ok-card .num    { color: var(--ok); }
-  .card.alert-card .num { color: var(--alert); }
-  .card.warn-card .num  { color: var(--warn); }
+  :root[data-theme="dark"] {
+    --bg:#0f1117; --surface:#1a1d27; --border:#2d3148; --text:#f1f5f9; --sub:#94a3b8;
+    --ok:#34d399; --ok-bg:#022c22; --ok-border:#065f46;
+    --alert:#f87171; --alert-bg:#2d0a0a; --alert-bdr:#7f1d1d;
+    --warn:#fbbf24; --warn-bg:#1c1204; --warn-bdr:#78350f;
+    --info:#60a5fa; --info-bg:#0f1e3d; --info-bdr:#1e3a8a;
+    --express:#fb923c; --express-bg:#1c0a00; --express-b:#7c2d12;
+    --shadow:0 1px 3px rgba(0,0,0,.4);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* ── Header ───────────────────────────────── */
+  .header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow);
+  }
+  .header-left { display: flex; align-items: center; gap: 10px; }
+  .header-logo { font-size: 1.25rem; }
+  .header-title { font-weight: 700; font-size: 1rem; }
+  .header-sub { font-size: 0.75rem; color: var(--sub); }
+
+  /* ── Date nav ─────────────────────────────── */
+  .date-nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .nav-btn {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    cursor: pointer;
+    font-family: var(--font);
+    font-size: 0.85rem;
+    padding: 6px 12px;
+    transition: background .15s;
+  }
+  .nav-btn:hover:not(:disabled) { background: var(--border); }
+  .nav-btn:disabled { opacity: .4; cursor: default; }
+  .date-label {
+    font-weight: 600;
+    font-size: 0.95rem;
+    min-width: 130px;
+    text-align: center;
+  }
+  .date-dots {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    margin-left: auto;
+  }
+  .dot {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    background: var(--bg);
+    color: var(--sub);
+    font-size: 0.7rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .15s;
+  }
+  .dot:hover { border-color: var(--info); color: var(--info); }
+  .dot.active { background: var(--text); color: var(--bg); border-color: var(--text); }
+  .dot.has-alert { border-color: var(--alert); color: var(--alert); }
+  .dot.has-alert.active { background: var(--alert); color: #fff; }
+  .dot.has-ok { border-color: var(--ok); color: var(--ok); }
+  .dot.has-ok.active { background: var(--ok); color: #fff; }
+  .dot.no-data { opacity: .3; cursor: default; }
+
+  /* ── Main content ─────────────────────────── */
+  .main { max-width: 1100px; margin: 0 auto; padding: 24px; }
+
+  /* ── Status bar ───────────────────────────── */
   .status-bar {
-    padding: 12px 20px; border-radius: 8px; font-weight: 600;
-    margin-bottom: 24px; font-size: 1rem;
+    padding: 12px 18px;
+    border-radius: var(--radius);
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+    border: 1px solid;
   }
-  .status-ok    { background: var(--ok-bg);    color: var(--ok);    border: 1px solid #a3d9bc; }
-  .status-alert { background: var(--alert-bg); color: var(--alert); border: 1px solid #f5c6c3; }
-  .table-wrap { overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; background: var(--card); border-radius: 10px; overflow: hidden; border: 1px solid var(--border); }
-  thead { background: #f1f3f5; }
-  th { padding: 10px 14px; text-align: left; font-size: 0.78rem; font-weight: 600; color: var(--sub); text-transform: uppercase; letter-spacing: .04em; white-space: nowrap; }
-  td { padding: 10px 14px; font-size: 0.88rem; border-top: 1px solid var(--border); vertical-align: middle; }
-  tr.ok { background: #fff; }
-  tr.alert-door { background: var(--alert-bg); }
-  tr.alert-occ  { background: var(--warn-bg); }
-  tr:hover td { filter: brightness(0.97); }
-  .badge { font-size: 0.78rem; font-weight: 600; padding: 3px 9px; border-radius: 20px; white-space: nowrap; }
-  .ok-badge    { background: var(--ok-bg);    color: var(--ok);    border: 1px solid #a3d9bc; }
-  .alert-badge { background: var(--alert-bg); color: var(--alert); border: 1px solid #f5c6c3; }
-  .warn-badge  { background: var(--warn-bg);  color: var(--warn);  border: 1px solid #ffd580; }
-  .alert-msg { font-style: italic; color: var(--sub); }
-  .empty { text-align: center; padding: 40px; color: var(--sub); }
-  .legend { margin-top: 20px; font-size: 0.8rem; color: var(--sub); line-height: 1.8; }
-  @media (max-width: 600px) {
-    body { padding: 12px; }
-    .cards { flex-direction: column; }
+  .status-ok    { background: var(--ok-bg);    color: var(--ok);    border-color: var(--ok-border); }
+  .status-alert { background: var(--alert-bg); color: var(--alert); border-color: var(--alert-bdr); }
+
+  /* ── Cards ────────────────────────────────── */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    box-shadow: var(--shadow);
+  }
+  .card .num  { font-size: 2.2rem; font-weight: 700; line-height: 1; }
+  .card .lbl  { font-size: 0.75rem; color: var(--sub); margin-top: 4px; font-weight: 500; }
+  .card.c-ok   .num { color: var(--ok); }
+  .card.c-alert .num { color: var(--alert); }
+  .card.c-warn  .num { color: var(--warn); }
+  .card.c-info  .num { color: var(--info); }
+
+  /* ── Table ────────────────────────────────── */
+  .table-wrap { overflow-x: auto; border-radius: var(--radius); box-shadow: var(--shadow); }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    font-variant-numeric: tabular-nums;
+  }
+  thead { background: var(--bg); }
+  th {
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--sub);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    white-space: nowrap;
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 10px 14px;
+    font-size: 0.85rem;
+    border-top: 1px solid var(--border);
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+  tr.r-ok       { background: var(--surface); }
+  tr.r-door     { background: var(--alert-bg); }
+  tr.r-occ      { background: var(--warn-bg); }
+  tr.r-co       { background: var(--info-bg); }
+  tr:hover td   { filter: brightness(.97); }
+
+  .badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 20px;
+    white-space: nowrap;
+    border: 1px solid;
+  }
+  .b-ok    { background: var(--ok-bg);    color: var(--ok);    border-color: var(--ok-border); }
+  .b-alert { background: var(--alert-bg); color: var(--alert); border-color: var(--alert-bdr); }
+  .b-warn  { background: var(--warn-bg);  color: var(--warn);  border-color: var(--warn-bdr); }
+  .b-info  { background: var(--info-bg);  color: var(--info);  border-color: var(--info-bdr); }
+  .b-exp   { background: var(--express-bg); color: var(--express); border-color: var(--express-b); }
+  .b-sinr  { background: var(--ok-bg);    color: var(--ok);    border-color: var(--ok-border); }
+
+  .alert-msg { color: var(--sub); font-style: italic; font-size: 0.82rem; }
+  .diff-ok   { color: var(--sub); }
+  .diff-bad  { color: var(--warn); font-weight: 600; }
+
+  /* ── Empty / loading ──────────────────────── */
+  .placeholder {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--sub);
+    font-size: 0.95rem;
+  }
+  .placeholder .icon { font-size: 2.5rem; margin-bottom: 12px; }
+
+  /* ── Legend ───────────────────────────────── */
+  .legend {
+    margin-top: 20px;
+    font-size: 0.78rem;
+    color: var(--sub);
+    line-height: 2;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 20px;
+  }
+
+  /* ── Mobile ───────────────────────────────── */
+  @media (max-width: 640px) {
+    .header { padding: 0 14px; }
+    .date-nav { padding: 10px 14px; }
+    .main { padding: 14px; }
+    .date-dots { display: none; }
   }
 </style>
 </head>
 <body>
-<h1>🚪 Motel Door Checker</h1>
-<p class="sub">Motel Ciento Once (181) — 2026-08-25 — generado 2026-08-26 13:13</p>
 
-<div class="status-bar status-alert">3 alerta(s) 🔴</div>
-
-<div class="cards">
-  <div class="card ok-card">
-    <div class="num">9</div>
-    <div class="label">Emparejados ✅</div>
+<header class="header">
+  <div class="header-left">
+    <span class="header-logo">🚪</span>
+    <div>
+      <div class="header-title">Motel Door Checker</div>
+      <div class="header-sub">Motel Ciento Once · 181</div>
+    </div>
   </div>
-  <div class="card alert-card">
-    <div class="num">2</div>
-    <div class="label">Cierre sin venta 🚨</div>
-  </div>
-  <div class="card warn-card">
-    <div class="num">1</div>
-    <div class="label">Venta sin cierre ⚠️</div>
-  </div>
-</div>
+</header>
 
-<div class="table-wrap">
-<table>
-  <thead>
-    <tr>
-      <th>Habitación</th>
-      <th>Estado</th>
-      <th>Puerta cerrada</th>
-      <th>Duración</th>
-      <th>Venta (PMS)</th>
-      <th>Tipo</th>
-      <th>Pago</th>
-      <th>CI Δ / CO Δ</th>
-    </tr>
-  </thead>
-  <tbody>
-    
-            <tr class="alert-door">
-              <td>33 Aire</td>
-              <td class="badge alert-badge">🚨 Sin venta</td>
-              <td>15:38 – 21:25</td>
-              <td>346.8 min</td>
-              <td colspan="4" class="alert-msg">Puerta cerrada 346.8 min — sin venta registrada</td>
-            </tr>
-            <tr class="alert-occ">
-              <td>33 Aire</td>
-              <td class="badge warn-badge">⚠️ Sin cierre</td>
-              <td>—</td>
-              <td>—</td>
-              <td>19:41 – 21:17</td>
-              <td><span style="font-size:0.75rem;font-weight:600;padding:2px 8px;border-radius:20px;background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0">Sin Reserva</span></td>
-              <td>tarjeta</td>
-              <td class="alert-msg">Venta registrada sin cierre de puerta</td>
-            </tr>
-            <tr class="ok">
-              <td>41 Aire</td>
-              <td class="badge ok-badge">✅ OK</td>
-              <td>13:56 – 14:21</td>
-              <td>24.2 min</td>
-              <td>13:58 – 14:22</td>
-              <td><span style="font-size:0.75rem;font-weight:600;padding:2px 8px;border-radius:20px;background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0">Sin Reserva</span></td>
-              <td>efectivo</td>
-              <td>-1 min / -1 min</td>
-            </tr>
-            <tr class="ok">
-              <td>41 Aire</td>
-              <td class="badge ok-badge">✅ OK</td>
-              <td>19:27 – 20:18</td>
-              <td>50.7 min</td>
-              <td>19:26 – 20:19</td>
-              <td><span style="font-size:0.75rem;font-weight:600;padding:2px 8px;border-radius:20px;background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0">Sin Reserva</span></td>
-              <td>tarjeta</td>
-              <td>+2 min / -1 min</td>
-            </tr>
-            <tr class="alert-co">
-              <td>42 Aire</td>
-              <td class="badge co-badge">🟡 Sobrequedada</td>
-              <td>19:17 – 21:18</td>
-              <td>121.2 min</td>
-              <td>19:15 – 20:33</td>
-              <td><span style="font-size:0.75rem;font-weight:600;padding:2px 8px;border-radius:20px;background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0">Sin Reserva</span></td>
-              <td>tarjeta</td>
-              <td>+2 min / +45 min</td>
-            </tr>
-            <tr class="ok">
-              <td>44 Aire</td>
-              <td class="badge ok-badge">✅ OK</td>
-              <td>00:12 – 03:15</td>
-              <td>183.7 min</td>
-              <td>00:15 – 03:17</td>
-              <td><span style="font-size:0.75rem;font-weight:600;padding:2px 8px;border-radius:20px;background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0">Sin Reserva</span></td>
-              <td>tarjeta</td>
-              <td>-3 min / -1 min</td>
-            </tr>
-            <tr class="ok">
-              <td>44 Aire</td>
-              <td class="badge ok-badge">✅ OK</td>
-              <td>10:25 – 11:40</td>
-              <td>75.0 min</td>
-              <td>10:26 – 11:40</td>
-              <td><span style="font-size:0.75rem;font-weight:600;padding:2px 8px;border-radius:20px;background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0">Sin Reserva</span></td>
-              <td>tarjeta</td>
-              <td>-1 min / +0 min</td>
-            </tr>
-            <tr class="ok">
-              <td>44 Aire</td>
-              <td class="badge ok-badge">✅ OK</td>
-              <td>19:02 – 11:28</td>
-              <td>986.2 min</td>
-              <td>18:52 – 12:00</td>
-              <td><span style="font-size:0.75rem;font-weight:600;padding:2px 8px;border-radius:20px;background:#fff7ed;color:#c2410c;border:1px solid #fed7aa">Express</span></td>
-              <td>efectivo</td>
-              <td>+10 min / -32 min</td>
-            </tr>
-            <tr class="ok">
-              <td>45 Aire</td>
-              <td class="badge ok-badge">✅ OK</td>
-              <td>15:31 – 16:28</td>
-              <td>56.8 min</td>
-              <td>15:31 – 16:29</td>
-              <td><span style="font-size:0.75rem;font-weight:600;padding:2px 8px;border-radius:20px;background:#fff7ed;color:#c2410c;border:1px solid #fed7aa">Express</span></td>
-              <td>mp</td>
-              <td>+0 min / -1 min</td>
-            </tr>
-            <tr class="ok">
-              <td>45 Aire</td>
-              <td class="badge ok-badge">✅ OK</td>
-              <td>20:59 – 23:06</td>
-              <td>126.9 min</td>
-              <td>21:06 – 23:08</td>
-              <td><span style="font-size:0.75rem;font-weight:600;padding:2px 8px;border-radius:20px;background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0">Sin Reserva</span></td>
-              <td>tarjeta</td>
-              <td>-6 min / -1 min</td>
-            </tr>
-            <tr class="alert-co">
-              <td>46 Aire</td>
-              <td class="badge co-badge">🟡 Sobrequedada</td>
-              <td>23:47 – 11:06</td>
-              <td>678.9 min</td>
-              <td>23:47 – 12:00</td>
-              <td><span style="font-size:0.75rem;font-weight:600;padding:2px 8px;border-radius:20px;background:#fff7ed;color:#c2410c;border:1px solid #fed7aa">Express</span></td>
-              <td>mp</td>
-              <td>+-0 min / -54 min</td>
-            </tr>
-            <tr class="alert-door">
-              <td>47 Aire</td>
-              <td class="badge alert-badge">🚨 Sin venta</td>
-              <td>14:49 – 15:36</td>
-              <td>47.0 min</td>
-              <td colspan="4" class="alert-msg">Puerta cerrada 47.0 min — sin venta registrada</td>
-            </tr>
-  </tbody>
-</table>
-</div>
+<nav class="date-nav">
+  <button class="nav-btn" id="btnPrev">◀ Anterior</button>
+  <span class="date-label" id="dateLabel">—</span>
+  <button class="nav-btn" id="btnNext">Siguiente ▶</button>
+  <div class="date-dots" id="dateDots"></div>
+</nav>
 
-<p class="legend">
-  ✅ <strong>Emparejado</strong>: cierre de puerta ≥15 min coincide con venta en PMS (tolerancia ±30 min) &nbsp;|&nbsp;
-  🚨 <strong>Cierre sin venta</strong>: puerta cerrada ≥15 min sin registro en PMS — revisar &nbsp;|&nbsp;
-  ⚠️ <strong>Venta sin cierre</strong>: registro en PMS sin cierre de puerta detectado<br>
-  Filtros PMS: active=1 · booking_type IS NOT NULL · state IN (1,2) · DATE(start) = fecha<br>
-  Tipo: <strong>Sin Reserva</strong> = foreign_booking_id IS NOT NULL · <strong>Express</strong> = sin foreign_id + booking_type=express · <strong>Programada</strong> = sin foreign_id + booking_type=scheduled
-</p>
+<main class="main" id="main">
+  <div class="placeholder">
+    <div class="icon">⏳</div>
+    Cargando datos…
+  </div>
+</main>
+
+<script>
+// ────────────────────────────────────────────────────────────
+//  Estado global
+// ────────────────────────────────────────────────────────────
+let availableDates = [];   // ['2026-08-01', ...]
+let currentIdx = 0;
+let cache = {};
+
+// ────────────────────────────────────────────────────────────
+//  Bootstrap
+// ────────────────────────────────────────────────────────────
+async function init() {
+  try {
+    const res = await fetch('data/index.json?t=' + Date.now());
+    if (!res.ok) throw new Error('No index');
+    const idx = await res.json();
+    availableDates = idx.dates.sort().reverse();  // newest first
+    buildDots();
+    currentIdx = 0;
+    loadDate(availableDates[0]);
+  } catch(e) {
+    document.getElementById('main').innerHTML =
+      '<div class="placeholder"><div class="icon">⚠️</div>No se encontraron datos. Asegúrate de haber publicado al menos un reporte.</div>';
+  }
+}
+
+// ────────────────────────────────────────────────────────────
+//  Dots (calendar mini-picker)
+// ────────────────────────────────────────────────────────────
+function buildDots() {
+  const container = document.getElementById('dateDots');
+  container.innerHTML = '';
+  // Show only the current month
+  const month = availableDates[0].substring(0,7);
+  // Days 1..31 of that month
+  const [y, m] = month.split('-').map(Number);
+  const daysInMonth = new Date(y, m, 0).getDate();
+  for (let d = 1; d <= daysInMonth; d++) {
+    const ds = `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const dot = document.createElement('div');
+    dot.className = 'dot';
+    dot.textContent = d;
+    dot.dataset.date = ds;
+    const idx = availableDates.indexOf(ds);
+    if (idx === -1) {
+      dot.classList.add('no-data');
+    } else {
+      dot.addEventListener('click', () => { currentIdx = idx; loadDate(ds); });
+    }
+    container.appendChild(dot);
+  }
+}
+
+function updateDotActive(date) {
+  document.querySelectorAll('.dot').forEach(d => {
+    d.classList.remove('active');
+    if (d.dataset.date === date) d.classList.add('active');
+  });
+}
+
+function colorDot(date, alertCount) {
+  const dot = document.querySelector(`.dot[data-date="${date}"]`);
+  if (!dot) return;
+  dot.classList.remove('has-alert','has-ok','no-data');
+  if (alertCount > 0) dot.classList.add('has-alert');
+  else dot.classList.add('has-ok');
+}
+
+// ────────────────────────────────────────────────────────────
+//  Load + render
+// ────────────────────────────────────────────────────────────
+async function loadDate(date) {
+  document.getElementById('dateLabel').textContent = formatDate(date);
+  document.getElementById('btnPrev').disabled = currentIdx >= availableDates.length - 1;
+  document.getElementById('btnNext').disabled = currentIdx <= 0;
+  updateDotActive(date);
+
+  if (cache[date]) { render(cache[date]); return; }
+
+  document.getElementById('main').innerHTML =
+    '<div class="placeholder"><div class="icon">⏳</div>Cargando reporte…</div>';
+
+  try {
+    const res = await fetch(`data/${date}.json?t=` + Date.now());
+    if (!res.ok) throw new Error('Not found');
+    const data = await res.json();
+    cache[date] = data;
+    colorDot(date, data.summary.alert_count);
+    render(data);
+  } catch(e) {
+    document.getElementById('main').innerHTML =
+      `<div class="placeholder"><div class="icon">📭</div>No hay datos para ${date}</div>`;
+  }
+}
+
+function formatDate(ds) {
+  const [y,m,d] = ds.split('-');
+  const days = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+  const months = ['','Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  const dt = new Date(+y, +m-1, +d);
+  return `${days[dt.getDay()]} ${+d} ${months[+m]} ${y}`;
+}
+
+function render(data) {
+  const s = data.summary;
+  const alerts = s.total_door_only + s.total_occ_only;
+  const statusClass = alerts > 0 ? 'status-alert' : 'status-ok';
+  const statusMsg = alerts > 0
+    ? `🔴 ${alerts} alerta${alerts>1?'s':''} — revisar`
+    : '✅ Sin alertas — todo OK';
+
+  let html = `
+    <div class="status-bar ${statusClass}">${statusMsg}</div>
+    <div class="cards">
+      <div class="card c-ok">
+        <div class="num">${s.total_matched}</div>
+        <div class="lbl">Emparejados ✅</div>
+      </div>
+      <div class="card c-alert">
+        <div class="num">${s.total_door_only}</div>
+        <div class="lbl">Cierre sin venta 🚨</div>
+      </div>
+      <div class="card c-warn">
+        <div class="num">${s.total_occ_only}</div>
+        <div class="lbl">Venta sin cierre ⚠️</div>
+      </div>
+      <div class="card c-info">
+        <div class="num">${s.total_co_alert ?? 0}</div>
+        <div class="lbl">Sobrequedada 🟡</div>
+      </div>
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr>
+        <th>Habitación</th>
+        <th>Estado</th>
+        <th>Puerta cerrada</th>
+        <th>Duración</th>
+        <th>Venta (PMS)</th>
+        <th>Tipo</th>
+        <th>Pago</th>
+        <th>CI Δ / CO Δ</th>
+      </tr></thead>
+      <tbody>
+  `;
+
+  for (const row of data.rows) {
+    html += renderRow(row);
+  }
+
+  html += `</tbody></table></div>
+    <div class="legend">
+      <span>✅ <strong>Emparejado</strong>: cierre ≥15 min coincide con venta (±30 min)</span>
+      <span>🚨 <strong>Sin venta</strong>: puerta cerrada ≥15 min sin registro PMS</span>
+      <span>⚠️ <strong>Sin cierre</strong>: venta PMS sin cierre de puerta detectado</span>
+      <span>🟡 <strong>Sobrequedada</strong>: puerta abierta mucho después del cierre PMS</span>
+    </div>
+    <div class="legend" style="margin-top:6px">Generado: ${data.generated}</div>
+  `;
+
+  document.getElementById('main').innerHTML = html;
+}
+
+function renderRow(row) {
+  // Status badge
+  let rowClass, badge;
+  if (row.status === 'ok') {
+    rowClass = 'r-ok';
+    badge = '<span class="badge b-ok">✅ OK</span>';
+  } else if (row.status === 'door_only') {
+    rowClass = 'r-door';
+    badge = '<span class="badge b-alert">🚨 Sin venta</span>';
+  } else if (row.status === 'occ_only') {
+    rowClass = 'r-occ';
+    badge = '<span class="badge b-warn">⚠️ Sin cierre</span>';
+  } else if (row.status === 'co_alert') {
+    rowClass = 'r-co';
+    badge = '<span class="badge b-info">🟡 Sobrequedada</span>';
+  } else {
+    rowClass = 'r-ok';
+    badge = `<span class="badge b-ok">${row.status}</span>`;
+  }
+
+  // Type badge
+  let tipoBadge = '';
+  if (row.tipo === 'Express') {
+    tipoBadge = '<span class="badge b-exp">Express</span>';
+  } else if (row.tipo === 'Sin Reserva') {
+    tipoBadge = '<span class="badge b-sinr">Sin Reserva</span>';
+  } else if (row.tipo) {
+    tipoBadge = `<span class="badge b-info">${row.tipo}</span>`;
+  }
+
+  // Door times
+  const doorStr = row.door_start
+    ? `${row.door_start} – ${row.door_end || '—'}`
+    : '—';
+  const durStr = row.duration_min != null
+    ? `${row.duration_min.toFixed(0)} min`
+    : '—';
+
+  // PMS times
+  const pmsStr = row.occ_start
+    ? `${row.occ_start} – ${row.occ_end || '—'}`
+    : '—';
+
+  // Diffs
+  let diffStr = '—';
+  if (row.ci_diff != null && row.co_diff != null) {
+    const ci = row.ci_diff >= 0 ? `+${row.ci_diff.toFixed(0)}` : row.ci_diff.toFixed(0);
+    const co = row.co_diff >= 0 ? `+${row.co_diff.toFixed(0)}` : row.co_diff.toFixed(0);
+    const badCi = Math.abs(row.ci_diff) > 30;
+    const badCo = Math.abs(row.co_diff) > 60;
+    diffStr = `<span class="${badCi?'diff-bad':'diff-ok'}">${ci} min</span> / <span class="${badCo?'diff-bad':'diff-ok'}">${co} min</span>`;
+  } else if (row.status === 'occ_only') {
+    diffStr = '<span class="alert-msg">Venta sin cierre de puerta</span>';
+  }
+
+  // For door_only rows, collapse PMS cols
+  if (row.status === 'door_only') {
+    return `<tr class="${rowClass}">
+      <td>${row.room}</td>
+      <td>${badge}</td>
+      <td>${doorStr}</td>
+      <td>${durStr}</td>
+      <td colspan="4" class="alert-msg">Puerta cerrada ${durStr} — sin venta registrada</td>
+    </tr>`;
+  }
+
+  return `<tr class="${rowClass}">
+    <td>${row.room}</td>
+    <td>${badge}</td>
+    <td>${doorStr}</td>
+    <td>${durStr}</td>
+    <td>${pmsStr}</td>
+    <td>${tipoBadge}</td>
+    <td>${row.payment || '—'}</td>
+    <td>${diffStr}</td>
+  </tr>`;
+}
+
+// ────────────────────────────────────────────────────────────
+//  Navigation
+// ────────────────────────────────────────────────────────────
+document.getElementById('btnPrev').addEventListener('click', () => {
+  if (currentIdx < availableDates.length - 1) {
+    currentIdx++;
+    loadDate(availableDates[currentIdx]);
+  }
+});
+document.getElementById('btnNext').addEventListener('click', () => {
+  if (currentIdx > 0) {
+    currentIdx--;
+    loadDate(availableDates[currentIdx]);
+  }
+});
+
+// ────────────────────────────────────────────────────────────
+//  Start
+// ────────────────────────────────────────────────────────────
+init();
+</script>
 </body>
 </html>
