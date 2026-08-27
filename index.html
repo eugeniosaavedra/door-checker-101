@@ -27,6 +27,9 @@
     --info:      #2563eb;
     --info-bg:   #eff6ff;
     --info-bdr:  #bfdbfe;
+    --early:     #7c3aed;
+    --early-bg:  #f5f3ff;
+    --early-bdr: #ddd6fe;
     --sev0:      #059669;
     --sev1:      #d97706;
     --sev2:      #ea580c;
@@ -54,6 +57,9 @@
       --info:      #60a5fa;
       --info-bg:   #0f1e3d;
       --info-bdr:  #1e3a8a;
+      --early:     #a78bfa;
+      --early-bg:  #1e1435;
+      --early-bdr: #5b21b6;
       --sev0:      #34d399;
       --sev1:      #fbbf24;
       --sev2:      #fb923c;
@@ -67,6 +73,7 @@
     --alert:#f87171; --alert-bg:#2d0a0a; --alert-bdr:#7f1d1d;
     --warn:#fbbf24; --warn-bg:#1c1204; --warn-bdr:#78350f;
     --info:#60a5fa; --info-bg:#0f1e3d; --info-bdr:#1e3a8a;
+    --early:#a78bfa; --early-bg:#1e1435; --early-bdr:#5b21b6;
     --sev0:#34d399; --sev1:#fbbf24; --sev2:#fb923c; --sev3:#f87171;
     --shadow:0 1px 3px rgba(0,0,0,.4);
   }
@@ -218,6 +225,7 @@
   .chip.on.f-door  { background: var(--alert-bg); color: var(--alert); border-color: var(--alert-bdr); }
   .chip.on.f-occ   { background: var(--warn-bg);  color: var(--warn);  border-color: var(--warn-bdr); }
   .chip.on.f-co    { background: var(--info-bg);  color: var(--info);  border-color: var(--info-bdr); }
+  .chip.on.f-early { background: var(--early-bg); color: var(--early); border-color: var(--early-bdr); }
   .chip:disabled { opacity: .4; cursor: default; }
 
   .room-select {
@@ -290,7 +298,8 @@
   tr.r-ok   { background: var(--surface); }
   tr.r-door { background: var(--alert-bg); }
   tr.r-occ  { background: var(--warn-bg); }
-  tr.r-co   { background: var(--info-bg); }
+  tr.r-co    { background: var(--info-bg); }
+  tr.r-early { background: var(--early-bg); }
   tr:hover td { filter: brightness(.97); }
 
   .badge {
@@ -306,6 +315,8 @@
   .b-alert { background: var(--alert-bg); color: var(--alert); border-color: var(--alert-bdr); }
   .b-warn  { background: var(--warn-bg);  color: var(--warn);  border-color: var(--warn-bdr); }
   .b-info  { background: var(--info-bg);  color: var(--info);  border-color: var(--info-bdr); }
+  .b-early { background: var(--early-bg); color: var(--early); border-color: var(--early-bdr); }
+  .card.c-early .num { color: var(--early); }
 
   .alert-msg { color: var(--sub); font-style: italic; font-size: 0.82rem; }
   .diff-ok   { color: var(--sub); }
@@ -375,12 +386,21 @@ let filterStatus = 'all';
 let filterRoom = 'all';
 
 const STATUSES = [
-  { key: 'ok',        cls: 'f-ok',    label: '✅ Emparejadas',    rowCls: 'r-ok',   badge: '<span class="badge b-ok">✅ OK</span>' },
-  { key: 'door_only', cls: 'f-door',  label: '🚨 Cierre sin venta', rowCls: 'r-door', badge: '<span class="badge b-alert">🚨 Sin venta</span>' },
-  { key: 'co_alert',  cls: 'f-co',    label: '🟡 Sobrequedadas',   rowCls: 'r-co',   badge: '<span class="badge b-info">🟡 Sobrequedada</span>' },
-  { key: 'occ_only',  cls: 'f-occ',   label: '⚠️ Venta sin cierre', rowCls: 'r-occ',  badge: '<span class="badge b-warn">⚠️ Sin cierre</span>' },
+  { key: 'ok',        cls: 'f-ok',    label: '✅ Emparejadas',       card: 'Emparejadas ✅',       cardCls: 'c-ok',    rowCls: 'r-ok',    badge: '<span class="badge b-ok">✅ OK</span>' },
+  { key: 'door_only', cls: 'f-door',  label: '🚨 Cierre sin venta',  card: 'Cierre sin venta 🚨',  cardCls: 'c-alert', rowCls: 'r-door',  badge: '<span class="badge b-alert">🚨 Sin venta</span>' },
+  { key: 'over',      cls: 'f-co',    label: '🟡 Sobrequedadas',     card: 'Sobrequedadas 🟡',     cardCls: 'c-info',  rowCls: 'r-co',    badge: '<span class="badge b-info">🟡 Sobrequedada</span>' },
+  { key: 'early',     cls: 'f-early', label: '🟣 Salidas anticipadas', card: 'Salida anticipada 🟣', cardCls: 'c-early', rowCls: 'r-early', badge: '<span class="badge b-early">🟣 Salida anticipada</span>' },
+  { key: 'occ_only',  cls: 'f-occ',   label: '⚠️ Venta sin cierre',  card: 'Venta sin cierre ⚠️',  cardCls: 'c-warn',  rowCls: 'r-occ',   badge: '<span class="badge b-warn">⚠️ Sin cierre</span>' },
 ];
 const BY_KEY = Object.fromEntries(STATUSES.map(s => [s.key, s]));
+
+// Una fila co_alert se separa según el signo de CO Δ:
+//   co_diff > 0 → la puerta se abrió DESPUÉS del check-out del PMS  → sobrequedada
+//   co_diff < 0 → la puerta se abrió ANTES del check-out del PMS    → salida anticipada
+function kindOf(row) {
+  if (row.status !== 'co_alert') return row.status;
+  return (row.co_diff != null && row.co_diff > 0) ? 'over' : 'early';
+}
 
 // ─────────────────────────────────────────────────────────────
 //  Utilidades
@@ -409,15 +429,15 @@ function dowShort(ds) {
 }
 
 function countByStatus(data) {
-  const c = { ok: 0, door_only: 0, occ_only: 0, co_alert: 0 };
-  (data.rows || []).forEach(r => { if (r.status in c) c[r.status]++; });
+  const c = { ok: 0, door_only: 0, occ_only: 0, over: 0, early: 0 };
+  (data.rows || []).forEach(r => { const k = kindOf(r); if (k in c) c[k]++; });
   c.all = (data.rows || []).length;
   return c;
 }
 
 function severity(data) {
   const c = countByStatus(data);
-  const n = c.door_only + c.occ_only + c.co_alert;
+  const n = c.door_only + c.occ_only + c.over + c.early;
   if (n === 0) return { n, tier: 0 };
   if (n <= 2)  return { n, tier: 1 };
   if (n <= 5)  return { n, tier: 2 };
@@ -511,7 +531,7 @@ function render() {
   const data = cache[date];
   const rows = data.rows || [];
   const counts = countByStatus(data);
-  const alerts = counts.door_only + counts.occ_only + counts.co_alert;
+  const alerts = counts.door_only + counts.occ_only + counts.over + counts.early;
 
   const rooms = [...new Set(rows.map(r => r.room))]
     .sort((a, b) => { const ka = roomKey(a), kb = roomKey(b); return ka[0] - kb[0] || String(ka[1]).localeCompare(String(kb[1])); });
@@ -530,7 +550,7 @@ function render() {
     ...rooms.map(r => `<option value="${r}" ${filterRoom === r ? 'selected' : ''}>${r}</option>`)].join('');
 
   const visible = rows.filter(r =>
-    (filterStatus === 'all' || r.status === filterStatus) &&
+    (filterStatus === 'all' || kindOf(r) === filterStatus) &&
     (filterRoom === 'all' || r.room === filterRoom));
 
   document.getElementById('main').innerHTML = `
@@ -538,10 +558,7 @@ function render() {
     <div class="date-sub">Generado ${data.generated || '—'}</div>
     ${statusHtml}
     <div class="cards">
-      <div class="card c-ok"><div class="num">${counts.ok}</div><div class="lbl">Emparejadas ✅</div></div>
-      <div class="card c-alert"><div class="num">${counts.door_only}</div><div class="lbl">Cierre sin venta 🚨</div></div>
-      <div class="card c-info"><div class="num">${counts.co_alert}</div><div class="lbl">Sobrequedadas 🟡</div></div>
-      <div class="card c-warn"><div class="num">${counts.occ_only}</div><div class="lbl">Venta sin cierre ⚠️</div></div>
+      ${STATUSES.map(st => `<div class="card ${st.cardCls}"><div class="num">${counts[st.key]}</div><div class="lbl">${st.card}</div></div>`).join('')}
     </div>
     <div class="filters">
       ${chips}
@@ -558,7 +575,8 @@ function render() {
     <div class="legend">
       <span>✅ <strong>Emparejada</strong>: cierre ≥15 min coincide con venta (±30 min)</span>
       <span>🚨 <strong>Cierre sin venta</strong>: puerta cerrada ≥15 min sin registro en PMS</span>
-      <span>🟡 <strong>Sobrequedada</strong>: puerta sigue cerrada mucho después del check-out</span>
+      <span>🟡 <strong>Sobrequedada</strong>: la puerta se abrió mucho después del check-out del PMS — posible tiempo extra no cobrado</span>
+      <span>🟣 <strong>Salida anticipada</strong>: la puerta se abrió mucho antes del check-out del PMS — la habitación quedó libre dentro de la ventana pagada</span>
       <span>⚠️ <strong>Venta sin cierre</strong>: venta en PMS sin cierre de puerta detectado</span>
     </div>`;
 
@@ -570,7 +588,7 @@ function render() {
 }
 
 function renderRow(row) {
-  const st = BY_KEY[row.status];
+  const st = BY_KEY[kindOf(row)];
   const rowCls = st ? st.rowCls : 'r-ok';
   const badge = st ? st.badge : `<span class="badge b-ok">${row.status}</span>`;
 
