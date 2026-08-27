@@ -111,11 +111,25 @@
   .timeline {
     background: var(--surface);
     border-bottom: 1px solid var(--border);
-    padding: 12px 24px;
+    padding: 10px 24px 12px;
     display: flex;
-    align-items: center;
-    gap: 12px;
+    flex-direction: column;
+    gap: 9px;
   }
+  .tl-top { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .tl-bottom { display: flex; align-items: center; gap: 10px; }
+  .month-select, .date-jump {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 7px 11px;
+    font-family: var(--font);
+    font-size: 0.85rem;
+    color: var(--text);
+    cursor: pointer;
+  }
+  .date-jump { font-variant-numeric: tabular-nums; }
+  .tl-count { font-size: 0.75rem; color: var(--sub); margin-left: auto; }
   .nav-btn {
     background: var(--bg);
     border: 1px solid var(--border);
@@ -168,6 +182,8 @@
   .day .cnt .bad  { color: var(--sub); }
   .day .cnt .sep  { color: var(--border); font-weight: 400; }
   .day.active { border-color: var(--text); box-shadow: 0 0 0 1px var(--text); }
+  .day.empty { opacity: .35; cursor: default; }
+  .day.empty:hover { transform: none; box-shadow: none; }
   .day.s1 .bar .bad { background: var(--sev1); } .day.s1 .cnt .bad { color: var(--sev1); }
   .day.s2 .bar .bad { background: var(--sev2); } .day.s2 .cnt .bad { color: var(--sev2); }
   .day.s3 .bar .bad { background: var(--sev3); } .day.s3 .cnt .bad { color: var(--sev3); }
@@ -366,9 +382,16 @@
 </header>
 
 <nav class="timeline">
-  <button class="nav-btn" id="btnPrev" title="Día anterior">◀</button>
-  <div class="days" id="days"></div>
-  <button class="nav-btn" id="btnNext" title="Día siguiente">▶</button>
+  <div class="tl-top">
+    <select class="month-select" id="monthSel" aria-label="Mes"></select>
+    <input type="date" class="date-jump" id="dateJump" aria-label="Ir a una fecha">
+    <span class="tl-count" id="tlCount"></span>
+  </div>
+  <div class="tl-bottom">
+    <button class="nav-btn" id="btnPrev" title="Día anterior">◀</button>
+    <div class="days" id="days"></div>
+    <button class="nav-btn" id="btnNext" title="Día siguiente">▶</button>
+  </div>
 </nav>
 
 <main class="main" id="main">
@@ -380,10 +403,16 @@
 //  Estado
 // ─────────────────────────────────────────────────────────────
 let dates = [];          // más reciente primero
-let cache = {};          // date -> data
+let dateSet = new Set();
+let stats = {};          // date -> {ok, door, over, early, occ}  (viene de index.json)
+let cache = {};          // date -> reporte completo
 let currentIdx = 0;
+let currentMonth = '';   // 'YYYY-MM'
 let filterStatus = 'all';
 let filterRoom = 'all';
+
+const MESES = ['enero','febrero','marzo','abril','mayo','junio',
+               'julio','agosto','septiembre','octubre','noviembre','diciembre'];
 
 const STATUSES = [
   { key: 'ok',        cls: 'f-ok',    label: '✅ Emparejadas',       card: 'Emparejadas ✅',       cardCls: 'c-ok',    rowCls: 'r-ok',    badge: '<span class="badge b-ok">✅ OK</span>' },
@@ -435,13 +464,22 @@ function countByStatus(data) {
   return c;
 }
 
-function severity(data) {
-  const c = countByStatus(data);
-  const n = c.door_only + c.occ_only + c.over + c.early;
-  if (n === 0) return { n, tier: 0 };
-  if (n <= 2)  return { n, tier: 1 };
-  if (n <= 5)  return { n, tier: 2 };
-  return { n, tier: 3 };
+function tierOf(n) {
+  if (n === 0) return 0;
+  if (n <= 2)  return 1;
+  if (n <= 5)  return 2;
+  return 3;
+}
+
+// Conteos de un día: primero del índice, si no del reporte ya cargado.
+function statsOf(date) {
+  if (stats[date]) return stats[date];
+  if (cache[date]) {
+    const c = countByStatus(cache[date]);
+    stats[date] = { ok: c.ok, door: c.door_only, over: c.over, early: c.early, occ: c.occ_only };
+    return stats[date];
+  }
+  return null;
 }
 
 function roomKey(r) {
@@ -464,62 +502,140 @@ async function init() {
     return;
   }
 
-  dates = idx.dates.slice().sort().reverse();
+  dates = (idx.dates || []).slice().sort().reverse();
+  stats = idx.stats || {};
+  dateSet = new Set(dates);
 
-  await Promise.all(dates.map(async d => {
-    try {
-      const r = await fetch(`data/${d}.json?t=` + Date.now());
-      if (r.ok) cache[d] = await r.json();
-    } catch (e) { /* día sin datos */ }
-  }));
-
-  dates = dates.filter(d => cache[d]);
   if (!dates.length) {
     document.getElementById('main').innerHTML =
       '<div class="placeholder"><div class="icon">📭</div>No hay reportes disponibles.</div>';
     return;
   }
 
-  buildTimeline();
-  currentIdx = 0;
+  buildMonthSelect();
+  const jump = document.getElementById('dateJump');
+  jump.min = dates[dates.length - 1];
+  jump.max = dates[0];
+  document.getElementById('tlCount').textContent =
+    `${dates.length} día${dates.length === 1 ? '' : 's'} publicados`;
+
   show(0);
 }
 
-function buildTimeline() {
-  const el = document.getElementById('days');
-  el.innerHTML = '';
-  // cronológico de izquierda a derecha
-  [...dates].reverse().forEach(d => {
-    const sev = severity(cache[d]);
-    const ok = countByStatus(cache[d]).ok;
-    const total = ok + sev.n;
-    const okPct = total ? Math.round((ok / total) * 100) : 100;
-    const btn = document.createElement('button');
-    btn.className = `day s${sev.tier}`;
-    btn.dataset.date = d;
-    btn.title = `${fmtDateLong(d)} — ${ok} OK · ${sev.n} inconsistencia${sev.n === 1 ? '' : 's'}`;
-    btn.innerHTML = `
-      <div class="dow">${dowShort(d)}</div>
-      <div class="dnum">${Number(d.split('-')[2])}</div>
-      <div class="bar"><i class="good" style="width:${okPct}%"></i><i class="bad" style="width:${100 - okPct}%"></i></div>
-      <div class="cnt"><span class="good">${ok}</span><span class="sep">·</span><span class="bad">${sev.n}</span></div>`;
-    btn.addEventListener('click', () => show(dates.indexOf(d)));
-    el.appendChild(btn);
+function buildMonthSelect() {
+  const meses = [...new Set(dates.map(d => d.slice(0, 7)))];  // ya vienen desc
+  const sel = document.getElementById('monthSel');
+  sel.innerHTML = meses.map(m => {
+    const [y, mm] = m.split('-');
+    const n = dates.filter(d => d.startsWith(m)).length;
+    return `<option value="${m}">${MESES[+mm - 1]} ${y} (${n})</option>`;
+  }).join('');
+  sel.addEventListener('change', () => {
+    // al cambiar de mes, ir al día más reciente publicado de ese mes
+    const primero = dates.find(d => d.startsWith(sel.value));
+    if (primero) show(dates.indexOf(primero));
   });
 }
 
-function show(i) {
+// Si el índice no trae stats (versión antigua), se descargan los días
+// del mes en paralelo y se repinta la tira.
+async function ensureMonthStats(month) {
+  const faltan = dates.filter(d => d.startsWith(month) && !statsOf(d));
+  if (!faltan.length) return;
+  await Promise.all(faltan.map(async d => {
+    try {
+      const r = await fetch(`data/${d}.json?t=` + Date.now());
+      if (r.ok) { cache[d] = await r.json(); statsOf(d); }
+    } catch (e) { /* ignorar */ }
+  }));
+  if (currentMonth === month) renderDays();
+}
+
+function renderDays() {
+  const el = document.getElementById('days');
+  const [y, m] = currentMonth.split('-').map(Number);
+  const diasDelMes = new Date(y, m, 0).getDate();
+  const activo = dates[currentIdx];
+  el.innerHTML = '';
+
+  for (let d = 1; d <= diasDelMes; d++) {
+    const ds = `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+    const btn = document.createElement('button');
+    btn.dataset.date = ds;
+
+    if (!dateSet.has(ds)) {
+      btn.className = 'day empty';
+      btn.disabled = true;
+      btn.title = `${fmtDateLong(ds)} — sin reporte`;
+      btn.innerHTML = `
+        <div class="dow">${dowShort(ds)}</div>
+        <div class="dnum">${d}</div>
+        <div class="bar"></div>
+        <div class="cnt">—</div>`;
+      el.appendChild(btn);
+      continue;
+    }
+
+    const s = statsOf(ds);
+    if (!s) {
+      btn.className = 'day';
+      btn.innerHTML = `
+        <div class="dow">${dowShort(ds)}</div>
+        <div class="dnum">${d}</div>
+        <div class="bar"></div>
+        <div class="cnt">…</div>`;
+    } else {
+      const mal = s.door + s.over + s.early + s.occ;
+      const total = s.ok + mal;
+      const okPct = total ? Math.round((s.ok / total) * 100) : 100;
+      btn.className = `day s${tierOf(mal)}`;
+      btn.title = `${fmtDateLong(ds)} — ${s.ok} OK · ${mal} inconsistencia${mal === 1 ? '' : 's'}`;
+      btn.innerHTML = `
+        <div class="dow">${dowShort(ds)}</div>
+        <div class="dnum">${d}</div>
+        <div class="bar"><i class="good" style="width:${okPct}%"></i><i class="bad" style="width:${100 - okPct}%"></i></div>
+        <div class="cnt"><span class="good">${s.ok}</span><span class="sep">·</span><span class="bad">${mal}</span></div>`;
+    }
+
+    if (ds === activo) btn.classList.add('active');
+    btn.addEventListener('click', () => show(dates.indexOf(ds)));
+    el.appendChild(btn);
+  }
+
+  const act = el.querySelector('.day.active');
+  if (act) act.scrollIntoView({ block: 'nearest', inline: 'center' });
+}
+
+async function show(i) {
   currentIdx = i;
   const date = dates[i];
+  currentMonth = date.slice(0, 7);
+
+  document.getElementById('monthSel').value = currentMonth;
+  document.getElementById('dateJump').value = date;
   document.getElementById('btnPrev').disabled = i >= dates.length - 1;
   document.getElementById('btnNext').disabled = i <= 0;
-  document.querySelectorAll('.day').forEach(el => {
-    el.classList.toggle('active', el.dataset.date === date);
-  });
-  const active = document.querySelector('.day.active');
-  if (active) active.scrollIntoView({ block: 'nearest', inline: 'center' });
+
+  renderDays();
+  ensureMonthStats(currentMonth);
+
   filterStatus = 'all';
   filterRoom = 'all';
+
+  if (!cache[date]) {
+    document.getElementById('main').innerHTML =
+      '<div class="placeholder"><div class="icon">⏳</div>Cargando reporte…</div>';
+    try {
+      const r = await fetch(`data/${date}.json?t=` + Date.now());
+      if (!r.ok) throw new Error();
+      cache[date] = await r.json();
+    } catch (e) {
+      document.getElementById('main').innerHTML =
+        `<div class="placeholder"><div class="icon">📭</div>No se pudo cargar el reporte de ${date}</div>`;
+      return;
+    }
+  }
+  if (dates[currentIdx] !== date) return;  // el usuario ya cambió de día
   render();
 }
 
@@ -630,8 +746,19 @@ document.getElementById('btnPrev').addEventListener('click', () => {
 document.getElementById('btnNext').addEventListener('click', () => {
   if (currentIdx > 0) show(currentIdx - 1);
 });
+document.getElementById('dateJump').addEventListener('change', e => {
+  const d = e.target.value;
+  if (dateSet.has(d)) {
+    show(dates.indexOf(d));
+  } else {
+    // no hay reporte ese día: ir al publicado más cercano hacia atrás
+    const anterior = dates.find(x => x <= d);
+    if (anterior) show(dates.indexOf(anterior));
+    e.target.value = anterior || dates[currentIdx];
+  }
+});
 document.addEventListener('keydown', e => {
-  if (e.target.tagName === 'SELECT') return;
+  if (e.target.tagName === 'SELECT' || e.target.tagName === 'INPUT') return;
   if (e.key === 'ArrowLeft'  && currentIdx < dates.length - 1) show(currentIdx + 1);
   if (e.key === 'ArrowRight' && currentIdx > 0) show(currentIdx - 1);
 });
