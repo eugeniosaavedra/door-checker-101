@@ -191,6 +191,20 @@
   /* ── Main ─────────────────────────────────── */
   .main { max-width: 1100px; margin: 0 auto; padding: 24px; }
 
+  .stale {
+    max-width: 1100px;
+    margin: 20px auto -4px;
+    padding: 12px 18px;
+    border-radius: var(--radius);
+    background: var(--warn-bg);
+    border: 1px solid var(--warn-bdr);
+    color: var(--warn);
+    font-size: 0.86rem;
+    font-weight: 500;
+  }
+  .stale strong { font-weight: 700; }
+  @media (max-width: 640px) { .stale { margin: 14px 14px -4px; } }
+
   .date-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 4px; }
   .date-sub { font-size: 0.78rem; color: var(--sub); margin-bottom: 18px; }
 
@@ -394,6 +408,8 @@
   </div>
 </nav>
 
+<div id="staleBar" hidden></div>
+
 <main class="main" id="main">
   <div class="placeholder"><div class="icon">⏳</div>Cargando datos…</div>
 </main>
@@ -519,7 +535,25 @@ async function init() {
   document.getElementById('tlCount').textContent =
     `${dates.length} día${dates.length === 1 ? '' : 's'} publicados`;
 
+  avisarSiEstaAtrasado();
   show(0);
+}
+
+// El reporte de un día se genera al día siguiente. Si el más reciente
+// es más viejo que ayer, algo falló en la publicación automática.
+function avisarSiEstaAtrasado() {
+  const hoy = new Date();
+  const ayer = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate() - 1);
+  const ayerStr = `${ayer.getFullYear()}-${String(ayer.getMonth() + 1).padStart(2, '0')}-${String(ayer.getDate()).padStart(2, '0')}`;
+  const ultimo = dates[0];
+  if (ultimo >= ayerStr) return;
+
+  const faltan = Math.round((ayer - new Date(ultimo + 'T00:00:00')) / 86400000);
+  const bar = document.getElementById('staleBar');
+  bar.className = 'stale';
+  bar.innerHTML = `⏳ El último reporte disponible es del <strong>${fmtDateLong(ultimo)}</strong>. ` +
+    `Faltan ${faltan} día${faltan === 1 ? '' : 's'} — revisa que el Mac haya corrido la publicación autom&aacute;tica.`;
+  bar.hidden = false;
 }
 
 function buildMonthSelect() {
