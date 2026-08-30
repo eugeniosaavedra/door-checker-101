@@ -206,7 +206,16 @@
   @media (max-width: 640px) { .stale { margin: 14px 14px -4px; } }
 
   .date-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 4px; }
-  .date-sub { font-size: 0.78rem; color: var(--sub); margin-bottom: 18px; }
+  .date-sub {
+    font-size: 0.78rem; color: var(--sub); margin-bottom: 18px;
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  }
+  .prov {
+    font-size: 0.7rem; font-weight: 600; padding: 2px 8px;
+    border-radius: 20px; border: 1px solid;
+    background: var(--warn-bg); color: var(--warn); border-color: var(--warn-bdr);
+  }
+  .prov.firme { background: var(--ok-bg); color: var(--ok); border-color: var(--ok-border); }
 
   .status-bar {
     padding: 12px 18px;
@@ -556,6 +565,21 @@ function avisarSiEstaAtrasado() {
   bar.hidden = false;
 }
 
+// La copia del PMS se toma ~7:00 AM: un reporte generado al día siguiente
+// puede traer check-outs provisorios de 12:00. Recién al segundo día la
+// copia trae los cierres definitivos.
+function sello(fecha, generated) {
+  if (!generated) return '';
+  const gen = generated.slice(0, 10);
+  const limite = new Date(fecha + 'T00:00:00');
+  limite.setDate(limite.getDate() + 2);
+  const limiteStr = `${limite.getFullYear()}-${String(limite.getMonth() + 1).padStart(2, '0')}-${String(limite.getDate()).padStart(2, '0')}`;
+
+  return gen >= limiteStr
+    ? '<span class="prov firme" title="El PMS ya tenía los check-out definitivos cuando se generó este reporte">✔ Datos confirmados</span>'
+    : '<span class="prov" title="Generado con la copia del PMS del día siguiente: las estadías aún abiertas pueden mostrar check-out provisorio de 12:00. Se re-verifica solo al día siguiente.">Provisorio</span>';
+}
+
 function buildMonthSelect() {
   const meses = [...new Set(dates.map(d => d.slice(0, 7)))];  // ya vienen desc
   const sel = document.getElementById('monthSel');
@@ -705,7 +729,7 @@ function render() {
 
   document.getElementById('main').innerHTML = `
     <div class="date-title">${fmtDateLong(date)}</div>
-    <div class="date-sub">Generado ${data.generated || '—'}</div>
+    <div class="date-sub"><span>Generado ${data.generated || '—'}</span>${sello(date, data.generated)}</div>
     ${statusHtml}
     <div class="cards">
       ${STATUSES.map(st => `<div class="card ${st.cardCls}"><div class="num">${counts[st.key]}</div><div class="lbl">${st.card}</div></div>`).join('')}

@@ -1,12 +1,12 @@
 {
   "date": "2026-08-23",
-  "generated": "2026-08-26 13:41",
+  "generated": "2026-08-30 00:05",
   "summary": {
-    "total_matched": 22,
-    "total_door_only": 5,
-    "total_occ_only": 3,
-    "total_co_alert": 4,
-    "alert_count": 8
+    "total_matched": 23,
+    "total_door_only": 4,
+    "total_occ_only": 2,
+    "total_co_alert": 5,
+    "alert_count": 6
   },
   "rows": [
     {
@@ -109,17 +109,17 @@
     },
     {
       "room": "33 Aire",
-      "status": "door_only",
+      "status": "co_alert",
       "door_start": "22:04",
       "door_end": "12:11",
       "duration_min": 847.3,
-      "occ_start": null,
-      "occ_end": null,
-      "tipo": null,
-      "payment": null,
-      "ci_diff": null,
-      "co_diff": null,
-      "co_alert": false
+      "occ_start": "22:03",
+      "occ_end": "07:03",
+      "tipo": "Sin Reserva",
+      "payment": "tarjeta",
+      "ci_diff": 1.4,
+      "co_diff": 308.6,
+      "co_alert": true
     },
     {
       "room": "33 Aire",
@@ -131,20 +131,6 @@
       "occ_end": "20:19",
       "tipo": "Express",
       "payment": "",
-      "ci_diff": null,
-      "co_diff": null,
-      "co_alert": false
-    },
-    {
-      "room": "33 Aire",
-      "status": "occ_only",
-      "door_start": null,
-      "door_end": null,
-      "duration_min": null,
-      "occ_start": "22:03",
-      "occ_end": "07:03",
-      "tipo": "Sin Reserva",
-      "payment": "tarjeta",
       "ci_diff": null,
       "co_diff": null,
       "co_alert": false

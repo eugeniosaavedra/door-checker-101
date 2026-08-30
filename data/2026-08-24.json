@@ -1,12 +1,12 @@
 {
   "date": "2026-08-24",
-  "generated": "2026-08-26 13:41",
+  "generated": "2026-08-30 00:05",
   "summary": {
-    "total_matched": 15,
-    "total_door_only": 11,
-    "total_occ_only": 2,
-    "total_co_alert": 1,
-    "alert_count": 13
+    "total_matched": 16,
+    "total_door_only": 10,
+    "total_occ_only": 1,
+    "total_co_alert": 2,
+    "alert_count": 11
   },
   "rows": [
     {
@@ -39,31 +39,17 @@
     },
     {
       "room": "32 Aire",
-      "status": "door_only",
+      "status": "co_alert",
       "door_start": "12:39",
       "door_end": "23:42",
       "duration_min": 662.6,
-      "occ_start": null,
-      "occ_end": null,
-      "tipo": null,
-      "payment": null,
-      "ci_diff": null,
-      "co_diff": null,
-      "co_alert": false
-    },
-    {
-      "room": "32 Aire",
-      "status": "occ_only",
-      "door_start": null,
-      "door_end": null,
-      "duration_min": null,
       "occ_start": "12:40",
       "occ_end": "20:12",
       "tipo": "Express",
       "payment": "tarjeta",
-      "ci_diff": null,
-      "co_diff": null,
-      "co_alert": false
+      "ci_diff": -0.4,
+      "co_diff": 210.5,
+      "co_alert": true
     },
     {
       "room": "33 Aire",
