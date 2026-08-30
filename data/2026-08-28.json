@@ -1,11 +1,11 @@
 {
   "date": "2026-08-28",
-  "generated": "2026-08-29 19:04",
+  "generated": "2026-08-30 09:03",
   "summary": {
     "total_matched": 38,
     "total_door_only": 2,
     "total_occ_only": 1,
-    "total_co_alert": 6,
+    "total_co_alert": 2,
     "alert_count": 3
   },
   "rows": [
@@ -16,11 +16,11 @@
       "door_end": "20:57",
       "duration_min": 48.3,
       "occ_start": "20:14",
-      "occ_end": "08:14",
+      "occ_end": "10:41",
       "tipo": "Sin Reserva",
       "payment": "tarjeta",
       "ci_diff": -5.1,
-      "co_diff": -676.8,
+      "co_diff": -823.8,
       "co_alert": true
     },
     {
@@ -81,17 +81,17 @@
     },
     {
       "room": "31 Aire",
-      "status": "co_alert",
+      "status": "ok",
       "door_start": "21:42",
       "door_end": "10:50",
       "duration_min": 787.3,
       "occ_start": "21:43",
-      "occ_end": "12:00",
+      "occ_end": "10:52",
       "tipo": "Express",
       "payment": "efectivo",
       "ci_diff": -0.8,
-      "co_diff": -70.0,
-      "co_alert": true
+      "co_diff": -2.0,
+      "co_alert": false
     },
     {
       "room": "32 Aire",
@@ -137,17 +137,17 @@
     },
     {
       "room": "34 Aire",
-      "status": "co_alert",
+      "status": "ok",
       "door_start": "22:58",
       "door_end": "10:32",
       "duration_min": 693.6,
       "occ_start": "22:58",
-      "occ_end": "12:00",
+      "occ_end": "10:32",
       "tipo": "Express",
       "payment": "efectivo",
       "ci_diff": 0.5,
-      "co_diff": -87.7,
-      "co_alert": true
+      "co_diff": 0.3,
+      "co_alert": false
     },
     {
       "room": "35 Aire",
@@ -249,17 +249,17 @@
     },
     {
       "room": "44 Aire",
-      "status": "co_alert",
+      "status": "ok",
       "door_start": "22:52",
       "door_end": "10:43",
       "duration_min": 711.0,
       "occ_start": "22:50",
-      "occ_end": "12:00",
+      "occ_end": "10:43",
       "tipo": "Sin Reserva",
       "payment": "tarjeta",
       "ci_diff": 2.1,
-      "co_diff": -76.9,
-      "co_alert": true
+      "co_diff": 0.1,
+      "co_alert": false
     },
     {
       "room": "45 Aire",
@@ -324,11 +324,11 @@
       "door_end": "11:42",
       "duration_min": 869.3,
       "occ_start": "21:11",
-      "occ_end": "12:00",
+      "occ_end": "11:42",
       "tipo": "Sin Reserva",
       "payment": "tarjeta",
       "ci_diff": 1.7,
-      "co_diff": -18.0,
+      "co_diff": 0.0,
       "co_alert": false
     },
     {
@@ -389,17 +389,17 @@
     },
     {
       "room": "49 Aire",
-      "status": "co_alert",
+      "status": "ok",
       "door_start": "23:44",
       "door_end": "09:20",
       "duration_min": 575.3,
       "occ_start": "23:42",
-      "occ_end": "12:00",
+      "occ_end": "09:20",
       "tipo": "Sin Reserva",
       "payment": "tarjeta",
       "ci_diff": 2.7,
-      "co_diff": -160.0,
-      "co_alert": true
+      "co_diff": 0.0,
+      "co_alert": false
     },
     {
       "room": "50 Aire",
@@ -450,7 +450,7 @@
       "door_end": null,
       "duration_min": 168.6,
       "occ_start": "23:12",
-      "occ_end": "12:00",
+      "occ_end": "10:22",
       "tipo": "Sin Reserva",
       "payment": "tarjeta",
       "ci_diff": 1.6,
