@@ -1,12 +1,12 @@
 {
   "date": "2026-08-30",
-  "generated": "2026-08-31 10:00",
+  "generated": "2026-09-01 10:52",
   "summary": {
-    "total_matched": 27,
+    "total_matched": 30,
     "total_door_only": 7,
-    "total_occ_only": 3,
+    "total_occ_only": 0,
     "total_co_alert": 5,
-    "alert_count": 10
+    "alert_count": 7
   },
   "rows": [
     {
@@ -39,16 +39,16 @@
     },
     {
       "room": "23 Aire",
-      "status": "occ_only",
-      "door_start": null,
-      "door_end": null,
-      "duration_min": null,
+      "status": "ok",
+      "door_start": "21:28",
+      "door_end": "11:43",
+      "duration_min": 854.9,
       "occ_start": "21:33",
-      "occ_end": "12:00",
+      "occ_end": "11:46",
       "tipo": "Sin Reserva",
       "payment": "tarjeta",
-      "ci_diff": null,
-      "co_diff": null,
+      "ci_diff": -4.7,
+      "co_diff": -2.8,
       "co_alert": false
     },
     {
@@ -179,16 +179,16 @@
     },
     {
       "room": "32 Aire",
-      "status": "occ_only",
-      "door_start": null,
-      "door_end": null,
-      "duration_min": null,
+      "status": "ok",
+      "door_start": "22:43",
+      "door_end": "11:56",
+      "duration_min": 792.5,
       "occ_start": "22:44",
       "occ_end": "12:00",
       "tipo": "Express",
       "payment": "mp",
-      "ci_diff": null,
-      "co_diff": null,
+      "ci_diff": -1.1,
+      "co_diff": -3.8,
       "co_alert": false
     },
     {
@@ -221,16 +221,16 @@
     },
     {
       "room": "35 Aire",
-      "status": "occ_only",
-      "door_start": null,
-      "door_end": null,
-      "duration_min": null,
+      "status": "ok",
+      "door_start": "21:24",
+      "door_end": "10:55",
+      "duration_min": 811.2,
       "occ_start": "21:20",
-      "occ_end": "12:00",
+      "occ_end": "10:56",
       "tipo": "Express",
       "payment": "mp",
-      "ci_diff": null,
-      "co_diff": null,
+      "ci_diff": 4.4,
+      "co_diff": -0.3,
       "co_alert": false
     },
     {
@@ -461,14 +461,14 @@
       "room": "53 Aire",
       "status": "ok",
       "door_start": "22:47",
-      "door_end": null,
-      "duration_min": 98.2,
+      "door_end": "11:51",
+      "duration_min": 783.8,
       "occ_start": "22:49",
-      "occ_end": "12:00",
+      "occ_end": "11:53",
       "tipo": "Sin Reserva",
       "payment": "efectivo",
       "ci_diff": -1.5,
-      "co_diff": null,
+      "co_diff": -1.8,
       "co_alert": false
     },
     {
