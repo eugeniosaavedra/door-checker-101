@@ -1,11 +1,11 @@
 {
   "date": "2026-08-31",
-  "generated": "2026-09-01 10:52",
+  "generated": "2026-09-02 09:12",
   "summary": {
     "total_matched": 21,
     "total_door_only": 2,
     "total_occ_only": 0,
-    "total_co_alert": 2,
+    "total_co_alert": 0,
     "alert_count": 2
   },
   "rows": [
@@ -139,14 +139,14 @@
       "room": "41 Aire",
       "status": "ok",
       "door_start": "22:16",
-      "door_end": null,
-      "duration_min": 727.9,
+      "door_end": "12:13",
+      "duration_min": 837.0,
       "occ_start": "22:15",
-      "occ_end": "12:00",
+      "occ_end": "11:56",
       "tipo": "Sin Reserva",
       "payment": "efectivo",
       "ci_diff": 1.1,
-      "co_diff": null,
+      "co_diff": 17.1,
       "co_alert": false
     },
     {
@@ -291,45 +291,45 @@
     },
     {
       "room": "52 Aire",
-      "status": "co_alert",
+      "status": "ok",
       "door_start": "21:57",
       "door_end": "10:02",
       "duration_min": 724.6,
       "occ_start": "22:02",
-      "occ_end": "12:00",
+      "occ_end": "10:02",
       "tipo": "Express",
       "payment": "mp",
       "ci_diff": -4.2,
-      "co_diff": -117.6,
-      "co_alert": true
+      "co_diff": 0.4,
+      "co_alert": false
     },
     {
       "room": "53 Aire",
       "status": "ok",
       "door_start": "21:22",
-      "door_end": null,
-      "duration_min": 637.0,
+      "door_end": "11:34",
+      "duration_min": 851.9,
       "occ_start": "21:24",
-      "occ_end": "12:00",
+      "occ_end": "11:37",
       "tipo": "Express",
       "payment": "tarjeta",
       "ci_diff": -1.9,
-      "co_diff": null,
+      "co_diff": -2.9,
       "co_alert": false
     },
     {
       "room": "54 Aire",
-      "status": "co_alert",
+      "status": "ok",
       "door_start": "22:13",
       "door_end": "08:33",
       "duration_min": 620.5,
       "occ_start": "22:14",
-      "occ_end": "12:00",
+      "occ_end": "07:53",
       "tipo": "Express",
       "payment": "mp",
       "ci_diff": -0.8,
-      "co_diff": -206.3,
-      "co_alert": true
+      "co_diff": 40.7,
+      "co_alert": false
     }
   ]
 }
