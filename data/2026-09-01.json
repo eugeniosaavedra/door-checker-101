@@ -1,6 +1,6 @@
 {
   "date": "2026-09-01",
-  "generated": "2026-09-02 09:12",
+  "generated": "2026-09-03 12:27",
   "summary": {
     "total_matched": 13,
     "total_door_only": 2,
@@ -86,11 +86,11 @@
       "door_end": "05:34",
       "duration_min": 369.2,
       "occ_start": "23:33",
-      "occ_end": "05:33",
+      "occ_end": "05:38",
       "tipo": "Express",
       "payment": "efectivo",
       "ci_diff": -8.3,
-      "co_diff": 0.9,
+      "co_diff": -3.9,
       "co_alert": false
     },
     {
