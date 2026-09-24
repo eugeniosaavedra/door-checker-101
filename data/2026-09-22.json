@@ -1,6 +1,6 @@
 {
   "date": "2026-09-22",
-  "generated": "2026-09-23 10:45",
+  "generated": "2026-09-24 12:58",
   "summary": {
     "total_matched": 10,
     "total_door_only": 8,
@@ -140,7 +140,7 @@
       "status": "door_only",
       "door_start": "07:03",
       "door_end": null,
-      "duration_min": 1016.6,
+      "duration_min": 1702.8,
       "occ_start": null,
       "occ_end": null,
       "tipo": null,
