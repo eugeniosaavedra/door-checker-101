@@ -1,6 +1,6 @@
 {
   "date": "2026-09-23",
-  "generated": "2026-09-24 12:58",
+  "generated": "2026-09-25 12:11",
   "summary": {
     "total_matched": 22,
     "total_door_only": 2,
@@ -128,7 +128,7 @@
       "door_end": null,
       "duration_min": 179.1,
       "occ_start": "21:23",
-      "occ_end": "12:00",
+      "occ_end": "12:21",
       "tipo": "Sin Reserva",
       "payment": "tarjeta",
       "ci_diff": -5.1,
@@ -240,7 +240,7 @@
       "door_end": null,
       "duration_min": 720.7,
       "occ_start": "13:31",
-      "occ_end": "12:00",
+      "occ_end": "10:32",
       "tipo": "Express",
       "payment": "tarjeta",
       "ci_diff": -0.2,
@@ -338,11 +338,11 @@
       "door_end": "11:54",
       "duration_min": 801.1,
       "occ_start": "22:37",
-      "occ_end": "12:00",
+      "occ_end": "11:54",
       "tipo": "Sin Reserva",
       "payment": "tarjeta",
       "ci_diff": -4.1,
-      "co_diff": -5.9,
+      "co_diff": 0.1,
       "co_alert": false
     }
   ]
