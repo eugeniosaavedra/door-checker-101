@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Door Checker — Grupo Now</title>
+<title>Door Checker — Motel 101</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232563eb'/%3E%3Crect x='19' y='13' width='26' height='38' rx='3' fill='white'/%3E%3Ccircle cx='39' cy='33' r='2.6' fill='%232563eb'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -390,149 +390,6 @@
     * { transition: none !important; }
     .day:hover { transform: none; }
   }
-
-  /* ── Pestañas de motel ────────────────────── */
-  .tabs {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 0 24px;
-    display: flex;
-    gap: 2px;
-    overflow-x: auto;
-    position: sticky;
-    top: 56px;
-    z-index: 99;
-    scrollbar-width: none;
-  }
-  .tabs::-webkit-scrollbar { display: none; }
-  .tab {
-    appearance: none;
-    background: none;
-    border: 0;
-    border-bottom: 2px solid transparent;
-    color: var(--sub);
-    font: inherit;
-    font-weight: 600;
-    font-size: .875rem;
-    padding: 11px 14px 9px;
-    cursor: pointer;
-    white-space: nowrap;
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    transition: color .12s, border-color .12s;
-  }
-  .tab:hover { color: var(--text); }
-  .tab.on { color: var(--info); border-bottom-color: var(--info); }
-  .tab .pill {
-    font-size: .6875rem;
-    font-weight: 700;
-    min-width: 18px;
-    padding: 1px 5px;
-    border-radius: 9px;
-    background: var(--border);
-    color: var(--sub);
-  }
-  .tab .pill.mal  { background: var(--alert); color: #fff; }
-  .tab .pill.bien { background: var(--ok);    color: #fff; }
-
-  /* ── Vista resumen ────────────────────────── */
-  .resumen {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-    gap: 12px;
-    margin-bottom: 20px;
-  }
-  .mcard {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-left-width: 3px;
-    border-radius: var(--radius);
-    padding: 14px 16px;
-    box-shadow: var(--shadow);
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  .mcard.mal   { border-left-color: var(--alert); }
-  .mcard.bien  { border-left-color: var(--ok); }
-  .mcard.vacio { border-left-color: var(--border); opacity: .72; }
-  .mcard-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
-  .mcard-nombre { font-weight: 700; font-size: .9375rem; }
-  .mcard-dir { font-size: .75rem; color: var(--sub); }
-  .mcard-big { font-size: 1.75rem; font-weight: 700; line-height: 1; }
-  .mcard-big.mal  { color: var(--alert); }
-  .mcard-big.bien { color: var(--ok); }
-  .mcard-desglose { display: flex; flex-wrap: wrap; gap: 5px; }
-  .mini {
-    font-size: .6875rem;
-    font-weight: 600;
-    padding: 2px 7px;
-    border-radius: 20px;
-    border: 1px solid var(--border);
-    color: var(--sub);
-    white-space: nowrap;
-  }
-  .mini.m-ok    { background: var(--ok-bg);    border-color: var(--ok-border); color: var(--ok); }
-  .mini.m-door  { background: var(--alert-bg); border-color: var(--alert-bdr); color: var(--alert); }
-  .mini.m-occ   { background: var(--warn-bg);  border-color: var(--warn-bdr);  color: var(--warn); }
-  .mini.m-over  { background: var(--info-bg);  border-color: var(--info-bdr);  color: var(--info); }
-  .mini.m-early { background: var(--early-bg); border-color: var(--early-bdr); color: var(--early); }
-  .mcard-link {
-    appearance: none;
-    background: none;
-    border: 1px solid var(--border);
-    border-radius: 7px;
-    color: var(--text);
-    font: inherit;
-    font-size: .8125rem;
-    font-weight: 600;
-    padding: 6px 10px;
-    cursor: pointer;
-    align-self: flex-start;
-  }
-  .mcard-link:hover { border-color: var(--info); color: var(--info); }
-  .mcard-link:disabled { opacity: .45; cursor: default; }
-
-  .alist-h {
-    font-weight: 700;
-    font-size: .9375rem;
-    margin: 0 0 10px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .alist-h .cuenta { font-size: .8125rem; font-weight: 600; color: var(--sub); }
-  .amotel { margin-bottom: 16px; }
-  .amotel-h {
-    font-size: .75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: .05em;
-    color: var(--sub);
-    padding: 0 0 6px 2px;
-  }
-  .arow {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 9px 12px;
-    margin-bottom: 5px;
-    font-size: .8125rem;
-  }
-  .arow .hab { font-weight: 700; min-width: 62px; }
-  .arow .det { color: var(--sub); }
-  .arow .det strong { color: var(--text); font-weight: 600; }
-
-  @media (max-width: 640px) {
-    .tabs { padding: 0 16px; }
-    .tab { padding: 10px 11px 8px; font-size: .8125rem; }
-    .resumen { grid-template-columns: 1fr; }
-  }
 </style>
 </head>
 <body>
@@ -542,12 +399,10 @@
     <span class="header-logo">🚪</span>
     <div>
       <div class="header-title">Motel Door Checker</div>
-      <div class="header-sub" id="headerSub">Grupo Now</div>
+      <div class="header-sub">Motel Ciento Once · 181</div>
     </div>
   </div>
 </header>
-
-<nav class="tabs" id="tabs"></nav>
 
 <nav class="timeline">
   <div class="tl-top">
@@ -572,40 +427,14 @@
 // ─────────────────────────────────────────────────────────────
 //  Estado
 // ─────────────────────────────────────────────────────────────
-let MOTELES = [];        // [{slug, nombre, direccion, motel_id, ...}] de moteles.json
-const M = {};            // slug -> {dates, dateSet, stats, cache}
-let vista = 'resumen';   // 'resumen' | slug de motel
-let unionDates = [];     // todas las fechas de todos los moteles, desc
-let statsUnion = {};     // fecha -> suma de los conteos de los tres moteles
-
-// Punteros a los datos de la vista activa. Cambian con la pestaña.
 let dates = [];          // más reciente primero
 let dateSet = new Set();
 let stats = {};          // date -> {ok, door, over, early, occ}  (viene de index.json)
 let cache = {};          // date -> reporte completo
 let currentIdx = 0;
-let currentDate = '';    // fecha activa; se conserva al cambiar de motel
 let currentMonth = '';   // 'YYYY-MM'
 let filterStatus = 'all';
 let filterRoom = 'all';
-
-function motelDe(slug) { return MOTELES.find(m => m.slug === slug); }
-
-// Apunta dates/dateSet/stats/cache a la vista pedida.
-function aplicarVista(slug) {
-  vista = slug;
-  if (slug === 'resumen') {
-    dates = unionDates;
-    dateSet = new Set(unionDates);
-    stats = statsUnion;
-    cache = {};                    // el resumen lee el caché de cada motel
-  } else {
-    const st = M[slug];
-    dates = st.dates; dateSet = st.dateSet; stats = st.stats; cache = st.cache;
-  }
-}
-
-function malDe(s) { return s ? s.door + s.over + s.early + s.occ : 0; }
 
 const MESES = ['enero','febrero','marzo','abril','mayo','junio',
                'julio','agosto','septiembre','octubre','noviembre','diciembre'];
@@ -687,123 +516,36 @@ function roomKey(r) {
 //  Arranque: precarga todos los días para el semáforo
 // ─────────────────────────────────────────────────────────────
 async function init() {
-  let meta;
+  let idx;
   try {
-    const res = await fetch('data/moteles.json?t=' + Date.now());
+    const res = await fetch('data/index.json?t=' + Date.now());
     if (!res.ok) throw new Error();
-    meta = await res.json();
+    idx = await res.json();
   } catch (e) {
     document.getElementById('main').innerHTML =
       '<div class="placeholder"><div class="icon">⚠️</div>No se encontraron datos publicados.</div>';
     return;
   }
 
-  MOTELES = meta.moteles || [];
+  dates = (idx.dates || []).slice().sort().reverse();
+  stats = idx.stats || {};
+  dateSet = new Set(dates);
 
-  // Un índice por motel, en paralelo
-  await Promise.all(MOTELES.map(async m => {
-    M[m.slug] = { dates: [], dateSet: new Set(), stats: {}, cache: {} };
-    try {
-      const r = await fetch(`data/${m.slug}/index.json?t=` + Date.now());
-      if (!r.ok) return;
-      const idx = await r.json();
-      const ds = (idx.dates || []).slice().sort().reverse();
-      M[m.slug] = { dates: ds, dateSet: new Set(ds), stats: idx.stats || {}, cache: {} };
-    } catch (e) { /* motel sin datos todavía */ }
-  }));
-
-  // Unión de fechas y conteos sumados, para la vista de resumen
-  const todas = new Set();
-  MOTELES.forEach(m => M[m.slug].dates.forEach(d => todas.add(d)));
-  unionDates = [...todas].sort().reverse();
-  statsUnion = {};
-  unionDates.forEach(d => {
-    const t = { ok: 0, door: 0, over: 0, early: 0, occ: 0 };
-    MOTELES.forEach(m => {
-      const s = M[m.slug].stats[d];
-      if (s) { t.ok += s.ok; t.door += s.door; t.over += s.over; t.early += s.early; t.occ += s.occ; }
-    });
-    statsUnion[d] = t;
-  });
-
-  if (!unionDates.length) {
-    renderTabs();
+  if (!dates.length) {
     document.getElementById('main').innerHTML =
       '<div class="placeholder"><div class="icon">📭</div>No hay reportes disponibles.</div>';
     return;
   }
 
-  aplicarVista(MOTELES.length > 1 ? 'resumen' : (MOTELES[0] && MOTELES[0].slug) || 'resumen');
-  actualizarRango();
   buildMonthSelect();
-  avisarSiEstaAtrasado();
-  show(0);
-}
-
-function actualizarRango() {
   const jump = document.getElementById('dateJump');
   jump.min = dates[dates.length - 1];
   jump.max = dates[0];
   document.getElementById('tlCount').textContent =
     `${dates.length} día${dates.length === 1 ? '' : 's'} publicados`;
-  const m = motelDe(vista);
-  document.getElementById('headerSub').textContent =
-    m ? `${m.nombre} · ${m.motel_id}` : `${MOTELES.length} moteles`;
-}
 
-// ─────────────────────────────────────────────────────────────
-//  Pestañas
-// ─────────────────────────────────────────────────────────────
-function renderTabs() {
-  const el = document.getElementById('tabs');
-  const items = [{ slug: 'resumen', nombre: 'Resumen' }, ...MOTELES];
-  el.innerHTML = items.map(m => {
-    const s = m.slug === 'resumen' ? statsUnion[currentDate] : (M[m.slug] || {}).stats?.[currentDate];
-    const hay = !!s;
-    const mal = malDe(s);
-    const pill = hay
-      ? `<span class="pill ${mal ? 'mal' : 'bien'}">${mal}</span>`
-      : `<span class="pill">–</span>`;
-    return `<button class="tab ${vista === m.slug ? 'on' : ''}" data-slug="${m.slug}"
-              title="${hay ? mal + ' inconsistencia(s) el ' + currentDate : 'Sin reporte el ' + currentDate}">${m.nombre}${pill}</button>`;
-  }).join('');
-  el.querySelectorAll('.tab').forEach(b =>
-    b.addEventListener('click', () => cambiarVista(b.dataset.slug)));
-}
-
-function cambiarVista(slug) {
-  if (slug === vista) return;
-  const antes = currentDate;
-  aplicarVista(slug);
-
-  if (!dates.length) {
-    currentDate = antes;
-    renderTabs();
-    actualizarRango();
-    document.getElementById('main').innerHTML =
-      `<div class="placeholder"><div class="icon">📭</div>${(motelDe(slug) || {}).nombre || slug} todavía no tiene reportes publicados.</div>`;
-    return;
-  }
-
-  // conservar el día; si ese motel no lo tiene, el publicado más cercano hacia atrás
-  let i = dates.indexOf(antes);
-  if (i < 0) {
-    const anterior = dates.find(d => d <= antes);
-    i = anterior ? dates.indexOf(anterior) : 0;
-  }
-  actualizarRango();
-  buildMonthSelect();
-  show(i);
-}
-
-async function cargarDia(slug, date) {
-  if (M[slug].cache[date]) return true;
-  try {
-    const r = await fetch(`data/${slug}/${date}.json?t=` + Date.now());
-    if (!r.ok) throw new Error();
-    M[slug].cache[date] = await r.json();
-    return true;
-  } catch (e) { return false; }
+  avisarSiEstaAtrasado();
+  show(0);
 }
 
 // El reporte de un día se genera al día siguiente. Si el más reciente
@@ -812,22 +554,14 @@ function avisarSiEstaAtrasado() {
   const hoy = new Date();
   const ayer = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate() - 1);
   const ayerStr = `${ayer.getFullYear()}-${String(ayer.getMonth() + 1).padStart(2, '0')}-${String(ayer.getDate()).padStart(2, '0')}`;
+  const ultimo = dates[0];
+  if (ultimo >= ayerStr) return;
+
+  const faltan = Math.round((ayer - new Date(ultimo + 'T00:00:00')) / 86400000);
   const bar = document.getElementById('staleBar');
-  const atrasados = MOTELES.filter(m => {
-    const u = M[m.slug].dates[0];
-    return !u || u < ayerStr;
-  });
-  if (!atrasados.length) { bar.hidden = true; return; }
-
-  const txt = atrasados.map(m => {
-    const u = M[m.slug].dates[0];
-    if (!u) return `<strong>${m.nombre}</strong> (sin reportes)`;
-    const faltan = Math.round((ayer - new Date(u + 'T00:00:00')) / 86400000);
-    return `<strong>${m.nombre}</strong> (último ${u}, faltan ${faltan})`;
-  }).join(' · ');
-
   bar.className = 'stale';
-  bar.innerHTML = `⏳ Publicación atrasada: ${txt} — revisa que el Mac haya corrido la publicación autom&aacute;tica.`;
+  bar.innerHTML = `⏳ El último reporte disponible es del <strong>${fmtDateLong(ultimo)}</strong>. ` +
+    `Faltan ${faltan} día${faltan === 1 ? '' : 's'} — revisa que el Mac haya corrido la publicación autom&aacute;tica.`;
   bar.hidden = false;
 }
 
@@ -854,28 +588,25 @@ function buildMonthSelect() {
     const n = dates.filter(d => d.startsWith(m)).length;
     return `<option value="${m}">${MESES[+mm - 1]} ${y} (${n})</option>`;
   }).join('');
-  sel.value = currentMonth || (dates[currentIdx] || dates[0]).slice(0, 7);
-  sel.onchange = () => {
+  sel.addEventListener('change', () => {
     // al cambiar de mes, ir al día más reciente publicado de ese mes
     const primero = dates.find(d => d.startsWith(sel.value));
     if (primero) show(dates.indexOf(primero));
-  };
+  });
 }
 
 // Si el índice no trae stats (versión antigua), se descargan los días
 // del mes en paralelo y se repinta la tira.
 async function ensureMonthStats(month) {
-  if (vista === 'resumen') return;   // el resumen se arma con los índices ya cargados
   const faltan = dates.filter(d => d.startsWith(month) && !statsOf(d));
   if (!faltan.length) return;
-  const slug = vista;
   await Promise.all(faltan.map(async d => {
     try {
-      const r = await fetch(`data/${slug}/${d}.json?t=` + Date.now());
+      const r = await fetch(`data/${d}.json?t=` + Date.now());
       if (r.ok) { cache[d] = await r.json(); statsOf(d); }
     } catch (e) { /* ignorar */ }
   }));
-  if (currentMonth === month && vista === slug) renderDays();
+  if (currentMonth === month) renderDays();
 }
 
 function renderDays() {
@@ -936,7 +667,6 @@ function renderDays() {
 async function show(i) {
   currentIdx = i;
   const date = dates[i];
-  currentDate = date;
   currentMonth = date.slice(0, 7);
 
   document.getElementById('monthSel').value = currentMonth;
@@ -944,36 +674,26 @@ async function show(i) {
   document.getElementById('btnPrev').disabled = i >= dates.length - 1;
   document.getElementById('btnNext').disabled = i <= 0;
 
-  renderTabs();
   renderDays();
   ensureMonthStats(currentMonth);
 
   filterStatus = 'all';
   filterRoom = 'all';
 
-  const main = document.getElementById('main');
-
-  if (vista === 'resumen') {
-    const faltan = MOTELES.filter(m => M[m.slug].dateSet.has(date) && !M[m.slug].cache[date]);
-    if (faltan.length) {
-      main.innerHTML = '<div class="placeholder"><div class="icon">⏳</div>Cargando los tres moteles…</div>';
-      await Promise.all(faltan.map(m => cargarDia(m.slug, date)));
-    }
-    if (currentDate !== date) return;   // el usuario ya cambió de día
-    renderResumen();
-    return;
-  }
-
   if (!cache[date]) {
-    main.innerHTML = '<div class="placeholder"><div class="icon">⏳</div>Cargando reporte…</div>';
-    const ok = await cargarDia(vista, date);
-    if (!ok) {
-      main.innerHTML =
+    document.getElementById('main').innerHTML =
+      '<div class="placeholder"><div class="icon">⏳</div>Cargando reporte…</div>';
+    try {
+      const r = await fetch(`data/${date}.json?t=` + Date.now());
+      if (!r.ok) throw new Error();
+      cache[date] = await r.json();
+    } catch (e) {
+      document.getElementById('main').innerHTML =
         `<div class="placeholder"><div class="icon">📭</div>No se pudo cargar el reporte de ${date}</div>`;
       return;
     }
   }
-  if (currentDate !== date) return;  // el usuario ya cambió de día
+  if (dates[currentIdx] !== date) return;  // el usuario ya cambió de día
   render();
 }
 
@@ -981,128 +701,6 @@ async function show(i) {
 //  Render
 // ─────────────────────────────────────────────────────────────
 function render() {
-  if (vista === 'resumen') return renderResumen();
-  return renderMotel();
-}
-
-// ─────────────────────────────────────────────────────────────
-//  Resumen de los tres moteles para un día
-// ─────────────────────────────────────────────────────────────
-const MINIS = [
-  { key: 'ok',        cls: 'm-ok',    txt: 'OK' },
-  { key: 'door_only', cls: 'm-door',  txt: 'sin venta' },
-  { key: 'occ_only',  cls: 'm-occ',   txt: 'sin cierre' },
-  { key: 'over',      cls: 'm-over',  txt: 'sobrequedada' },
-  { key: 'early',     cls: 'm-early', txt: 'salida antic.' },
-];
-
-// Detalle legible de una fila con problema, para la lista del resumen.
-function detalleAlerta(row) {
-  const k = kindOf(row);
-  const puerta = row.door_start ? `${row.door_start} – ${row.door_end || '—'}` : '—';
-  const venta  = row.occ_start  ? `${row.occ_start} – ${row.occ_end || '—'}`   : '—';
-  if (k === 'door_only')
-    return `Puerta cerrada <strong>${puerta}</strong> (${fmtDur(row.duration_min)}) sin venta registrada`;
-  if (k === 'occ_only')
-    return `Venta <strong>${venta}</strong> sin cierre de puerta detectado`;
-  if (k === 'over')
-    return `Puerta abierta <strong>${Math.round(row.co_diff)} min después</strong> del check-out · venta ${venta}`;
-  if (k === 'early')
-    return `Puerta abierta <strong>${Math.abs(Math.round(row.co_diff))} min antes</strong> del check-out · venta ${venta}`;
-  return `Puerta ${puerta} · venta ${venta}`;
-}
-
-function renderResumen() {
-  const date = currentDate;
-
-  const porMotel = MOTELES.map(m => {
-    const data = M[m.slug].cache[date];
-    const s    = M[m.slug].stats[date];
-    if (!data && !s) return { m, hay: false };
-    const c = data ? countByStatus(data)
-                   : { ok: s.ok, door_only: s.door, occ_only: s.occ, over: s.over,
-                       early: s.early, all: s.ok + s.door + s.occ + s.over + s.early };
-    return {
-      m, hay: true, data, c,
-      mal: c.door_only + c.occ_only + c.over + c.early,
-      filas: data ? (data.rows || []).filter(r => kindOf(r) !== 'ok') : [],
-    };
-  });
-
-  const totalMal = porMotel.reduce((a, x) => a + (x.mal || 0), 0);
-  const totalOk  = porMotel.reduce((a, x) => a + ((x.c && x.c.ok) || 0), 0);
-  const sinDatos = porMotel.filter(x => !x.hay).map(x => x.m.nombre);
-
-  const statusHtml = totalMal > 0
-    ? `<div class="status-bar status-alert">🔴 ${totalMal} inconsistencia${totalMal > 1 ? 's' : ''} en total — revisar</div>`
-    : `<div class="status-bar status-ok">✅ Sin inconsistencias en ningún motel — todo cuadra</div>`;
-
-  const tarjetas = porMotel.map(x => {
-    const m = x.m;
-    if (!x.hay) {
-      return `<div class="mcard vacio">
-        <div class="mcard-top">
-          <div><div class="mcard-nombre">${m.nombre}</div>
-               <div class="mcard-dir">${m.direccion || ''}</div></div>
-          <div class="mcard-big">–</div>
-        </div>
-        <div class="mcard-desglose"><span class="mini">Sin reporte este día</span></div>
-        <button class="mcard-link" disabled>Ver detalle →</button>
-      </div>`;
-    }
-    const cls = x.mal ? 'mal' : 'bien';
-    const minis = MINIS
-      .filter(mi => mi.key === 'ok' || x.c[mi.key] > 0)
-      .map(mi => `<span class="mini ${mi.cls}">${x.c[mi.key]} ${mi.txt}</span>`).join('');
-    const prov = x.data ? sello(date, x.data.generated) : '';
-    return `<div class="mcard ${cls}">
-      <div class="mcard-top">
-        <div><div class="mcard-nombre">${m.nombre}</div>
-             <div class="mcard-dir">${m.direccion || ''} · PMS ${m.motel_id}</div></div>
-        <div class="mcard-big ${cls}">${x.mal}</div>
-      </div>
-      <div class="mcard-desglose">${minis}${prov}</div>
-      <button class="mcard-link" data-ir="${m.slug}">Ver detalle →</button>
-    </div>`;
-  }).join('');
-
-  const listas = porMotel.filter(x => x.hay && x.filas.length).map(x => `
-    <div class="amotel">
-      <div class="amotel-h">${x.m.nombre} — ${x.filas.length} inconsistencia${x.filas.length > 1 ? 's' : ''}</div>
-      ${x.filas.map(r => {
-        const st = BY_KEY[kindOf(r)];
-        return `<div class="arow">
-          <span class="hab">${r.room}</span>
-          ${st ? st.badge : ''}
-          <span class="det">${detalleAlerta(r)}</span>
-        </div>`;
-      }).join('')}
-    </div>`).join('');
-
-  const cuerpoAlertas = totalMal > 0
-    ? `<div class="alist-h">Qué revisar <span class="cuenta">${totalOk} estadías cuadran</span></div>${listas}`
-    : '';
-
-  const avisoSinDatos = sinDatos.length
-    ? `<div class="date-sub" style="margin-bottom:14px">Sin reporte este día: ${sinDatos.join(', ')}</div>`
-    : '';
-
-  document.getElementById('main').innerHTML = `
-    <div class="date-title">${fmtDateLong(date)}</div>
-    <div class="date-sub"><span>Los tres moteles</span></div>
-    ${statusHtml}
-    <div class="resumen">${tarjetas}</div>
-    ${avisoSinDatos}
-    ${cuerpoAlertas}`;
-
-  document.querySelectorAll('.mcard-link[data-ir]').forEach(b =>
-    b.addEventListener('click', () => cambiarVista(b.dataset.ir)));
-}
-
-// ─────────────────────────────────────────────────────────────
-//  Detalle de un motel
-// ─────────────────────────────────────────────────────────────
-function renderMotel() {
   const date = dates[currentIdx];
   const data = cache[date];
   const rows = data.rows || [];
