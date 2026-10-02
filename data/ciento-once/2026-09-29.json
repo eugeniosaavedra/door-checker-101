@@ -1,6 +1,11 @@
 {
   "date": "2026-09-29",
-  "generated": "2026-10-01 10:52",
+  "motel": {
+    "slug": "ciento-once",
+    "nombre": "Ciento Once",
+    "motel_id": 181
+  },
+  "generated": "2026-10-01 23:03",
   "summary": {
     "total_matched": 5,
     "total_door_only": 0,
