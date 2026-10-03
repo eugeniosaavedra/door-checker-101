@@ -5,7 +5,7 @@
     "nombre": "Ciento Once",
     "motel_id": 181
   },
-  "generated": "2026-10-02 14:01",
+  "generated": "2026-10-03 13:33",
   "summary": {
     "total_matched": 12,
     "total_door_only": 2,
@@ -315,7 +315,7 @@
       "door_end": null,
       "duration_min": null,
       "occ_start": "23:03",
-      "occ_end": "12:00",
+      "occ_end": "09:45",
       "tipo": "Sin Reserva",
       "payment": "tarjeta",
       "ci_diff": null,
