@@ -5,12 +5,12 @@
     "nombre": "Jardín",
     "motel_id": 221
   },
-  "generated": "2026-10-03 13:34",
+  "generated": "2026-10-04 13:55",
   "summary": {
     "total_matched": 20,
     "total_door_only": 6,
     "total_occ_only": 8,
-    "total_co_alert": 4,
+    "total_co_alert": 5,
     "alert_count": 14
   },
   "rows": [
@@ -161,11 +161,11 @@
       "door_end": "11:18",
       "duration_min": 845.3,
       "occ_start": "21:20",
-      "occ_end": "12:00",
+      "occ_end": "11:54",
       "tipo": "Sin Reserva",
       "payment": "tarjeta",
       "ci_diff": -6.6,
-      "co_diff": -41.3,
+      "co_diff": -35.3,
       "co_alert": false
     },
     {
@@ -217,11 +217,11 @@
       "door_end": "10:58",
       "duration_min": 841.2,
       "occ_start": "21:20",
-      "occ_end": "12:00",
+      "occ_end": "09:23",
       "tipo": "Express",
       "payment": "tarjeta",
       "ci_diff": -23.1,
-      "co_diff": -61.9,
+      "co_diff": 95.2,
       "co_alert": true
     },
     {
@@ -296,17 +296,17 @@
     },
     {
       "room": "25",
-      "status": "ok",
+      "status": "co_alert",
       "door_start": "22:51",
       "door_end": "11:56",
       "duration_min": 784.7,
       "occ_start": "23:17",
-      "occ_end": "12:00",
+      "occ_end": "09:24",
       "tipo": "Sin Reserva",
       "payment": "tarjeta",
       "ci_diff": -25.1,
-      "co_diff": -3.3,
-      "co_alert": false
+      "co_diff": 152.7,
+      "co_alert": true
     },
     {
       "room": "25",
@@ -357,7 +357,7 @@
       "door_end": null,
       "duration_min": null,
       "occ_start": "22:46",
-      "occ_end": "12:00",
+      "occ_end": "06:30",
       "tipo": "Express",
       "payment": "tarjeta",
       "ci_diff": null,
@@ -413,7 +413,7 @@
       "door_end": null,
       "duration_min": null,
       "occ_start": "23:26",
-      "occ_end": "12:00",
+      "occ_end": "11:54",
       "tipo": "Express",
       "payment": "tarjeta",
       "ci_diff": null,
