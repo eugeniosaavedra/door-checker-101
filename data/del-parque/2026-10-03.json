@@ -5,7 +5,7 @@
     "nombre": "Del Parque",
     "motel_id": 192
   },
-  "generated": "2026-10-04 13:55",
+  "generated": "2026-10-05 18:50",
   "summary": {
     "total_matched": 31,
     "total_door_only": 8,
@@ -203,11 +203,11 @@
       "door_end": "12:18",
       "duration_min": 777.4,
       "occ_start": "23:15",
-      "occ_end": "12:00",
+      "occ_end": "12:21",
       "tipo": "Sin Reserva",
       "payment": "tarjeta",
       "ci_diff": 6.4,
-      "co_diff": 18.9,
+      "co_diff": -2.1,
       "co_alert": false
     },
     {
@@ -343,11 +343,11 @@
       "door_end": "13:07",
       "duration_min": 805.9,
       "occ_start": "23:40",
-      "occ_end": "12:00",
+      "occ_end": "11:49",
       "tipo": "Express",
       "payment": "tarjeta",
       "ci_diff": 0.9,
-      "co_diff": 67.4,
+      "co_diff": 78.4,
       "co_alert": true
     },
     {
@@ -427,11 +427,11 @@
       "door_end": "05:30",
       "duration_min": 739.5,
       "occ_start": "17:12",
-      "occ_end": "05:12",
+      "occ_end": "05:30",
       "tipo": "Sin Reserva",
       "payment": "tarjeta",
       "ci_diff": -1.3,
-      "co_diff": 18.2,
+      "co_diff": 0.2,
       "co_alert": false
     },
     {
@@ -483,11 +483,11 @@
       "door_end": "11:57",
       "duration_min": 775.1,
       "occ_start": "23:00",
-      "occ_end": "12:00",
+      "occ_end": "11:58",
       "tipo": "Sin Reserva",
       "payment": "tarjeta",
       "ci_diff": 1.9,
-      "co_diff": -3.0,
+      "co_diff": -1.0,
       "co_alert": false
     },
     {
@@ -520,31 +520,31 @@
     },
     {
       "room": "43",
-      "status": "co_alert",
+      "status": "ok",
       "door_start": "23:22",
       "door_end": "08:46",
       "duration_min": 563.8,
       "occ_start": "23:21",
-      "occ_end": "12:00",
+      "occ_end": "08:48",
       "tipo": "Express",
       "payment": "tarjeta",
       "ci_diff": 1.2,
-      "co_diff": -193.4,
-      "co_alert": true
+      "co_diff": -1.4,
+      "co_alert": false
     },
     {
       "room": "44 Aire",
-      "status": "ok",
+      "status": "co_alert",
       "door_start": "23:50",
       "door_end": "12:13",
       "duration_min": 743.0,
       "occ_start": "23:48",
-      "occ_end": "12:00",
+      "occ_end": "10:18",
       "tipo": "Sin Reserva",
       "payment": "tarjeta",
       "ci_diff": 2.4,
-      "co_diff": 13.5,
-      "co_alert": false
+      "co_diff": 115.5,
+      "co_alert": true
     },
     {
       "room": "44 Aire",
