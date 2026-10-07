@@ -5,12 +5,12 @@
     "nombre": "Jardín",
     "motel_id": 221
   },
-  "generated": "2026-10-06 15:31",
+  "generated": "2026-10-07 16:01",
   "summary": {
     "total_matched": 5,
     "total_door_only": 4,
     "total_occ_only": 0,
-    "total_co_alert": 0,
+    "total_co_alert": 1,
     "alert_count": 4
   },
   "rows": [
@@ -72,17 +72,17 @@
     },
     {
       "room": "33 Aire",
-      "status": "ok",
+      "status": "co_alert",
       "door_start": "20:40",
       "door_end": "11:28",
       "duration_min": 888.2,
       "occ_start": "20:39",
-      "occ_end": "12:00",
+      "occ_end": "09:39",
       "tipo": "Express",
       "payment": "tarjeta",
       "ci_diff": 0.3,
-      "co_diff": -31.7,
-      "co_alert": false
+      "co_diff": 109.3,
+      "co_alert": true
     },
     {
       "room": "36 Aire",
