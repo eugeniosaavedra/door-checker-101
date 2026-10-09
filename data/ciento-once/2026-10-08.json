@@ -8,10 +8,10 @@
   "generated": "2026-10-09 15:26",
   "summary": {
     "total_matched": 21,
-    "total_door_only": 3,
+    "total_door_only": 2,
     "total_occ_only": 8,
     "total_co_alert": 4,
-    "alert_count": 11
+    "alert_count": 10
   },
   "rows": [
     {
@@ -136,20 +136,6 @@
       "occ_end": "10:26",
       "tipo": "Sin Reserva",
       "payment": "efectivo",
-      "ci_diff": null,
-      "co_diff": null,
-      "co_alert": false
-    },
-    {
-      "room": "43 Aire",
-      "status": "door_only",
-      "door_start": "09:51",
-      "door_end": null,
-      "duration_min": 848.7,
-      "occ_start": null,
-      "occ_end": null,
-      "tipo": null,
-      "payment": null,
       "ci_diff": null,
       "co_diff": null,
       "co_alert": false

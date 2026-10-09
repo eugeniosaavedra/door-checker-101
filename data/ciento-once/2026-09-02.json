@@ -3,10 +3,10 @@
   "generated": "2026-09-04 17:01",
   "summary": {
     "total_matched": 18,
-    "total_door_only": 3,
+    "total_door_only": 2,
     "total_occ_only": 2,
     "total_co_alert": 1,
-    "alert_count": 5
+    "alert_count": 4
   },
   "rows": [
     {
@@ -105,20 +105,6 @@
       "payment": "tarjeta",
       "ci_diff": 1.5,
       "co_diff": -0.6,
-      "co_alert": false
-    },
-    {
-      "room": "43 Aire",
-      "status": "door_only",
-      "door_start": "08:17",
-      "door_end": null,
-      "duration_min": 942.8,
-      "occ_start": null,
-      "occ_end": null,
-      "tipo": null,
-      "payment": null,
-      "ci_diff": null,
-      "co_diff": null,
       "co_alert": false
     },
     {

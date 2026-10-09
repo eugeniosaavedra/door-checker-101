@@ -167,26 +167,45 @@
   .day:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
   .day .dow { font-size: 0.62rem; color: var(--sub); text-transform: uppercase; letter-spacing: .06em; }
   .day .dnum { font-size: 1.05rem; font-weight: 700; line-height: 1.15; font-variant-numeric: tabular-nums; }
-  .day .bar {
-    height: 4px; border-radius: 2px; margin-top: 5px;
-    background: var(--border); display: flex; overflow: hidden;
+  /* Anillo del día: un segmento por estado, con el número del día al centro.
+     Verde = emparejadas, rojo = cierre sin venta (lo que importa), ámbar = venta
+     sin cierre, azul = sobrequedada, violeta = salida anticipada. */
+  .day .ring { position: relative; width: 44px; height: 44px; margin: 3px auto 0; }
+  .day .ring svg { width: 44px; height: 44px; display: block; transform: rotate(-90deg); }
+  .day .ring circle { fill: none; stroke-width: 5; }
+  .day .ring .track { stroke: var(--border); }
+  .day .ring .seg-ok    { stroke: var(--ok); }
+  .day .ring .seg-door  { stroke: var(--alert); }
+  .day .ring .seg-occ   { stroke: var(--warn); }
+  .day .ring .seg-over  { stroke: var(--info); }
+  .day .ring .seg-early { stroke: var(--early); }
+  .day .ring .dnum {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    font-size: 0.95rem; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1;
   }
-  .day .bar i { display: block; height: 100%; }
-  .day .bar .good { background: var(--sev0); }
   .day .cnt {
-    font-size: 0.62rem; font-weight: 700; margin-top: 3px;
+    font-size: 0.62rem; font-weight: 700; margin-top: 4px;
     display: flex; justify-content: center; gap: 3px;
     font-variant-numeric: tabular-nums;
   }
-  .day .cnt .good { color: var(--sev0); }
-  .day .cnt .bad  { color: var(--sub); }
+  .day .cnt .good { color: var(--ok); }
+  .day .cnt .door { color: var(--sub); }
+  .day .cnt .door.hay { color: var(--alert); }
   .day .cnt .sep  { color: var(--border); font-weight: 400; }
   .day.active { border-color: var(--text); box-shadow: 0 0 0 1px var(--text); }
   .day.empty { opacity: .35; cursor: default; }
   .day.empty:hover { transform: none; box-shadow: none; }
-  .day.s1 .bar .bad { background: var(--sev1); } .day.s1 .cnt .bad { color: var(--sev1); }
-  .day.s2 .bar .bad { background: var(--sev2); } .day.s2 .cnt .bad { color: var(--sev2); }
-  .day.s3 .bar .bad { background: var(--sev3); } .day.s3 .cnt .bad { color: var(--sev3); }
+  .tl-legend {
+    display: flex; flex-wrap: wrap; gap: 4px 12px;
+    font-size: 0.68rem; color: var(--sub); padding-left: 2px;
+  }
+  .tl-legend span { display: inline-flex; align-items: center; gap: 4px; }
+  .tl-legend i { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+  .tl-legend .l-ok    { background: var(--ok); }
+  .tl-legend .l-door  { background: var(--alert); }
+  .tl-legend .l-occ   { background: var(--warn); }
+  .tl-legend .l-over  { background: var(--info); }
+  .tl-legend .l-early { background: var(--early); }
 
   /* ── Main ─────────────────────────────────── */
   .main { max-width: 1100px; margin: 0 auto; padding: 24px; }
@@ -433,7 +452,8 @@
     background: var(--border);
     color: var(--sub);
   }
-  .tab .pill.mal  { background: var(--alert); color: #fff; }
+  .tab .pill.mal  { background: var(--alert); color: #fff; }   /* hay cierres sin venta */
+  .tab .pill.ojo  { background: var(--warn);  color: #fff; }   /* solo otros tipos */
   .tab .pill.bien { background: var(--ok);    color: #fff; }
 
   /* ── Vista resumen ────────────────────────── */
@@ -454,7 +474,8 @@
     flex-direction: column;
     gap: 12px;
   }
-  .mcard.mal   { border-left-color: var(--alert); }
+  .mcard.mal   { border-left-color: var(--alert); }   /* hay cierres sin venta */
+  .mcard.ojo   { border-left-color: var(--warn); }    /* solo otros tipos */
   .mcard.bien  { border-left-color: var(--ok); }
   .mcard.vacio { border-left-color: var(--border); opacity: .72; }
   .mcard-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
@@ -462,6 +483,7 @@
   .mcard-dir { font-size: .75rem; color: var(--sub); }
   .mcard-big { font-size: 1.75rem; font-weight: 700; line-height: 1; }
   .mcard-big.mal  { color: var(--alert); }
+  .mcard-big.ojo  { color: var(--warn); }
   .mcard-big.bien { color: var(--ok); }
   .mcard-desglose { display: flex; flex-wrap: wrap; gap: 5px; }
   .mini {
@@ -559,6 +581,14 @@
     <button class="nav-btn" id="btnPrev" title="Día anterior">◀</button>
     <div class="days" id="days"></div>
     <button class="nav-btn" id="btnNext" title="Día siguiente">▶</button>
+  </div>
+  <div class="tl-legend">
+    <span><i class="l-ok"></i>Emparejadas</span>
+    <span><i class="l-door"></i>Cierre sin venta</span>
+    <span><i class="l-occ"></i>Venta sin cierre</span>
+    <span><i class="l-over"></i>Sobrequedada</span>
+    <span><i class="l-early"></i>Salida anticipada</span>
+    <span>· Debajo de cada día: emparejadas · cierres sin venta</span>
   </div>
 </nav>
 
@@ -660,11 +690,38 @@ function countByStatus(data) {
   return c;
 }
 
-function tierOf(n) {
-  if (n === 0) return 0;
-  if (n <= 2)  return 1;
-  if (n <= 5)  return 2;
-  return 3;
+// Anillo de un día: un segmento por estado, proporcional a su cantidad.
+// Orden fijo (ok → sin venta → sin cierre → sobrequedada → anticipada) para que
+// el rojo quede siempre a continuación del verde y sea fácil de comparar entre días.
+const RING_SEGS = [
+  { key: 'ok',    cls: 'seg-ok' },
+  { key: 'door',  cls: 'seg-door' },
+  { key: 'occ',   cls: 'seg-occ' },
+  { key: 'over',  cls: 'seg-over' },
+  { key: 'early', cls: 'seg-early' },
+];
+function ringHtml(s, dayNum) {
+  const total = s ? RING_SEGS.reduce((a, g) => a + (s[g.key] || 0), 0) : 0;
+  let segs = '';
+  if (total > 0) {
+    let offset = 0;
+    for (const g of RING_SEGS) {
+      const n = s[g.key] || 0;
+      if (!n) continue;
+      const len = (n / total) * 100;
+      // pathLength=100 → dasharray en porcentajes; el offset negativo empuja el segmento
+      segs += `<circle class="${g.cls}" cx="22" cy="22" r="17.5" pathLength="100"
+                 stroke-dasharray="${len.toFixed(2)} ${(100 - len).toFixed(2)}"
+                 stroke-dashoffset="${(-offset).toFixed(2)}"></circle>`;
+      offset += len;
+    }
+  }
+  return `<div class="ring">
+    <svg viewBox="0 0 44 44" aria-hidden="true">
+      <circle class="track" cx="22" cy="22" r="17.5"></circle>${segs}
+    </svg>
+    <div class="dnum">${dayNum}</div>
+  </div>`;
 }
 
 // Conteos de un día: primero del índice, si no del reporte ya cargado.
@@ -761,8 +818,10 @@ function renderTabs() {
     const s = m.slug === 'resumen' ? statsUnion[currentDate] : (M[m.slug] || {}).stats?.[currentDate];
     const hay = !!s;
     const mal = malDe(s);
+    // Rojo solo cuando hay cierres sin venta; el resto de inconsistencias va en ámbar.
+    const tono = !mal ? 'bien' : (s.door > 0 ? 'mal' : 'ojo');
     const pill = hay
-      ? `<span class="pill ${mal ? 'mal' : 'bien'}">${mal}</span>`
+      ? `<span class="pill ${tono}">${mal}</span>`
       : `<span class="pill">–</span>`;
     return `<button class="tab ${vista === m.slug ? 'on' : ''}" data-slug="${m.slug}"
               title="${hay ? mal + ' inconsistencia(s) el ' + currentDate : 'Sin reporte el ' + currentDate}">${m.nombre}${pill}</button>`;
@@ -896,8 +955,7 @@ function renderDays() {
       btn.title = `${fmtDateLong(ds)} — sin reporte`;
       btn.innerHTML = `
         <div class="dow">${dowShort(ds)}</div>
-        <div class="dnum">${d}</div>
-        <div class="bar"></div>
+        ${ringHtml(null, d)}
         <div class="cnt">—</div>`;
       el.appendChild(btn);
       continue;
@@ -908,20 +966,19 @@ function renderDays() {
       btn.className = 'day';
       btn.innerHTML = `
         <div class="dow">${dowShort(ds)}</div>
-        <div class="dnum">${d}</div>
-        <div class="bar"></div>
+        ${ringHtml(null, d)}
         <div class="cnt">…</div>`;
     } else {
       const mal = s.door + s.over + s.early + s.occ;
-      const total = s.ok + mal;
-      const okPct = total ? Math.round((s.ok / total) * 100) : 100;
-      btn.className = `day s${tierOf(mal)}`;
-      btn.title = `${fmtDateLong(ds)} — ${s.ok} OK · ${mal} inconsistencia${mal === 1 ? '' : 's'}`;
+      btn.className = 'day';
+      btn.title = `${fmtDateLong(ds)} — ${s.ok} OK · ${s.door} cierre${s.door === 1 ? '' : 's'} sin venta`
+        + ` · ${s.occ} venta${s.occ === 1 ? '' : 's'} sin cierre · ${s.over} sobrequedada${s.over === 1 ? '' : 's'}`
+        + ` · ${s.early} salida${s.early === 1 ? '' : 's'} anticipada${s.early === 1 ? '' : 's'}`
+        + ` (${mal} inconsistencia${mal === 1 ? '' : 's'})`;
       btn.innerHTML = `
         <div class="dow">${dowShort(ds)}</div>
-        <div class="dnum">${d}</div>
-        <div class="bar"><i class="good" style="width:${okPct}%"></i><i class="bad" style="width:${100 - okPct}%"></i></div>
-        <div class="cnt"><span class="good">${s.ok}</span><span class="sep">·</span><span class="bad">${mal}</span></div>`;
+        ${ringHtml(s, d)}
+        <div class="cnt"><span class="good">${s.ok}</span><span class="sep">·</span><span class="door ${s.door ? 'hay' : ''}">${s.door}</span></div>`;
     }
 
     if (ds === activo) btn.classList.add('active');
@@ -1050,7 +1107,7 @@ function renderResumen() {
         <button class="mcard-link" disabled>Ver detalle →</button>
       </div>`;
     }
-    const cls = x.mal ? 'mal' : 'bien';
+    const cls = !x.mal ? 'bien' : (x.c.door_only > 0 ? 'mal' : 'ojo');
     const minis = MINIS
       .filter(mi => mi.key === 'ok' || x.c[mi.key] > 0)
       .map(mi => `<span class="mini ${mi.cls}">${x.c[mi.key]} ${mi.txt}</span>`).join('');
