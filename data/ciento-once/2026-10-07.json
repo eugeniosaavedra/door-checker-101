@@ -8,10 +8,10 @@
   "generated": "2026-10-09 19:47",
   "summary": {
     "total_matched": 5,
-    "total_door_only": 1,
+    "total_door_only": 0,
     "total_occ_only": 19,
     "total_co_alert": 2,
-    "alert_count": 20
+    "alert_count": 19
   },
   "rows": [
     {
@@ -26,20 +26,6 @@
       "payment": "tarjeta",
       "ci_diff": -0.2,
       "co_diff": -1.7,
-      "co_alert": false
-    },
-    {
-      "room": "22 Aire",
-      "status": "door_only",
-      "door_start": "18:05",
-      "door_end": null,
-      "duration_min": 1134.1,
-      "occ_start": null,
-      "occ_end": null,
-      "tipo": null,
-      "payment": null,
-      "ci_diff": null,
-      "co_diff": null,
       "co_alert": false
     },
     {
