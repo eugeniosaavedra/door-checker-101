@@ -5,7 +5,7 @@
     "nombre": "Jardín",
     "motel_id": 221
   },
-  "generated": "2026-10-13 16:25",
+  "generated": "2026-10-14 14:25",
   "summary": {
     "total_matched": 10,
     "total_door_only": 4,
@@ -161,11 +161,11 @@
       "door_end": "10:53",
       "duration_min": 678.4,
       "occ_start": "23:33",
-      "occ_end": "12:00",
+      "occ_end": "11:49",
       "tipo": "Sin Reserva",
       "payment": "tarjeta",
       "ci_diff": 2.3,
-      "co_diff": -66.3,
+      "co_diff": -55.3,
       "co_alert": true
     },
     {

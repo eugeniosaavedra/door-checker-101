@@ -5,7 +5,7 @@
     "nombre": "Del Parque",
     "motel_id": 192
   },
-  "generated": "2026-10-13 16:25",
+  "generated": "2026-10-14 14:25",
   "summary": {
     "total_matched": 13,
     "total_door_only": 3,
@@ -77,11 +77,11 @@
       "door_end": "08:12",
       "duration_min": 657.5,
       "occ_start": "21:31",
-      "occ_end": "12:00",
+      "occ_end": "12:03",
       "tipo": "Sin Reserva",
       "payment": "efectivo",
       "ci_diff": -15.5,
-      "co_diff": -227.0,
+      "co_diff": -230.0,
       "co_alert": true
     },
     {
