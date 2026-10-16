@@ -5,28 +5,28 @@
     "nombre": "Ciento Once",
     "motel_id": 181
   },
-  "generated": "2026-10-15 14:13",
+  "generated": "2026-10-16 13:50",
   "summary": {
     "total_matched": 16,
     "total_door_only": 2,
     "total_occ_only": 5,
-    "total_co_alert": 2,
+    "total_co_alert": 0,
     "alert_count": 7
   },
   "rows": [
     {
       "room": "23 Aire",
-      "status": "co_alert",
+      "status": "ok",
       "door_start": "22:12",
       "door_end": "08:29",
       "duration_min": 616.7,
       "occ_start": "22:13",
-      "occ_end": "12:00",
+      "occ_end": "08:48",
       "tipo": "Express",
       "payment": "tarjeta",
       "ci_diff": -0.9,
-      "co_diff": -211.0,
-      "co_alert": true
+      "co_diff": -19.0,
+      "co_alert": false
     },
     {
       "room": "24 Aire",
@@ -217,11 +217,11 @@
       "door_end": "11:56",
       "duration_min": 745.5,
       "occ_start": "23:33",
-      "occ_end": "12:00",
+      "occ_end": "11:59",
       "tipo": "Express",
       "payment": "tarjeta",
       "ci_diff": -3.1,
-      "co_diff": -4.0,
+      "co_diff": -3.0,
       "co_alert": false
     },
     {
@@ -240,17 +240,17 @@
     },
     {
       "room": "52 Aire",
-      "status": "co_alert",
+      "status": "ok",
       "door_start": "20:45",
       "door_end": "10:58",
       "duration_min": 853.1,
       "occ_start": "20:43",
-      "occ_end": "12:00",
+      "occ_end": "10:37",
       "tipo": "Express",
       "payment": "tarjeta",
       "ci_diff": 1.5,
-      "co_diff": -61.4,
-      "co_alert": true
+      "co_diff": 21.6,
+      "co_alert": false
     },
     {
       "room": "52 Aire",
@@ -301,7 +301,7 @@
       "door_end": null,
       "duration_min": null,
       "occ_start": "23:47",
-      "occ_end": "12:00",
+      "occ_end": "11:20",
       "tipo": "Sin Reserva",
       "payment": "tarjeta",
       "ci_diff": null,
