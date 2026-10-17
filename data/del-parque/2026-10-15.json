@@ -5,12 +5,12 @@
     "nombre": "Del Parque",
     "motel_id": 192
   },
-  "generated": "2026-10-16 13:50",
+  "generated": "2026-10-17 12:47",
   "summary": {
     "total_matched": 16,
     "total_door_only": 2,
     "total_occ_only": 0,
-    "total_co_alert": 6,
+    "total_co_alert": 4,
     "alert_count": 2
   },
   "rows": [
@@ -198,17 +198,17 @@
     },
     {
       "room": "37 Aire",
-      "status": "co_alert",
+      "status": "ok",
       "door_start": "21:28",
       "door_end": "09:23",
       "duration_min": 715.0,
       "occ_start": "21:27",
-      "occ_end": "12:00",
+      "occ_end": "09:24",
       "tipo": "Express",
       "payment": "tarjeta",
       "ci_diff": 1.4,
-      "co_diff": -156.3,
-      "co_alert": true
+      "co_diff": -0.3,
+      "co_alert": false
     },
     {
       "room": "38",
@@ -226,17 +226,17 @@
     },
     {
       "room": "41 Aire",
-      "status": "co_alert",
+      "status": "ok",
       "door_start": "22:02",
       "door_end": "12:47",
       "duration_min": 885.6,
       "occ_start": "22:00",
-      "occ_end": "12:00",
+      "occ_end": "12:07",
       "tipo": "Express",
       "payment": "tarjeta",
       "ci_diff": 2.3,
-      "co_diff": 47.9,
-      "co_alert": true
+      "co_diff": 40.9,
+      "co_alert": false
     },
     {
       "room": "42 Aire",
