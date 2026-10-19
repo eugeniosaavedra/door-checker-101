@@ -30,6 +30,12 @@
     --early:     #7c3aed;
     --early-bg:  #f5f3ff;
     --early-bdr: #ddd6fe;
+    --open:      #0d9488;
+    --open-bg:   #f0fdfa;
+    --open-bdr:  #99f6e4;
+    --cont:      #64748b;
+    --cont-bg:   #f8fafc;
+    --cont-bdr:  #cbd5e1;
     --sev0:      #059669;
     --sev1:      #d97706;
     --sev2:      #ea580c;
@@ -60,6 +66,12 @@
       --early:     #a78bfa;
       --early-bg:  #1e1435;
       --early-bdr: #5b21b6;
+      --open:      #2dd4bf;
+      --open-bg:   #042f2e;
+      --open-bdr:  #115e59;
+      --cont:      #94a3b8;
+      --cont-bg:   #171a23;
+      --cont-bdr:  #334155;
       --sev0:      #34d399;
       --sev1:      #fbbf24;
       --sev2:      #fb923c;
@@ -74,6 +86,8 @@
     --warn:#fbbf24; --warn-bg:#1c1204; --warn-bdr:#78350f;
     --info:#60a5fa; --info-bg:#0f1e3d; --info-bdr:#1e3a8a;
     --early:#a78bfa; --early-bg:#1e1435; --early-bdr:#5b21b6;
+    --open:#2dd4bf; --open-bg:#042f2e; --open-bdr:#115e59;
+    --cont:#94a3b8; --cont-bg:#171a23; --cont-bdr:#334155;
     --sev0:#34d399; --sev1:#fbbf24; --sev2:#fb923c; --sev3:#f87171;
     --shadow:0 1px 3px rgba(0,0,0,.4);
   }
@@ -179,6 +193,7 @@
   .day .ring .seg-occ   { stroke: var(--warn); }
   .day .ring .seg-over  { stroke: var(--info); }
   .day .ring .seg-early { stroke: var(--early); }
+  .day .ring .seg-open  { stroke: var(--open); }
   .day .ring .dnum {
     position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
     font-size: 0.95rem; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1;
@@ -206,6 +221,7 @@
   .tl-legend .l-occ   { background: var(--warn); }
   .tl-legend .l-over  { background: var(--info); }
   .tl-legend .l-early { background: var(--early); }
+  .tl-legend .l-open  { background: var(--open); }
 
   /* ── Main ─────────────────────────────────── */
   .main { max-width: 1100px; margin: 0 auto; padding: 24px; }
@@ -284,6 +300,8 @@
   .chip.on.f-occ   { background: var(--warn-bg);  color: var(--warn);  border-color: var(--warn-bdr); }
   .chip.on.f-co    { background: var(--info-bg);  color: var(--info);  border-color: var(--info-bdr); }
   .chip.on.f-early { background: var(--early-bg); color: var(--early); border-color: var(--early-bdr); }
+  .chip.on.f-open  { background: var(--open-bg);  color: var(--open);  border-color: var(--open-bdr); }
+  .chip.on.f-cont  { background: var(--cont-bg);  color: var(--cont);  border-color: var(--cont-bdr); }
   .chip:disabled { opacity: .4; cursor: default; }
 
   .room-select {
@@ -358,6 +376,8 @@
   tr.r-occ  { background: var(--warn-bg); }
   tr.r-co    { background: var(--info-bg); }
   tr.r-early { background: var(--early-bg); }
+  tr.r-open  { background: var(--open-bg); }
+  tr.r-cont  { background: var(--cont-bg); color: var(--sub); }
   tr:hover td { filter: brightness(.97); }
 
   .badge {
@@ -374,7 +394,53 @@
   .b-warn  { background: var(--warn-bg);  color: var(--warn);  border-color: var(--warn-bdr); }
   .b-info  { background: var(--info-bg);  color: var(--info);  border-color: var(--info-bdr); }
   .b-early { background: var(--early-bg); color: var(--early); border-color: var(--early-bdr); }
+  .b-open  { background: var(--open-bg);  color: var(--open);  border-color: var(--open-bdr); }
+  .b-cont  { background: var(--cont-bg);  color: var(--cont);  border-color: var(--cont-bdr); }
   .card.c-early .num { color: var(--early); }
+  .card.c-open  .num { color: var(--open); }
+  .card.c-cont  .num { color: var(--cont); }
+  .aperturas { display: block; font-size: .72rem; color: var(--sub); margin-top: 2px; white-space: normal; }
+  .aperturas.larga { color: var(--open); font-weight: 600; }
+  .occ-ayer { font-size: .72rem; color: var(--sub); margin-left: 4px; }
+
+  /* ── Vista: tabla / línea de tiempo ─────── */
+  .view-toggle { display: inline-flex; border: 1px solid var(--border); border-radius: 20px; overflow: hidden; }
+  .view-toggle button {
+    appearance: none; background: var(--surface); border: 0; color: var(--sub);
+    font: inherit; font-size: .78rem; font-weight: 600; padding: 6px 12px; cursor: pointer;
+  }
+  .view-toggle button.on { background: var(--text); color: var(--bg); }
+  .gantt { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 12px 16px 8px; overflow-x: auto; }
+  .gantt-head, .gantt-room { display: grid; grid-template-columns: 96px 44px 1fr; align-items: center; min-width: 760px; }
+  .gantt-lane-col { font-size: .58rem; color: var(--sub); text-transform: uppercase; letter-spacing: .06em; line-height: 1; }
+  .gantt-lane-col span { display: block; height: 21px; padding-top: 7px; }
+  .gantt-head { position: sticky; top: 0; background: var(--surface); z-index: 1; padding-bottom: 4px; border-bottom: 1px solid var(--border); margin-bottom: 4px; }
+  .gantt-axis { position: relative; height: 18px; }
+  .gantt-axis span { position: absolute; transform: translateX(-50%); font-size: .66rem; color: var(--sub); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .gantt-axis span.mid { color: var(--text); font-weight: 700; }
+  .gantt-room { border-top: 1px solid var(--border); }
+  .gantt-room:first-of-type { border-top: 0; }
+  .gantt-lbl { font-size: .82rem; font-weight: 600; padding: 8px 0; }
+  .gantt-lbl small { display: block; font-weight: 500; color: var(--sub); font-size: .66rem; line-height: 1.25; white-space: normal; padding-right: 6px; }
+  .gantt-lanes { position: relative; height: 46px; }
+  .gantt-lanes .grid { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--border); }
+  .gantt-lanes .grid.mid { background: var(--sub); width: 2px; }
+  .bar { position: absolute; height: 14px; border-radius: 3px; cursor: default; }
+  .bar.door { top: 6px; background: var(--text); opacity: .85; }
+  .bar.door.k-ok     { background: var(--ok); }
+  .bar.door.k-door   { background: var(--alert); }
+  .bar.door.k-over   { background: var(--info); }
+  .bar.door.k-early  { background: var(--early); }
+  .bar.door.k-open   { background: var(--open); }
+  .bar.door.k-cont   { background: var(--cont); }
+  .bar.door.k-short  { background: var(--sub); opacity: .45; height: 8px; top: 9px; }
+  .bar.door.k-next   { background: var(--sub); opacity: .55; }
+  .bar.sale { top: 27px; background: var(--info-bg); border: 1.5px solid var(--info); }
+  .bar.sale.k-occ   { background: var(--warn-bg); border-color: var(--warn); }
+  .bar.sale.k-ayer  { border-style: dashed; }
+  .bar.gap { top: 2px; height: 22px; border-radius: 2px; background: repeating-linear-gradient(135deg, transparent 0 3px, var(--open) 3px 4px); opacity: .6; }
+  .gantt-legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: .7rem; color: var(--sub); margin-top: 10px; }
+  .gantt-legend i { display: inline-block; width: 14px; height: 8px; border-radius: 2px; vertical-align: middle; margin-right: 4px; }
 
   .alert-msg { color: var(--sub); font-style: italic; font-size: 0.82rem; }
   .diff-ok   { color: var(--sub); }
@@ -500,6 +566,8 @@
   .mini.m-occ   { background: var(--warn-bg);  border-color: var(--warn-bdr);  color: var(--warn); }
   .mini.m-over  { background: var(--info-bg);  border-color: var(--info-bdr);  color: var(--info); }
   .mini.m-early { background: var(--early-bg); border-color: var(--early-bdr); color: var(--early); }
+  .mini.m-open  { background: var(--open-bg);  border-color: var(--open-bdr);  color: var(--open); }
+  .mini.m-cont  { background: var(--cont-bg);  border-color: var(--cont-bdr);  color: var(--cont); }
   .mcard-link {
     appearance: none;
     background: none;
@@ -588,6 +656,7 @@
     <span><i class="l-occ"></i>Venta sin cierre</span>
     <span><i class="l-over"></i>Sobrequedada</span>
     <span><i class="l-early"></i>Salida anticipada</span>
+    <span><i class="l-open"></i>Puerta abierta a mitad de estadía</span>
     <span>· Debajo de cada día: emparejadas · cierres sin venta</span>
   </div>
 </nav>
@@ -618,6 +687,7 @@ let currentDate = '';    // fecha activa; se conserva al cambiar de motel
 let currentMonth = '';   // 'YYYY-MM'
 let filterStatus = 'all';
 let filterRoom = 'all';
+let viewMode = 'tabla';   // 'tabla' | 'tiempo'
 
 function motelDe(slug) { return MOTELES.find(m => m.slug === slug); }
 
@@ -635,7 +705,7 @@ function aplicarVista(slug) {
   }
 }
 
-function malDe(s) { return s ? s.door + s.over + s.early + s.occ : 0; }
+function malDe(s) { return s ? s.door + s.over + s.early + s.occ + (s.abierta || 0) : 0; }
 
 const MESES = ['enero','febrero','marzo','abril','mayo','junio',
                'julio','agosto','septiembre','octubre','noviembre','diciembre'];
@@ -646,16 +716,25 @@ const STATUSES = [
   { key: 'over',      cls: 'f-co',    label: '🟡 Sobrequedadas',     card: 'Sobrequedadas 🟡',     cardCls: 'c-info',  rowCls: 'r-co',    badge: '<span class="badge b-info">🟡 Sobrequedada</span>' },
   { key: 'early',     cls: 'f-early', label: '🟣 Salidas anticipadas', card: 'Salida anticipada 🟣', cardCls: 'c-early', rowCls: 'r-early', badge: '<span class="badge b-early">🟣 Salida anticipada</span>' },
   { key: 'occ_only',  cls: 'f-occ',   label: '⚠️ Venta sin cierre',  card: 'Venta sin cierre ⚠️',  cardCls: 'c-warn',  rowCls: 'r-occ',   badge: '<span class="badge b-warn">⚠️ Sin cierre</span>' },
+  { key: 'abierta',   cls: 'f-open',  label: '🚪 Puerta abierta',     card: 'Puerta abierta 🚪',     cardCls: 'c-open',  rowCls: 'r-open',  badge: '<span class="badge b-open">🚪 Puerta abierta</span>', soft: true },
+  { key: 'cont',      cls: 'f-cont',  label: '⏩ Continuación',       card: 'Continuación ⏩',       cardCls: 'c-cont',  rowCls: 'r-cont',  badge: '<span class="badge b-cont">⏩ Continuación</span>', soft: true },
 ];
 const BY_KEY = Object.fromEntries(STATUSES.map(s => [s.key, s]));
 
 // Una fila co_alert se separa según el signo de CO Δ:
 //   co_diff > 0 → la puerta se abrió DESPUÉS del check-out del PMS  → sobrequedada
 //   co_diff < 0 → la puerta se abrió ANTES del check-out del PMS    → salida anticipada
+//   open_alert   → estadía emparejada con una apertura intermedia larga (≥90 min)
+//   continuacion → cola de una venta de ayer que se abrió hoy (informativo)
 function kindOf(row) {
+  if (row.status === 'open_alert')   return 'abierta';
+  if (row.status === 'continuacion') return 'cont';
   if (row.status !== 'co_alert') return row.status;
   return (row.co_diff != null && row.co_diff > 0) ? 'over' : 'early';
 }
+// Lo que cuenta como inconsistencia: todo menos OK y continuación.
+const MAL_KEYS = ['door_only', 'occ_only', 'over', 'early', 'abierta'];
+function malDeCounts(c) { return MAL_KEYS.reduce((a, k) => a + (c[k] || 0), 0); }
 
 // ─────────────────────────────────────────────────────────────
 //  Utilidades
@@ -684,7 +763,7 @@ function dowShort(ds) {
 }
 
 function countByStatus(data) {
-  const c = { ok: 0, door_only: 0, occ_only: 0, over: 0, early: 0 };
+  const c = { ok: 0, door_only: 0, occ_only: 0, over: 0, early: 0, abierta: 0, cont: 0 };
   (data.rows || []).forEach(r => { const k = kindOf(r); if (k in c) c[k]++; });
   c.all = (data.rows || []).length;
   return c;
@@ -699,6 +778,7 @@ const RING_SEGS = [
   { key: 'occ',   cls: 'seg-occ' },
   { key: 'over',  cls: 'seg-over' },
   { key: 'early', cls: 'seg-early' },
+  { key: 'abierta', cls: 'seg-open' },
 ];
 function ringHtml(s, dayNum) {
   const total = s ? RING_SEGS.reduce((a, g) => a + (s[g.key] || 0), 0) : 0;
@@ -729,7 +809,7 @@ function statsOf(date) {
   if (stats[date]) return stats[date];
   if (cache[date]) {
     const c = countByStatus(cache[date]);
-    stats[date] = { ok: c.ok, door: c.door_only, over: c.over, early: c.early, occ: c.occ_only };
+    stats[date] = { ok: c.ok, door: c.door_only, over: c.over, early: c.early, occ: c.occ_only, abierta: c.abierta, cont: c.cont };
     return stats[date];
   }
   return null;
@@ -775,10 +855,10 @@ async function init() {
   unionDates = [...todas].sort().reverse();
   statsUnion = {};
   unionDates.forEach(d => {
-    const t = { ok: 0, door: 0, over: 0, early: 0, occ: 0 };
+    const t = { ok: 0, door: 0, over: 0, early: 0, occ: 0, abierta: 0, cont: 0 };
     MOTELES.forEach(m => {
       const s = M[m.slug].stats[d];
-      if (s) { t.ok += s.ok; t.door += s.door; t.over += s.over; t.early += s.early; t.occ += s.occ; }
+      if (s) { t.ok += s.ok; t.door += s.door; t.over += s.over; t.early += s.early; t.occ += s.occ; t.abierta += (s.abierta || 0); t.cont += (s.cont || 0); }
     });
     statsUnion[d] = t;
   });
@@ -969,11 +1049,13 @@ function renderDays() {
         ${ringHtml(null, d)}
         <div class="cnt">…</div>`;
     } else {
-      const mal = s.door + s.over + s.early + s.occ;
+      const mal = malDe(s);
       btn.className = 'day';
       btn.title = `${fmtDateLong(ds)} — ${s.ok} OK · ${s.door} cierre${s.door === 1 ? '' : 's'} sin venta`
         + ` · ${s.occ} venta${s.occ === 1 ? '' : 's'} sin cierre · ${s.over} sobrequedada${s.over === 1 ? '' : 's'}`
         + ` · ${s.early} salida${s.early === 1 ? '' : 's'} anticipada${s.early === 1 ? '' : 's'}`
+        + (s.abierta ? ` · ${s.abierta} con puerta abierta a mitad de estadía` : '')
+        + (s.cont ? ` · ${s.cont} continuación${s.cont === 1 ? '' : 'es'} de ayer` : '')
         + ` (${mal} inconsistencia${mal === 1 ? '' : 's'})`;
       btn.innerHTML = `
         <div class="dow">${dowShort(ds)}</div>
@@ -1051,6 +1133,8 @@ const MINIS = [
   { key: 'occ_only',  cls: 'm-occ',   txt: 'sin cierre' },
   { key: 'over',      cls: 'm-over',  txt: 'sobrequedada' },
   { key: 'early',     cls: 'm-early', txt: 'salida antic.' },
+  { key: 'abierta',   cls: 'm-open',  txt: 'puerta abierta' },
+  { key: 'cont',      cls: 'm-cont',  txt: 'continuación' },
 ];
 
 // Detalle legible de una fila con problema, para la lista del resumen.
@@ -1066,6 +1150,10 @@ function detalleAlerta(row) {
     return `Puerta abierta <strong>${Math.round(row.co_diff)} min después</strong> del check-out · venta ${venta}`;
   if (k === 'early')
     return `Puerta abierta <strong>${Math.abs(Math.round(row.co_diff))} min antes</strong> del check-out · venta ${venta}`;
+  if (k === 'abierta') {
+    const mayor = (row.aperturas || []).reduce((a, x) => x.min > a.min ? x : a, { min: 0 });
+    return `Puerta abierta <strong>${fmtDur(mayor.min)}</strong> a mitad de la estadía (${mayor.start}–${mayor.end}) · venta ${venta}`;
+  }
   return `Puerta ${puerta} · venta ${venta}`;
 }
 
@@ -1078,11 +1166,12 @@ function renderResumen() {
     if (!data && !s) return { m, hay: false };
     const c = data ? countByStatus(data)
                    : { ok: s.ok, door_only: s.door, occ_only: s.occ, over: s.over,
-                       early: s.early, all: s.ok + s.door + s.occ + s.over + s.early };
+                       early: s.early, abierta: s.abierta || 0, cont: s.cont || 0,
+                       all: s.ok + s.door + s.occ + s.over + s.early + (s.abierta || 0) + (s.cont || 0) };
     return {
       m, hay: true, data, c,
-      mal: c.door_only + c.occ_only + c.over + c.early,
-      filas: data ? (data.rows || []).filter(r => kindOf(r) !== 'ok') : [],
+      mal: malDeCounts(c),
+      filas: data ? (data.rows || []).filter(r => MAL_KEYS.includes(kindOf(r))) : [],
     };
   });
 
@@ -1164,7 +1253,7 @@ function renderMotel() {
   const data = cache[date];
   const rows = data.rows || [];
   const counts = countByStatus(data);
-  const alerts = counts.door_only + counts.occ_only + counts.over + counts.early;
+  const alerts = malDeCounts(counts);
 
   const rooms = [...new Set(rows.map(r => r.room))]
     .sort((a, b) => { const ka = roomKey(a), kb = roomKey(b); return ka[0] - kb[0] || String(ka[1]).localeCompare(String(kb[1])); });
@@ -1175,9 +1264,13 @@ function renderMotel() {
 
   const chips = [
     `<button class="chip f-all ${filterStatus === 'all' ? 'on' : ''}" data-f="all">Todas <span class="n">${counts.all}</span></button>`,
-    ...STATUSES.map(st =>
+    ...STATUSES.filter(st => !st.soft || counts[st.key] > 0).map(st =>
       `<button class="chip ${st.cls} ${filterStatus === st.key ? 'on' : ''}" data-f="${st.key}" ${counts[st.key] === 0 ? 'disabled' : ''}>${st.label} <span class="n">${counts[st.key]}</span></button>`)
   ].join('');
+  const toggle = `<div class="view-toggle" role="group" aria-label="Vista">
+      <button class="${viewMode === 'tabla' ? 'on' : ''}" data-v="tabla">Tabla</button>
+      <button class="${viewMode === 'tiempo' ? 'on' : ''}" data-v="tiempo">Línea de tiempo</button>
+    </div>`;
 
   const roomOpts = ['<option value="all">Todas las habitaciones</option>',
     ...rooms.map(r => `<option value="${r}" ${filterRoom === r ? 'selected' : ''}>${r}</option>`)].join('');
@@ -1191,33 +1284,175 @@ function renderMotel() {
     <div class="date-sub"><span>Generado ${data.generated || '—'}</span>${sello(date, data.generated)}</div>
     ${statusHtml}
     <div class="cards">
-      ${STATUSES.map(st => `<div class="card ${st.cardCls}"><div class="num">${counts[st.key]}</div><div class="lbl">${st.card}</div></div>`).join('')}
+      ${STATUSES.filter(st => !st.soft || counts[st.key] > 0).map(st => `<div class="card ${st.cardCls}"><div class="num">${counts[st.key]}</div><div class="lbl">${st.card}</div></div>`).join('')}
     </div>
     <div class="filters">
       ${chips}
+      ${toggle}
       <select class="room-select" id="roomSel">${roomOpts}</select>
     </div>
-    <div class="table-wrap"><table>
+    ${viewMode === 'tiempo' ? renderGantt(data, rooms, visible) : `<div class="table-wrap"><table>
       <thead><tr>
         <th>Habitación</th><th>Estado</th><th>Puerta cerrada</th><th>Duración</th>
         <th>Venta (PMS)</th><th>Pago</th><th>CI Δ / CO Δ</th>
       </tr></thead>
       <tbody>${visible.length ? visible.map(renderRow).join('') :
         '<tr><td colspan="7" class="placeholder" style="padding:36px">Ningún registro con estos filtros</td></tr>'}</tbody>
-    </table></div>
+    </table></div>`}
     <div class="legend">
-      <span>✅ <strong>Emparejada</strong>: cierre ≥15 min coincide con venta (±30 min)</span>
-      <span>🚨 <strong>Cierre sin venta</strong>: puerta cerrada ≥15 min sin registro en PMS</span>
+      <span>✅ <strong>Emparejada</strong>: cierre ≥15 min coincide con venta (±30 min). Si la puerta se abrió a mitad de estadía, los cierres se unen y la apertura queda anotada bajo el horario</span>
+      <span>🚨 <strong>Cierre sin venta</strong>: puerta cerrada ≥15 min sin ninguna venta en PMS que la cubra</span>
       <span>🟡 <strong>Sobrequedada</strong>: la puerta se abrió mucho después del check-out del PMS — posible tiempo extra no cobrado</span>
       <span>🟣 <strong>Salida anticipada</strong>: la puerta se abrió mucho antes del check-out del PMS — la habitación quedó libre dentro de la ventana pagada</span>
       <span>⚠️ <strong>Venta sin cierre</strong>: venta en PMS sin cierre de puerta detectado</span>
+      <span>🚪 <strong>Puerta abierta</strong>: estadía emparejada, pero con la puerta abierta ≥90 min a mitad de la venta — revisar qué pasó en ese rato</span>
+      <span>⏩ <strong>Continuación</strong>: cola de una venta que entró ayer y se abrió hoy — no cuenta como inconsistencia, el veredicto está en el día anterior</span>
     </div>`;
 
   document.querySelectorAll('.chip').forEach(c =>
     c.addEventListener('click', () => { filterStatus = c.dataset.f; render(); }));
+  document.querySelectorAll('.view-toggle button').forEach(b =>
+    b.addEventListener('click', () => { viewMode = b.dataset.v; render(); }));
   document.getElementById('roomSel').addEventListener('change', e => {
     filterRoom = e.target.value; render();
   });
+}
+
+// ─────────────────────────────────────────────────────────────
+//  Línea de tiempo por habitación
+//  Franja de 38 h (00:00 del día → 14:00 del siguiente, lo que trae la
+//  consulta a Home Assistant). Arriba los cierres de puerta, abajo las
+//  ventas del PMS; la raya gruesa es la medianoche.
+// ─────────────────────────────────────────────────────────────
+const GANTT_HORAS = 38;
+
+function minutosDesde(fecha, s) {
+  // s: 'YYYY-MM-DD HH:MM' → minutos desde las 00:00 de `fecha`
+  if (!s) return null;
+  const [d, t] = s.split(' ');
+  const [y, m, dd] = d.split('-').map(Number);
+  const [hh, mm] = t.split(':').map(Number);
+  const [y0, m0, d0] = fecha.split('-').map(Number);
+  const dias = Math.round((Date.UTC(y, m - 1, dd) - Date.UTC(y0, m0 - 1, d0)) / 86400000);
+  return dias * 1440 + hh * 60 + mm;
+}
+
+// Para días sin bloque `eventos` (reportes anteriores a la regla de
+// contención): se arma desde las filas, que solo traen horas.
+function eventosDesdeFilas(data) {
+  const ev = {};
+  (data.rows || []).forEach(r => {
+    const e = ev[r.room] = ev[r.room] || { cierres: [], ventas: [] };
+    const full = (hhmm, base) => {
+      if (!hhmm) return null;
+      let d = data.date;
+      if (base && hhmm < base) {  // cruzó medianoche
+        const [y, m, dd] = data.date.split('-').map(Number);
+        const n = new Date(y, m - 1, dd + 1);
+        d = `${n.getFullYear()}-${String(n.getMonth() + 1).padStart(2, '0')}-${String(n.getDate()).padStart(2, '0')}`;
+      }
+      return `${d} ${hhmm}`;
+    };
+    if (r.door_start) e.cierres.push([full(r.door_start), full(r.door_end, r.door_start), r.duration_min]);
+    if (r.occ_start && r.status !== 'continuacion') e.ventas.push([full(r.occ_start), full(r.occ_end, r.occ_start), r.tipo, r.payment]);
+  });
+  return ev;
+}
+
+function renderGantt(data, rooms, visible) {
+  const fecha = data.date;
+  const eventos = data.eventos || eventosDesdeFilas(data);
+  const total = GANTT_HORAS * 60;
+  const pct = min => `${Math.max(0, Math.min(100, (min / total) * 100)).toFixed(2)}%`;
+  const roomsVisibles = rooms.filter(r => filterRoom === 'all' || r === filterRoom)
+                             .filter(r => filterStatus === 'all' || visible.some(v => v.room === r));
+
+  // Ejes: una marca cada 2 h; 00:00 del día siguiente en negrita
+  let axis = '', grid = '';
+  for (let h = 0; h <= GANTT_HORAS; h += 2) {
+    const mid = h === 24;
+    const lbl = mid ? '00:00 +1' : `${String(h % 24).padStart(2, '0')}:00`;
+    axis += `<span class="${mid ? 'mid' : ''}" style="left:${pct(h * 60)}">${lbl}</span>`;
+    grid += `<div class="grid ${mid ? 'mid' : ''}" style="left:${pct(h * 60)}"></div>`;
+  }
+
+  // Clasificación de cada cierre: por la fila a la que pertenece (misma
+  // hora de inicio). Los cierres que ya se absorbieron como fragmentos
+  // heredan el estado de su fila a través de las aperturas anotadas.
+  const filasDe = room => (data.rows || []).filter(r => r.room === room);
+  const kindDoor = (room, s, e, dur) => {
+    const hhmm = s.slice(11);
+    const esDiaSig = !s.startsWith(fecha);
+    for (const r of filasDe(room)) {
+      if (!r.door_start) continue;
+      if (r.door_start === hhmm && (r.status === 'continuacion' || !esDiaSig)) return kindOf(r);
+      // fragmento absorbido: empieza en el "end" de alguna apertura anotada
+      if ((r.aperturas || []).some(a => a.end === hhmm)) return kindOf(r);
+    }
+    if (dur != null && dur < 15) return 'short';
+    return esDiaSig ? 'next' : 'door_only';
+  };
+  const kindSale = (room, s) => {
+    const hhmm = s.slice(11);
+    const r = filasDe(room).find(x => x.occ_start === hhmm && x.status !== 'continuacion');
+    if (!s.startsWith(fecha)) return 'ayer';
+    return r && r.status === 'occ_only' ? 'occ' : 'ok';
+  };
+  const CLS = { ok: 'k-ok', door_only: 'k-door', over: 'k-over', early: 'k-early', abierta: 'k-open', cont: 'k-cont', short: 'k-short', next: 'k-next' };
+  const NOMBRE = { ok: 'Emparejada', door_only: 'Sin venta', over: 'Sobrequedada', early: 'Salida anticipada', abierta: 'Puerta abierta a mitad de estadía', cont: 'Continuación de ayer', short: 'Cierre breve (<15 min, no se cruza)', next: 'Cierre del día siguiente (se evalúa en ese día)' };
+
+  const filas = roomsVisibles.map(room => {
+    const ev = eventos[room] || { cierres: [], ventas: [] };
+    let bars = '';
+    ev.cierres.forEach(([s, e, dur]) => {
+      const a = minutosDesde(fecha, s);
+      const b = e ? minutosDesde(fecha, e) : total;
+      if (a == null || b <= 0 || a >= total) return;
+      const k = kindDoor(room, s, e, dur);
+      bars += `<div class="bar door ${CLS[k] || ''}" style="left:${pct(a)};width:${pct(Math.max(b - a, 4))}"
+        title="Puerta cerrada ${s.slice(11)} – ${e ? e.slice(11) : 'sigue cerrada'} (${fmtDur(dur)}) · ${NOMBRE[k] || k}"></div>`;
+    });
+    ev.ventas.forEach(([s, e, tipo, pago]) => {
+      const a = minutosDesde(fecha, s);
+      const b = e ? minutosDesde(fecha, e) : total;
+      if (a == null || b <= 0 || a >= total) return;
+      const k = kindSale(room, s);
+      bars += `<div class="bar sale k-${k}" style="left:${pct(Math.max(a, 0))};width:${pct(Math.max(Math.min(b, total) - Math.max(a, 0), 4))}"
+        title="Venta PMS ${s.slice(11)} – ${e ? e.slice(11) : '?'}${s.startsWith(fecha) ? '' : ' (entró el ' + s.slice(0, 10) + ')'} · ${tipo || ''} · ${pago || ''}${k === 'occ' ? ' · sin cierre de puerta' : ''}"></div>`;
+    });
+    // Aperturas intermedias absorbidas: rayado entre fragmentos
+    filasDe(room).forEach(r => (r.aperturas || []).forEach(ap => {
+      const base = r.door_start;
+      const s = `${fecha} ${ap.start}`;
+      let a = minutosDesde(fecha, s); if (ap.start < base) a += 1440;
+      let b = a + Math.round(ap.min);
+      bars += `<div class="bar gap" style="left:${pct(a)};width:${pct(Math.max(b - a, 3))}"
+        title="Puerta abierta ${fmtDur(ap.min)} a mitad de la estadía (${ap.start}–${ap.end})"></div>`;
+    }));
+    const CORTO = { door_only: 'sin venta', occ_only: 'sin cierre', over: 'sobrequedada', early: 'anticipada', abierta: 'puerta abierta' };
+    const estados = [...new Set(filasDe(room).map(kindOf))].filter(k => CORTO[k]).map(k => CORTO[k]).join(' · ');
+    return `<div class="gantt-room">
+      <div class="gantt-lbl">${room}${estados ? `<small>${estados}</small>` : ''}</div>
+      <div class="gantt-lane-col"><span>puerta</span><span>pms</span></div>
+      <div class="gantt-lanes">${grid}${bars}</div>
+    </div>`;
+  }).join('');
+
+  return `<div class="gantt">
+    <div class="gantt-head"><div></div><div></div><div class="gantt-axis">${axis}</div></div>
+    ${filas || '<div class="placeholder" style="padding:36px">Ninguna habitación con estos filtros</div>'}
+    <div class="gantt-legend">
+      <span><i style="background:var(--ok)"></i>cierre emparejado</span>
+      <span><i style="background:var(--alert)"></i>cierre sin venta</span>
+      <span><i style="background:var(--info)"></i>sobrequedada</span>
+      <span><i style="background:var(--early)"></i>salida anticipada</span>
+      <span><i style="background:var(--open)"></i>puerta abierta a mitad de estadía</span>
+      <span><i style="background:var(--cont)"></i>continuación / día siguiente</span>
+      <span><i style="background:var(--info-bg);border:1.5px solid var(--info)"></i>venta PMS</span>
+      <span><i style="background:var(--warn-bg);border:1.5px solid var(--warn)"></i>venta sin cierre</span>
+      <span><i style="background:repeating-linear-gradient(135deg,transparent 0 3px,var(--open) 3px 4px)"></i>apertura intermedia absorbida</span>
+    </div>
+  </div>`;
 }
 
 function renderRow(row) {
@@ -1225,12 +1460,21 @@ function renderRow(row) {
   const rowCls = st ? st.rowCls : 'r-ok';
   const badge = st ? st.badge : `<span class="badge b-ok">${row.status}</span>`;
 
-  const doorStr = row.door_start ? `${row.door_start} – ${row.door_end || '—'}` : '—';
+  let doorStr = row.door_start ? `${row.door_start} – ${row.door_end || '—'}` : '—';
+  if (row.aperturas && row.aperturas.length) {
+    const larga = row.aperturas.some(a => a.min >= 90);
+    doorStr += `<span class="aperturas ${larga ? 'larga' : ''}">` +
+      row.aperturas.map(a => `abierta ${fmtDur(a.min)} (${a.start}–${a.end})`).join(' · ') + '</span>';
+  }
   const durMin = row.duration_min;
   const durStr = durMin != null
     ? `<span class="${durMin >= 60 ? 'long' : ''}">${fmtDur(durMin)}</span>`
     : '—';
-  const pmsStr = row.occ_start ? `${row.occ_start} – ${row.occ_end || '—'}` : '—';
+  let pmsStr = row.occ_start ? `${row.occ_start} – ${row.occ_end || '—'}` : '—';
+  if (row.status === 'continuacion' && row.occ_date) {
+    const [, m, d] = row.occ_date.split('-');
+    pmsStr += `<span class="occ-ayer">(entró el ${Number(d)}/${Number(m)})</span>`;
+  }
 
   let diffStr = '—';
   if (row.ci_diff != null && row.co_diff != null) {
@@ -1239,6 +1483,9 @@ function renderRow(row) {
               ` / <span class="${Math.abs(row.co_diff) > 60 ? 'diff-bad' : 'diff-ok'}">${f(row.co_diff)} min</span>`;
   } else if (row.status === 'occ_only') {
     diffStr = '<span class="alert-msg">Sin cierre de puerta</span>';
+  }
+  if (row.status === 'continuacion') {
+    diffStr = '<span class="alert-msg">Cola de la estadía de ayer</span>';
   }
 
   if (row.status === 'door_only') {

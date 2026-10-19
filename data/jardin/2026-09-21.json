@@ -11,6 +11,8 @@
     "total_door_only": 3,
     "total_occ_only": 5,
     "total_co_alert": 0,
+    "total_continuacion": 0,
+    "total_open_alert": 0,
     "alert_count": 8
   },
   "rows": [
@@ -19,13 +21,13 @@
       "status": "ok",
       "door_start": "15:10",
       "door_end": "17:46",
-      "duration_min": 156.1,
+      "duration_min": 156.0,
       "occ_start": "15:11",
       "occ_end": "17:36",
       "tipo": "Sin Reserva",
       "payment": "tarjeta",
-      "ci_diff": -0.4,
-      "co_diff": 10.7,
+      "ci_diff": -1.0,
+      "co_diff": 10.0,
       "co_alert": false
     },
     {
@@ -89,7 +91,7 @@
       "status": "door_only",
       "door_start": "16:15",
       "door_end": "16:38",
-      "duration_min": 23.4,
+      "duration_min": 23.0,
       "occ_start": null,
       "occ_end": null,
       "tipo": null,
@@ -117,7 +119,7 @@
       "status": "door_only",
       "door_start": "23:49",
       "door_end": "13:16",
-      "duration_min": 807.1,
+      "duration_min": 807.0,
       "occ_start": null,
       "occ_end": null,
       "tipo": null,
@@ -140,5 +142,181 @@
       "co_diff": null,
       "co_alert": false
     }
-  ]
+  ],
+  "reclasificado": "2026-10-19 19:02",
+  "eventos": {
+    "42 Aire": {
+      "cierres": [
+        [
+          "2026-09-21 16:15",
+          "2026-09-21 16:38",
+          23.0
+        ]
+      ],
+      "ventas": []
+    },
+    "44 Aire": {
+      "cierres": [
+        [
+          "2026-09-21 23:49",
+          "2026-09-22 13:16",
+          807.0
+        ]
+      ],
+      "ventas": [
+        [
+          "2026-09-21 17:32",
+          "2026-09-21 20:43",
+          "Express",
+          "tarjeta"
+        ]
+      ]
+    },
+    "13": {
+      "cierres": [],
+      "ventas": []
+    },
+    "24 Aire": {
+      "cierres": [
+        [
+          "2026-09-22 00:39",
+          "2026-09-22 10:51",
+          612.0
+        ]
+      ],
+      "ventas": []
+    },
+    "43 Aire": {
+      "cierres": [],
+      "ventas": [
+        [
+          "2026-09-21 16:01",
+          "2026-09-21 21:41",
+          "Sin Reserva",
+          "tarjeta"
+        ]
+      ]
+    },
+    "23 Aire": {
+      "cierres": [
+        [
+          "2026-09-21 15:10",
+          "2026-09-21 17:46",
+          156.0
+        ],
+        [
+          "2026-09-22 11:12",
+          "2026-09-22 17:20",
+          368.0
+        ]
+      ],
+      "ventas": [
+        [
+          "2026-09-21 15:11",
+          "2026-09-21 17:36",
+          "Sin Reserva",
+          "tarjeta"
+        ]
+      ]
+    },
+    "14": {
+      "cierres": [
+        [
+          "2026-09-22 11:57",
+          "2026-09-22 13:36",
+          99.0
+        ]
+      ],
+      "ventas": []
+    },
+    "22": {
+      "cierres": [],
+      "ventas": []
+    },
+    "36 Aire": {
+      "cierres": [],
+      "ventas": [
+        [
+          "2026-09-21 17:49",
+          "2026-09-21 20:39",
+          "Express",
+          "tarjeta"
+        ]
+      ]
+    },
+    "12 Aire": {
+      "cierres": [
+        [
+          "2026-09-22 10:44",
+          "2026-09-22 13:29",
+          165.0
+        ]
+      ],
+      "ventas": []
+    },
+    "21 Aire": {
+      "cierres": [
+        [
+          "2026-09-22 09:00",
+          "2026-09-22 12:48",
+          228.0
+        ]
+      ],
+      "ventas": []
+    },
+    "31": {
+      "cierres": [
+        [
+          "2026-09-22 13:52",
+          null,
+          607.8
+        ]
+      ],
+      "ventas": [
+        [
+          "2026-09-21 19:35",
+          "2026-09-21 21:44",
+          "Sin Reserva",
+          "tarjeta"
+        ]
+      ]
+    },
+    "33 Aire": {
+      "cierres": [
+        [
+          "2026-09-21 12:02",
+          null,
+          1549.5
+        ]
+      ],
+      "ventas": [
+        [
+          "2026-09-21 17:20",
+          "2026-09-21 20:01",
+          "Express",
+          "tarjeta"
+        ]
+      ]
+    },
+    "11": {
+      "cierres": [
+        [
+          "2026-09-22 13:13",
+          "2026-09-23 00:23",
+          670.0
+        ]
+      ],
+      "ventas": []
+    },
+    "41 Aire": {
+      "cierres": [
+        [
+          "2026-09-22 13:46",
+          null,
+          613.1
+        ]
+      ],
+      "ventas": []
+    }
+  }
 }
