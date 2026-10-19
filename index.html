@@ -606,6 +606,7 @@
   .alist-h .cuenta { font-size: .8125rem; font-weight: 600; color: var(--sub); }
   .amotel { margin-bottom: 16px; }
   .amotel-h {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
     font-size: .75rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -613,6 +614,9 @@
     color: var(--sub);
     padding: 0 0 6px 2px;
   }
+  .amotel-ir { padding: 3px 8px; font-size: .72rem; text-transform: none; letter-spacing: 0; }
+  .alist-h .view-toggle { margin-left: auto; }
+  .amotel + .gantt-legend { margin-top: -6px; }
   .arow {
     display: flex;
     align-items: center;
@@ -723,7 +727,9 @@ let currentDate = '';    // fecha activa; se conserva al cambiar de motel
 let currentMonth = '';   // 'YYYY-MM'
 let filterStatus = 'all';
 let filterRoom = 'all';
-let viewMode = 'tabla';   // 'tabla' | 'tiempo'
+let viewMode = 'tabla';   // 'tabla' | 'tiempo'   (detalle de un motel)
+let resumenVista = 'tiempo'; // 'tiempo' | 'lista'   (sección "Qué revisar" del resumen)
+try { resumenVista = localStorage.getItem('resumenVista') || 'tiempo'; } catch (e) {}
 
 function motelDe(slug) { return MOTELES.find(m => m.slug === slug); }
 
@@ -1248,9 +1254,20 @@ function renderResumen() {
     </div>`;
   }).join('');
 
-  const listas = porMotel.filter(x => x.hay && x.filas.length).map(x => `
-    <div class="amotel">
-      <div class="amotel-h">${x.m.nombre} — ${x.filas.length} inconsistencia${x.filas.length > 1 ? 's' : ''}</div>
+  // "Qué revisar": por motel, solo las habitaciones con alguna inconsistencia.
+  // En modo línea de tiempo se ve de un vistazo si un cierre sin venta es
+  // preocupante (dónde cae respecto de las ventas de esa pieza) sin entrar
+  // a cada motel; en modo lista, el detalle en texto de siempre.
+  const conProblemas = porMotel.filter(x => x.hay && x.filas.length);
+  const listas = conProblemas.map(x => {
+    const titulo = `<div class="amotel-h">${x.m.nombre} — ${x.filas.length} inconsistencia${x.filas.length > 1 ? 's' : ''}
+        <button class="mcard-link amotel-ir" data-ir="${x.m.slug}">Ver detalle →</button></div>`;
+    if (resumenVista === 'tiempo' && x.data) {
+      const rooms = [...new Set(x.filas.map(r => r.room))]
+        .sort((a, b) => { const ka = roomKey(a), kb = roomKey(b); return ka[0] - kb[0] || String(ka[1]).localeCompare(String(kb[1])); });
+      return `<div class="amotel">${titulo}${renderGantt(x.data, rooms, { leyenda: false })}</div>`;
+    }
+    return `<div class="amotel">${titulo}
       ${x.filas.map(r => {
         const st = BY_KEY[kindOf(r)];
         return `<div class="arow">
@@ -1259,10 +1276,16 @@ function renderResumen() {
           <span class="det">${detalleAlerta(r)}</span>
         </div>`;
       }).join('')}
-    </div>`).join('');
+    </div>`;
+  }).join('');
 
+  const toggleResumen = `<div class="view-toggle" role="group" aria-label="Cómo ver las inconsistencias">
+      <button class="${resumenVista === 'tiempo' ? 'on' : ''}" data-rv="tiempo">Línea de tiempo</button>
+      <button class="${resumenVista === 'lista' ? 'on' : ''}" data-rv="lista">Lista</button>
+    </div>`;
   const cuerpoAlertas = totalMal > 0
-    ? `<div class="alist-h">Qué revisar <span class="cuenta">${totalOk} estadías cuadran</span></div>${listas}`
+    ? `<div class="alist-h">Qué revisar <span class="cuenta">${totalOk} estadías cuadran</span>${toggleResumen}</div>
+       ${listas}${resumenVista === 'tiempo' ? ganttLeyenda() : ''}`
     : '';
 
   const avisoSinDatos = sinDatos.length
@@ -1279,6 +1302,12 @@ function renderResumen() {
 
   document.querySelectorAll('.mcard-link[data-ir]').forEach(b =>
     b.addEventListener('click', () => cambiarVista(b.dataset.ir)));
+  document.querySelectorAll('.view-toggle button[data-rv]').forEach(b =>
+    b.addEventListener('click', () => {
+      resumenVista = b.dataset.rv;
+      try { localStorage.setItem('resumenVista', resumenVista); } catch (e) {}
+      render();
+    }));
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -1327,7 +1356,7 @@ function renderMotel() {
       ${toggle}
       <select class="room-select" id="roomSel">${roomOpts}</select>
     </div>
-    ${viewMode === 'tiempo' ? renderGantt(data, rooms, visible) : `<div class="table-wrap"><table>
+    ${viewMode === 'tiempo' ? renderGantt(data, rooms.filter(r => (filterRoom === 'all' || r === filterRoom) && (filterStatus === 'all' || visible.some(v => v.room === r)))) : `<div class="table-wrap"><table>
       <thead><tr>
         <th>Habitación</th><th>Estado</th><th>Puerta cerrada</th><th>Duración</th>
         <th>Venta (PMS)</th><th>Pago</th><th>CI Δ / CO Δ</th>
@@ -1395,13 +1424,27 @@ function eventosDesdeFilas(data) {
   return ev;
 }
 
-function renderGantt(data, rooms, visible) {
+function ganttLeyenda() {
+  return `<div class="gantt-legend">
+      <span><i style="background:var(--ok)"></i>cierre emparejado</span>
+      <span><i style="background:var(--alert)"></i>cierre sin venta</span>
+      <span><i style="background:var(--info)"></i>sobrequedada</span>
+      <span><i style="background:var(--early)"></i>salida anticipada</span>
+      <span><i style="background:var(--open)"></i>puerta abierta a mitad de estadía</span>
+      <span><i style="background:var(--cont)"></i>continuación / día siguiente</span>
+      <span><i style="background:var(--info-bg);border:1.5px solid var(--info)"></i>venta PMS</span>
+      <span><i style="background:var(--warn-bg);border:1.5px solid var(--warn)"></i>venta sin cierre</span>
+      <span><i style="background:repeating-linear-gradient(135deg,transparent 0 3px,var(--open) 3px 4px)"></i>apertura intermedia absorbida</span>
+    </div>`;
+}
+
+// roomsVisibles: las habitaciones a pintar, ya filtradas por quien llama.
+function renderGantt(data, roomsVisibles, opts) {
+  opts = opts || {};
   const fecha = data.date;
   const eventos = data.eventos || eventosDesdeFilas(data);
   const total = GANTT_HORAS * 60;
   const pct = min => `${Math.max(0, Math.min(100, (min / total) * 100)).toFixed(2)}%`;
-  const roomsVisibles = rooms.filter(r => filterRoom === 'all' || r === filterRoom)
-                             .filter(r => filterStatus === 'all' || visible.some(v => v.room === r));
 
   // Ejes: una marca cada 2 h; 00:00 del día siguiente en negrita
   let axis = '', grid = '';
@@ -1477,17 +1520,7 @@ function renderGantt(data, rooms, visible) {
   return `<div class="gantt">
     <div class="gantt-head"><div></div><div></div><div class="gantt-axis">${axis}</div></div>
     ${filas || '<div class="placeholder" style="padding:36px">Ninguna habitación con estos filtros</div>'}
-    <div class="gantt-legend">
-      <span><i style="background:var(--ok)"></i>cierre emparejado</span>
-      <span><i style="background:var(--alert)"></i>cierre sin venta</span>
-      <span><i style="background:var(--info)"></i>sobrequedada</span>
-      <span><i style="background:var(--early)"></i>salida anticipada</span>
-      <span><i style="background:var(--open)"></i>puerta abierta a mitad de estadía</span>
-      <span><i style="background:var(--cont)"></i>continuación / día siguiente</span>
-      <span><i style="background:var(--info-bg);border:1.5px solid var(--info)"></i>venta PMS</span>
-      <span><i style="background:var(--warn-bg);border:1.5px solid var(--warn)"></i>venta sin cierre</span>
-      <span><i style="background:repeating-linear-gradient(135deg,transparent 0 3px,var(--open) 3px 4px)"></i>apertura intermedia absorbida</span>
-    </div>
+    ${opts.leyenda === false ? '' : ganttLeyenda()}
   </div>`;
 }
 
