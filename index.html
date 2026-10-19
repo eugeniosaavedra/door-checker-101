@@ -36,6 +36,15 @@
     --cont:      #64748b;
     --cont-bg:   #f8fafc;
     --cont-bdr:  #cbd5e1;
+    --tardio:    #c2410c;
+    --tardio-bg: #fff7ed;
+    --tardio-bdr:#fed7aa;
+    --ctardio:   #be185d;
+    --ctardio-bg:#fdf2f8;
+    --ctardio-bdr:#fbcfe8;
+    --aseo:      #57534e;
+    --aseo-bg:   #f5f5f4;
+    --aseo-bdr:  #d6d3d1;
     --sev0:      #059669;
     --sev1:      #d97706;
     --sev2:      #ea580c;
@@ -73,6 +82,15 @@
       --cont:      #94a3b8;
       --cont-bg:   #171a23;
       --cont-bdr:  #334155;
+      --tardio:    #fb923c;
+      --tardio-bg: #2a1506;
+      --tardio-bdr:#7c2d12;
+      --ctardio:   #f472b6;
+      --ctardio-bg:#2a0a1b;
+      --ctardio-bdr:#831843;
+      --aseo:      #a8a29e;
+      --aseo-bg:   #1c1917;
+      --aseo-bdr:  #44403c;
       --sev0:      #34d399;
       --sev1:      #fbbf24;
       --sev2:      #fb923c;
@@ -90,6 +108,9 @@
     --early:#a78bfa; --early-bg:#1e1435; --early-bdr:#5b21b6;
     --open:#2dd4bf; --open-bg:#042f2e; --open-bdr:#115e59;
     --cont:#94a3b8; --cont-bg:#171a23; --cont-bdr:#334155;
+    --tardio:#fb923c; --tardio-bg:#2a1506; --tardio-bdr:#7c2d12;
+    --ctardio:#f472b6; --ctardio-bg:#2a0a1b; --ctardio-bdr:#831843;
+    --aseo:#a8a29e; --aseo-bg:#1c1917; --aseo-bdr:#44403c;
     --sev0:#34d399; --sev1:#fbbf24; --sev2:#fb923c; --sev3:#f87171;
     --shadow:0 1px 3px rgba(0,0,0,.4);
     color-scheme: dark;
@@ -205,6 +226,9 @@
   .day .ring .seg-over  { stroke: var(--info); }
   .day .ring .seg-early { stroke: var(--early); }
   .day .ring .seg-open  { stroke: var(--open); }
+  .day .ring .seg-tardio  { stroke: var(--tardio); }
+  .day .ring .seg-ctardio { stroke: var(--ctardio); }
+  .day .ring .seg-aseo    { stroke: var(--aseo); }
   .day .ring .dnum {
     position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
     font-size: 0.95rem; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1;
@@ -233,6 +257,9 @@
   .tl-legend .l-over  { background: var(--info); }
   .tl-legend .l-early { background: var(--early); }
   .tl-legend .l-open  { background: var(--open); }
+  .tl-legend .l-tardio  { background: var(--tardio); }
+  .tl-legend .l-ctardio { background: var(--ctardio); }
+  .tl-legend .l-aseo    { background: var(--aseo); }
 
   /* ── Main ─────────────────────────────────── */
   .main { max-width: 1100px; margin: 0 auto; padding: 24px; }
@@ -313,6 +340,9 @@
   .chip.on.f-early { background: var(--early-bg); color: var(--early); border-color: var(--early-bdr); }
   .chip.on.f-open  { background: var(--open-bg);  color: var(--open);  border-color: var(--open-bdr); }
   .chip.on.f-cont  { background: var(--cont-bg);  color: var(--cont);  border-color: var(--cont-bdr); }
+  .chip.on.f-tardio  { background: var(--tardio-bg);  color: var(--tardio);  border-color: var(--tardio-bdr); }
+  .chip.on.f-ctardio { background: var(--ctardio-bg); color: var(--ctardio); border-color: var(--ctardio-bdr); }
+  .chip.on.f-aseo    { background: var(--aseo-bg);    color: var(--aseo);    border-color: var(--aseo-bdr); }
   .chip:disabled { opacity: .4; cursor: default; }
 
   .room-select {
@@ -389,6 +419,12 @@
   tr.r-early { background: var(--early-bg); }
   tr.r-open  { background: var(--open-bg); }
   tr.r-cont  { background: var(--cont-bg); color: var(--sub); }
+  tr.r-tardio  { background: var(--tardio-bg); }
+  tr.r-ctardio { background: var(--ctardio-bg); }
+  tr.r-aseo    { background: var(--aseo-bg); }
+  .nota { display: block; font-size: .72rem; color: var(--sub); margin-top: 2px; white-space: normal; }
+  .nota.tardio { color: var(--tardio); font-weight: 600; }
+  .nota.ctardio { color: var(--ctardio); font-weight: 600; }
   tr:hover td { filter: brightness(.97); }
 
   .badge {
@@ -407,9 +443,15 @@
   .b-early { background: var(--early-bg); color: var(--early); border-color: var(--early-bdr); }
   .b-open  { background: var(--open-bg);  color: var(--open);  border-color: var(--open-bdr); }
   .b-cont  { background: var(--cont-bg);  color: var(--cont);  border-color: var(--cont-bdr); }
+  .b-tardio  { background: var(--tardio-bg);  color: var(--tardio);  border-color: var(--tardio-bdr); }
+  .b-ctardio { background: var(--ctardio-bg); color: var(--ctardio); border-color: var(--ctardio-bdr); }
+  .b-aseo    { background: var(--aseo-bg);    color: var(--aseo);    border-color: var(--aseo-bdr); }
   .card.c-early .num { color: var(--early); }
   .card.c-open  .num { color: var(--open); }
   .card.c-cont  .num { color: var(--cont); }
+  .card.c-tardio  .num { color: var(--tardio); }
+  .card.c-ctardio .num { color: var(--ctardio); }
+  .card.c-aseo    .num { color: var(--aseo); }
   .aperturas { display: block; font-size: .72rem; color: var(--sub); margin-top: 2px; white-space: normal; }
   .aperturas.larga { color: var(--open); font-weight: 600; }
   .occ-ayer { font-size: .72rem; color: var(--sub); margin-left: 4px; }
@@ -446,6 +488,9 @@
   .bar.door.k-cont   { background: var(--cont); }
   .bar.door.k-short  { background: var(--sub); opacity: .45; height: 8px; top: 9px; }
   .bar.door.k-next   { background: var(--sub); opacity: .55; }
+  .bar.door.k-tardio  { background: var(--tardio); }
+  .bar.door.k-ctardio { background: var(--ctardio); }
+  .bar.door.k-aseo    { background: var(--aseo); }
   .bar.sale { top: 27px; background: var(--info-bg); border: 1.5px solid var(--info); }
   .bar.sale.k-occ   { background: var(--warn-bg); border-color: var(--warn); }
   .bar.sale.k-ayer  { border-style: dashed; }
@@ -579,6 +624,9 @@
   .mini.m-early { background: var(--early-bg); border-color: var(--early-bdr); color: var(--early); }
   .mini.m-open  { background: var(--open-bg);  border-color: var(--open-bdr);  color: var(--open); }
   .mini.m-cont  { background: var(--cont-bg);  border-color: var(--cont-bdr);  color: var(--cont); }
+  .mini.m-tardio  { background: var(--tardio-bg);  border-color: var(--tardio-bdr);  color: var(--tardio); }
+  .mini.m-ctardio { background: var(--ctardio-bg); border-color: var(--ctardio-bdr); color: var(--ctardio); }
+  .mini.m-aseo    { background: var(--aseo-bg);    border-color: var(--aseo-bdr);    color: var(--aseo); }
   .mcard-link {
     appearance: none;
     background: none;
@@ -677,6 +725,9 @@
     <span><i class="l-over"></i>Sobrequedada</span>
     <span><i class="l-early"></i>Salida anticipada</span>
     <span><i class="l-open"></i>Puerta abierta a mitad de estadía</span>
+    <span><i class="l-tardio"></i>Registro tardío</span>
+    <span><i class="l-ctardio"></i>Cierre tardío</span>
+    <span><i class="l-aseo"></i>Posible aseo</span>
     <span>· Debajo de cada día: emparejadas · cierres sin venta</span>
   </div>
 </nav>
@@ -747,7 +798,7 @@ function aplicarVista(slug) {
   }
 }
 
-function malDe(s) { return s ? s.door + s.over + s.early + s.occ + (s.abierta || 0) : 0; }
+function malDe(s) { return s ? s.door + s.over + s.early + s.occ + (s.abierta || 0) + (s.tardio || 0) + (s.ctardio || 0) + (s.aseo || 0) : 0; }
 
 const MESES = ['enero','febrero','marzo','abril','mayo','junio',
                'julio','agosto','septiembre','octubre','noviembre','diciembre'];
@@ -759,6 +810,9 @@ const STATUSES = [
   { key: 'early',     cls: 'f-early', label: '🟣 Salidas anticipadas', card: 'Salida anticipada 🟣', cardCls: 'c-early', rowCls: 'r-early', badge: '<span class="badge b-early">🟣 Salida anticipada</span>' },
   { key: 'occ_only',  cls: 'f-occ',   label: '⚠️ Venta sin cierre',  card: 'Venta sin cierre ⚠️',  cardCls: 'c-warn',  rowCls: 'r-occ',   badge: '<span class="badge b-warn">⚠️ Sin cierre</span>' },
   { key: 'abierta',   cls: 'f-open',  label: '🚪 Puerta abierta',     card: 'Puerta abierta 🚪',     cardCls: 'c-open',  rowCls: 'r-open',  badge: '<span class="badge b-open">🚪 Puerta abierta</span>', soft: true },
+  { key: 'tardio',    cls: 'f-tardio',  label: '🕒 Registro tardío',  card: 'Registro tardío 🕒',  cardCls: 'c-tardio',  rowCls: 'r-tardio',  badge: '<span class="badge b-tardio">🕒 Registro tardío</span>', soft: true },
+  { key: 'ctardio',   cls: 'f-ctardio', label: '🕒 Cierre tardío',    card: 'Cierre tardío 🕒',    cardCls: 'c-ctardio', rowCls: 'r-ctardio', badge: '<span class="badge b-ctardio">🕒 Cierre tardío</span>', soft: true },
+  { key: 'aseo',      cls: 'f-aseo',    label: '🧹 Posible aseo',     card: 'Posible aseo 🧹',     cardCls: 'c-aseo',    rowCls: 'r-aseo',    badge: '<span class="badge b-aseo">🧹 Posible aseo</span>', soft: true },
   { key: 'cont',      cls: 'f-cont',  label: '⏩ Continuación',       card: 'Continuación ⏩',       cardCls: 'c-cont',  rowCls: 'r-cont',  badge: '<span class="badge b-cont">⏩ Continuación</span>', soft: true },
 ];
 const BY_KEY = Object.fromEntries(STATUSES.map(s => [s.key, s]));
@@ -768,15 +822,23 @@ const BY_KEY = Object.fromEntries(STATUSES.map(s => [s.key, s]));
 //   co_diff < 0 → la puerta se abrió ANTES del check-out del PMS    → salida anticipada
 //   open_alert   → estadía emparejada con una apertura intermedia larga (≥90 min)
 //   continuacion → cola de una venta de ayer que se abrió hoy (informativo)
+//   registro_tardio → la venta se registró 30 min–3 h después de que se cerró la puerta
+//   cierre_tardio   → la puerta se cerró 30 min–3 h después del check-in registrado
+//   aseo            → cierre corto justo después de un check-out (posible aseo)
 function kindOf(row) {
-  if (row.status === 'open_alert')   return 'abierta';
-  if (row.status === 'continuacion') return 'cont';
+  if (row.status === 'open_alert')      return 'abierta';
+  if (row.status === 'continuacion')    return 'cont';
+  if (row.status === 'registro_tardio') return 'tardio';
+  if (row.status === 'cierre_tardio')   return 'ctardio';
+  if (row.status === 'aseo')            return 'aseo';
   if (row.status !== 'co_alert') return row.status;
   return (row.co_diff != null && row.co_diff > 0) ? 'over' : 'early';
 }
 // Lo que cuenta como inconsistencia: todo menos OK y continuación.
-const MAL_KEYS = ['door_only', 'occ_only', 'over', 'early', 'abierta'];
+// En orden de gravedad: así se ordena "Qué revisar" en el resumen.
+const MAL_KEYS = ['door_only', 'occ_only', 'over', 'early', 'tardio', 'ctardio', 'abierta', 'aseo'];
 function malDeCounts(c) { return MAL_KEYS.reduce((a, k) => a + (c[k] || 0), 0); }
+function gravedad(row) { const i = MAL_KEYS.indexOf(kindOf(row)); return i < 0 ? 99 : i; }
 
 // ─────────────────────────────────────────────────────────────
 //  Utilidades
@@ -805,7 +867,7 @@ function dowShort(ds) {
 }
 
 function countByStatus(data) {
-  const c = { ok: 0, door_only: 0, occ_only: 0, over: 0, early: 0, abierta: 0, cont: 0 };
+  const c = { ok: 0, door_only: 0, occ_only: 0, over: 0, early: 0, abierta: 0, cont: 0, tardio: 0, ctardio: 0, aseo: 0 };
   (data.rows || []).forEach(r => { const k = kindOf(r); if (k in c) c[k]++; });
   c.all = (data.rows || []).length;
   return c;
@@ -820,7 +882,10 @@ const RING_SEGS = [
   { key: 'occ',   cls: 'seg-occ' },
   { key: 'over',  cls: 'seg-over' },
   { key: 'early', cls: 'seg-early' },
+  { key: 'tardio',  cls: 'seg-tardio' },
+  { key: 'ctardio', cls: 'seg-ctardio' },
   { key: 'abierta', cls: 'seg-open' },
+  { key: 'aseo',    cls: 'seg-aseo' },
 ];
 function ringHtml(s, dayNum) {
   const total = s ? RING_SEGS.reduce((a, g) => a + (s[g.key] || 0), 0) : 0;
@@ -851,7 +916,7 @@ function statsOf(date) {
   if (stats[date]) return stats[date];
   if (cache[date]) {
     const c = countByStatus(cache[date]);
-    stats[date] = { ok: c.ok, door: c.door_only, over: c.over, early: c.early, occ: c.occ_only, abierta: c.abierta, cont: c.cont };
+    stats[date] = { ok: c.ok, door: c.door_only, over: c.over, early: c.early, occ: c.occ_only, abierta: c.abierta, cont: c.cont, tardio: c.tardio, ctardio: c.ctardio, aseo: c.aseo };
     return stats[date];
   }
   return null;
@@ -897,10 +962,10 @@ async function init() {
   unionDates = [...todas].sort().reverse();
   statsUnion = {};
   unionDates.forEach(d => {
-    const t = { ok: 0, door: 0, over: 0, early: 0, occ: 0, abierta: 0, cont: 0 };
+    const t = { ok: 0, door: 0, over: 0, early: 0, occ: 0, abierta: 0, cont: 0, tardio: 0, ctardio: 0, aseo: 0 };
     MOTELES.forEach(m => {
       const s = M[m.slug].stats[d];
-      if (s) { t.ok += s.ok; t.door += s.door; t.over += s.over; t.early += s.early; t.occ += s.occ; t.abierta += (s.abierta || 0); t.cont += (s.cont || 0); }
+      if (s) { t.ok += s.ok; t.door += s.door; t.over += s.over; t.early += s.early; t.occ += s.occ; t.abierta += (s.abierta || 0); t.cont += (s.cont || 0); t.tardio += (s.tardio || 0); t.ctardio += (s.ctardio || 0); t.aseo += (s.aseo || 0); }
     });
     statsUnion[d] = t;
   });
@@ -1097,6 +1162,9 @@ function renderDays() {
         + ` · ${s.occ} venta${s.occ === 1 ? '' : 's'} sin cierre · ${s.over} sobrequedada${s.over === 1 ? '' : 's'}`
         + ` · ${s.early} salida${s.early === 1 ? '' : 's'} anticipada${s.early === 1 ? '' : 's'}`
         + (s.abierta ? ` · ${s.abierta} con puerta abierta a mitad de estadía` : '')
+        + (s.tardio ? ` · ${s.tardio} registro${s.tardio === 1 ? '' : 's'} tardío${s.tardio === 1 ? '' : 's'}` : '')
+        + (s.ctardio ? ` · ${s.ctardio} cierre${s.ctardio === 1 ? '' : 's'} tardío${s.ctardio === 1 ? '' : 's'}` : '')
+        + (s.aseo ? ` · ${s.aseo} posible${s.aseo === 1 ? '' : 's'} aseo${s.aseo === 1 ? '' : 's'}` : '')
         + (s.cont ? ` · ${s.cont} continuación${s.cont === 1 ? '' : 'es'} de ayer` : '')
         + ` (${mal} inconsistencia${mal === 1 ? '' : 's'})`;
       btn.innerHTML = `
@@ -1176,6 +1244,9 @@ const MINIS = [
   { key: 'over',      cls: 'm-over',  txt: 'sobrequedada' },
   { key: 'early',     cls: 'm-early', txt: 'salida antic.' },
   { key: 'abierta',   cls: 'm-open',  txt: 'puerta abierta' },
+  { key: 'tardio',    cls: 'm-tardio',  txt: 'registro tardío' },
+  { key: 'ctardio',   cls: 'm-ctardio', txt: 'cierre tardío' },
+  { key: 'aseo',      cls: 'm-aseo',    txt: 'posible aseo' },
   { key: 'cont',      cls: 'm-cont',  txt: 'continuación' },
 ];
 
@@ -1192,6 +1263,12 @@ function detalleAlerta(row) {
     return `Puerta abierta <strong>${Math.round(row.co_diff)} min después</strong> del check-out · venta ${venta}`;
   if (k === 'early')
     return `Puerta abierta <strong>${Math.abs(Math.round(row.co_diff))} min antes</strong> del check-out · venta ${venta}`;
+  if (k === 'tardio')
+    return `Venta registrada <strong>${fmtDur(row.late_reg_min)} después</strong> de que se cerró la puerta · puerta ${puerta} · venta ${venta}`;
+  if (k === 'ctardio')
+    return `Puerta cerrada <strong>${fmtDur(row.late_close_min)} después</strong> del check-in registrado · puerta ${puerta} · venta ${venta}`;
+  if (k === 'aseo')
+    return `Puerta cerrada <strong>${puerta}</strong> (${fmtDur(row.duration_min)}) — ${Math.round(row.tras_min)} min después del check-out de las ${row.tras}`;
   if (k === 'abierta') {
     const mayor = (row.aperturas || []).reduce((a, x) => x.min > a.min ? x : a, { min: 0 });
     return `Puerta abierta <strong>${fmtDur(mayor.min)}</strong> a mitad de la estadía (${mayor.start}–${mayor.end}) · venta ${venta}`;
@@ -1209,12 +1286,12 @@ function renderResumen() {
     const c = data ? countByStatus(data)
                    : { ok: s.ok, door_only: s.door, occ_only: s.occ, over: s.over,
                        early: s.early, abierta: s.abierta || 0, cont: s.cont || 0,
-                       all: s.ok + s.door + s.occ + s.over + s.early + (s.abierta || 0) + (s.cont || 0) };
-    return {
-      m, hay: true, data, c,
-      mal: malDeCounts(c),
-      filas: data ? (data.rows || []).filter(r => MAL_KEYS.includes(kindOf(r))) : [],
-    };
+                       tardio: s.tardio || 0, ctardio: s.ctardio || 0, aseo: s.aseo || 0,
+                       all: s.ok + s.door + s.occ + s.over + s.early + (s.abierta || 0) + (s.cont || 0) + (s.tardio || 0) + (s.ctardio || 0) + (s.aseo || 0) };
+    // Lo preocupante primero: sin venta, luego el resto por gravedad.
+    const filas = data ? (data.rows || []).filter(r => MAL_KEYS.includes(kindOf(r)))
+                                          .sort((a, b) => gravedad(a) - gravedad(b)) : [];
+    return { m, hay: true, data, c, mal: malDeCounts(c), filas };
   });
 
   const totalMal = porMotel.reduce((a, x) => a + (x.mal || 0), 0);
@@ -1263,8 +1340,11 @@ function renderResumen() {
     const titulo = `<div class="amotel-h">${x.m.nombre} — ${x.filas.length} inconsistencia${x.filas.length > 1 ? 's' : ''}
         <button class="mcard-link amotel-ir" data-ir="${x.m.slug}">Ver detalle →</button></div>`;
     if (resumenVista === 'tiempo' && x.data) {
-      const rooms = [...new Set(x.filas.map(r => r.room))]
-        .sort((a, b) => { const ka = roomKey(a), kb = roomKey(b); return ka[0] - kb[0] || String(ka[1]).localeCompare(String(kb[1])); });
+      // Habitaciones ordenadas por su peor estado y después por número.
+      const peor = {};
+      x.filas.forEach(r => { peor[r.room] = Math.min(peor[r.room] ?? 99, gravedad(r)); });
+      const rooms = Object.keys(peor)
+        .sort((a, b) => { const ka = roomKey(a), kb = roomKey(b); return (peor[a] - peor[b]) || ka[0] - kb[0] || String(ka[1]).localeCompare(String(kb[1])); });
       return `<div class="amotel">${titulo}${renderGantt(x.data, rooms, { leyenda: false })}</div>`;
     }
     return `<div class="amotel">${titulo}
@@ -1371,6 +1451,9 @@ function renderMotel() {
       <span>🟣 <strong>Salida anticipada</strong>: la puerta se abrió mucho antes del check-out del PMS — la habitación quedó libre dentro de la ventana pagada</span>
       <span>⚠️ <strong>Venta sin cierre</strong>: venta en PMS sin cierre de puerta detectado</span>
       <span>🚪 <strong>Puerta abierta</strong>: estadía emparejada, pero con la puerta abierta ≥90 min a mitad de la venta — revisar qué pasó en ese rato</span>
+      <span>🕒 <strong>Registro tardío</strong>: la puerta se cerró primero y la venta se registró 30 min a 3 h después (la apertura calza con el check-out) — misma estadía, pero el recepcionista registró tarde</span>
+      <span>🕒 <strong>Cierre tardío</strong>: la venta se registró primero y la puerta se cerró 30 min a 3 h después — misma estadía, con la puerta abierta un buen rato tras el check-in</span>
+      <span>🧹 <strong>Posible aseo</strong>: cierre de ≤60 min que empieza hasta 90 min después de un check-out de esa pieza — lo que dura más sigue en rojo</span>
       <span>⏩ <strong>Continuación</strong>: cola de una venta que entró ayer y se abrió hoy — no cuenta como inconsistencia, el veredicto está en el día anterior</span>
     </div>`;
 
@@ -1431,6 +1514,9 @@ function ganttLeyenda() {
       <span><i style="background:var(--info)"></i>sobrequedada</span>
       <span><i style="background:var(--early)"></i>salida anticipada</span>
       <span><i style="background:var(--open)"></i>puerta abierta a mitad de estadía</span>
+      <span><i style="background:var(--tardio)"></i>registro tardío</span>
+      <span><i style="background:var(--ctardio)"></i>cierre tardío</span>
+      <span><i style="background:var(--aseo)"></i>posible aseo</span>
       <span><i style="background:var(--cont)"></i>continuación / día siguiente</span>
       <span><i style="background:var(--info-bg);border:1.5px solid var(--info)"></i>venta PMS</span>
       <span><i style="background:var(--warn-bg);border:1.5px solid var(--warn)"></i>venta sin cierre</span>
@@ -1477,8 +1563,8 @@ function renderGantt(data, roomsVisibles, opts) {
     if (!s.startsWith(fecha)) return 'ayer';
     return r && r.status === 'occ_only' ? 'occ' : 'ok';
   };
-  const CLS = { ok: 'k-ok', door_only: 'k-door', over: 'k-over', early: 'k-early', abierta: 'k-open', cont: 'k-cont', short: 'k-short', next: 'k-next' };
-  const NOMBRE = { ok: 'Emparejada', door_only: 'Sin venta', over: 'Sobrequedada', early: 'Salida anticipada', abierta: 'Puerta abierta a mitad de estadía', cont: 'Continuación de ayer', short: 'Cierre breve (<15 min, no se cruza)', next: 'Cierre del día siguiente (se evalúa en ese día)' };
+  const CLS = { ok: 'k-ok', door_only: 'k-door', over: 'k-over', early: 'k-early', abierta: 'k-open', cont: 'k-cont', tardio: 'k-tardio', ctardio: 'k-ctardio', aseo: 'k-aseo', short: 'k-short', next: 'k-next' };
+  const NOMBRE = { ok: 'Emparejada', door_only: 'Sin venta', over: 'Sobrequedada', early: 'Salida anticipada', abierta: 'Puerta abierta a mitad de estadía', cont: 'Continuación de ayer', tardio: 'Registro tardío', ctardio: 'Cierre tardío', aseo: 'Posible aseo', short: 'Cierre breve (<15 min, no se cruza)', next: 'Cierre del día siguiente (se evalúa en ese día)' };
 
   const filas = roomsVisibles.map(room => {
     const ev = eventos[room] || { cierres: [], ventas: [] };
@@ -1508,7 +1594,7 @@ function renderGantt(data, roomsVisibles, opts) {
       bars += `<div class="bar gap" style="left:${pct(a)};width:${pct(Math.max(b - a, 3))}"
         title="Puerta abierta ${fmtDur(ap.min)} a mitad de la estadía (${ap.start}–${ap.end})"></div>`;
     }));
-    const CORTO = { door_only: 'sin venta', occ_only: 'sin cierre', over: 'sobrequedada', early: 'anticipada', abierta: 'puerta abierta' };
+    const CORTO = { door_only: 'sin venta', occ_only: 'sin cierre', over: 'sobrequedada', early: 'anticipada', tardio: 'registro tardío', ctardio: 'cierre tardío', abierta: 'puerta abierta', aseo: 'posible aseo' };
     const estados = [...new Set(filasDe(room).map(kindOf))].filter(k => CORTO[k]).map(k => CORTO[k]).join(' · ');
     return `<div class="gantt-room">
       <div class="gantt-lbl">${room}${estados ? `<small>${estados}</small>` : ''}</div>
@@ -1563,6 +1649,17 @@ function renderRow(row) {
       <td colspan="3" class="alert-msg">Puerta cerrada ${fmtDur(durMin)} — sin venta registrada</td>
     </tr>`;
   }
+  if (row.status === 'aseo') {
+    return `<tr class="${rowCls}">
+      <td>${row.room}</td><td>${badge}</td><td>${doorStr}</td><td>${durStr}</td>
+      <td colspan="3" class="alert-msg">Cierre corto ${Math.round(row.tras_min)} min después del check-out de las ${row.tras} — sin venta, parece aseo</td>
+    </tr>`;
+  }
+  // Marcas secundarias: una fila sobrequedada puede ser además un registro tardío, etc.
+  if (row.late_reg_min != null)
+    pmsStr += `<span class="nota tardio">registrada ${fmtDur(row.late_reg_min)} después de cerrarse la puerta</span>`;
+  if (row.late_close_min != null)
+    pmsStr += `<span class="nota ctardio">puerta cerrada ${fmtDur(row.late_close_min)} después del check-in</span>`;
 
   return `<tr class="${rowCls}">
     <td>${row.room}</td><td>${badge}</td><td>${doorStr}</td><td>${durStr}</td>

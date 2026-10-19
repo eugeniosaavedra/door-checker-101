@@ -13,6 +13,9 @@
     "total_co_alert": 1,
     "total_continuacion": 0,
     "total_open_alert": 0,
+    "total_late_close": 0,
+    "total_late_reg": 0,
+    "total_aseo": 0,
     "alert_count": 6
   },
   "rows": [
@@ -171,19 +174,8 @@
       "co_alert": true
     }
   ],
-  "reclasificado": "2026-10-19 19:02",
+  "reclasificado": "2026-10-19 20:00",
   "eventos": {
-    "42 Aire": {
-      "cierres": [],
-      "ventas": [
-        [
-          "2026-09-29 18:47",
-          "2026-09-30 11:47",
-          "Express",
-          "tarjeta"
-        ]
-      ]
-    },
     "44 Aire": {
       "cierres": [],
       "ventas": [
@@ -197,49 +189,6 @@
           "2026-09-29 16:37",
           "2026-09-29 17:46",
           "Express",
-          "efectivo"
-        ]
-      ]
-    },
-    "45 Aire": {
-      "cierres": [],
-      "ventas": [
-        [
-          "2026-09-29 19:00",
-          "2026-09-29 20:47",
-          "Sin Reserva",
-          "tarjeta"
-        ]
-      ]
-    },
-    "54 Aire": {
-      "cierres": [],
-      "ventas": []
-    },
-    "31 Aire": {
-      "cierres": [
-        [
-          "2026-09-29 19:54",
-          "2026-09-29 22:31",
-          157.0
-        ]
-      ],
-      "ventas": [
-        [
-          "2026-09-29 19:54",
-          "2026-09-29 22:32",
-          "Express",
-          "tarjeta"
-        ]
-      ]
-    },
-    "46 Aire": {
-      "cierres": [],
-      "ventas": [
-        [
-          "2026-09-29 10:46",
-          "2026-09-29 12:59",
-          "Sin Reserva",
           "efectivo"
         ]
       ]
@@ -276,6 +225,23 @@
       "cierres": [],
       "ventas": []
     },
+    "31 Aire": {
+      "cierres": [
+        [
+          "2026-09-29 19:54",
+          "2026-09-29 22:31",
+          157.0
+        ]
+      ],
+      "ventas": [
+        [
+          "2026-09-29 19:54",
+          "2026-09-29 22:32",
+          "Express",
+          "tarjeta"
+        ]
+      ]
+    },
     "12 Aire": {
       "cierres": [
         [
@@ -293,12 +259,55 @@
         ]
       ]
     },
+    "35 Aire": {
+      "cierres": [
+        [
+          "2026-09-29 20:49",
+          "2026-09-29 23:19",
+          150.0
+        ]
+      ],
+      "ventas": [
+        [
+          "2026-09-29 20:45",
+          "2026-09-29 23:29",
+          "Express",
+          "tarjeta"
+        ]
+      ]
+    },
+    "54 Aire": {
+      "cierres": [],
+      "ventas": []
+    },
+    "42 Aire": {
+      "cierres": [],
+      "ventas": [
+        [
+          "2026-09-29 18:47",
+          "2026-09-30 11:47",
+          "Express",
+          "tarjeta"
+        ]
+      ]
+    },
     "48 Aire": {
       "cierres": [],
       "ventas": [
         [
           "2026-09-29 18:16",
           "2026-09-29 20:38",
+          "Sin Reserva",
+          "tarjeta"
+        ]
+      ]
+    },
+    "45 Aire": {
+      "cierres": [],
+      "ventas": [
+        [
+          "2026-09-29 19:00",
+          "2026-09-29 20:47",
           "Sin Reserva",
           "tarjeta"
         ]
@@ -327,20 +336,14 @@
         ]
       ]
     },
-    "35 Aire": {
-      "cierres": [
-        [
-          "2026-09-29 20:49",
-          "2026-09-29 23:19",
-          150.0
-        ]
-      ],
+    "46 Aire": {
+      "cierres": [],
       "ventas": [
         [
-          "2026-09-29 20:45",
-          "2026-09-29 23:29",
-          "Express",
-          "tarjeta"
+          "2026-09-29 10:46",
+          "2026-09-29 12:59",
+          "Sin Reserva",
+          "efectivo"
         ]
       ]
     }
