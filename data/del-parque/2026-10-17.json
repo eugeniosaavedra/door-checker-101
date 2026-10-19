@@ -5,12 +5,12 @@
     "nombre": "Del Parque",
     "motel_id": 192
   },
-  "generated": "2026-10-18 13:02",
+  "generated": "2026-10-19 15:47",
   "summary": {
     "total_matched": 26,
     "total_door_only": 2,
     "total_occ_only": 2,
-    "total_co_alert": 4,
+    "total_co_alert": 2,
     "alert_count": 4
   },
   "rows": [
@@ -114,17 +114,17 @@
     },
     {
       "room": "18",
-      "status": "co_alert",
+      "status": "ok",
       "door_start": "20:33",
       "door_end": "10:07",
       "duration_min": 814.7,
       "occ_start": "20:33",
-      "occ_end": "12:00",
+      "occ_end": "10:09",
       "tipo": "Sin Reserva",
       "payment": "tarjeta",
       "ci_diff": 0.1,
-      "co_diff": -112.2,
-      "co_alert": true
+      "co_diff": -1.2,
+      "co_alert": false
     },
     {
       "room": "25",
@@ -161,11 +161,11 @@
       "door_end": "12:10",
       "duration_min": 835.1,
       "occ_start": "22:17",
-      "occ_end": "12:00",
+      "occ_end": "12:10",
       "tipo": "Express",
       "payment": "tarjeta",
       "ci_diff": -2.8,
-      "co_diff": 10.1,
+      "co_diff": 0.1,
       "co_alert": false
     },
     {
@@ -189,11 +189,11 @@
       "door_end": "11:57",
       "duration_min": 765.4,
       "occ_start": "23:11",
-      "occ_end": "12:00",
+      "occ_end": "11:59",
       "tipo": "Sin Reserva",
       "payment": "efectivo",
       "ci_diff": 1.4,
-      "co_diff": -2.2,
+      "co_diff": -1.2,
       "co_alert": false
     },
     {
@@ -231,7 +231,7 @@
       "door_end": null,
       "duration_min": 994.0,
       "occ_start": "17:01",
-      "occ_end": "17:01",
+      "occ_end": "16:19",
       "tipo": "Express",
       "payment": "mp",
       "ci_diff": 0.5,
@@ -287,7 +287,7 @@
       "door_end": null,
       "duration_min": null,
       "occ_start": "23:31",
-      "occ_end": "12:00",
+      "occ_end": "10:49",
       "tipo": "Sin Reserva",
       "payment": "tarjeta",
       "ci_diff": null,
@@ -329,11 +329,11 @@
       "door_end": "11:57",
       "duration_min": 819.3,
       "occ_start": "22:22",
-      "occ_end": "12:00",
+      "occ_end": "12:03",
       "tipo": "Sin Reserva",
       "payment": "tarjeta",
       "ci_diff": -3.9,
-      "co_diff": -2.6,
+      "co_diff": -5.6,
       "co_alert": false
     },
     {
@@ -343,11 +343,11 @@
       "door_end": "11:42",
       "duration_min": 831.8,
       "occ_start": "22:06",
-      "occ_end": "12:00",
+      "occ_end": "11:43",
       "tipo": "Sin Reserva",
       "payment": "tarjeta",
       "ci_diff": -14.9,
-      "co_diff": -17.2,
+      "co_diff": -0.2,
       "co_alert": false
     },
     {
@@ -357,11 +357,11 @@
       "door_end": "11:33",
       "duration_min": 785.3,
       "occ_start": "22:31",
-      "occ_end": "12:00",
+      "occ_end": "11:38",
       "tipo": "Sin Reserva",
       "payment": "tarjeta",
       "ci_diff": -2.4,
-      "co_diff": -26.1,
+      "co_diff": -4.1,
       "co_alert": false
     },
     {
@@ -380,17 +380,17 @@
     },
     {
       "room": "43",
-      "status": "co_alert",
+      "status": "ok",
       "door_start": "23:13",
       "door_end": "08:52",
       "duration_min": 578.8,
       "occ_start": "23:18",
-      "occ_end": "12:00",
+      "occ_end": "08:53",
       "tipo": "Sin Reserva",
       "payment": "tarjeta",
       "ci_diff": -4.7,
-      "co_diff": -188.0,
-      "co_alert": true
+      "co_diff": -1.0,
+      "co_alert": false
     },
     {
       "room": "44 Aire",
@@ -427,11 +427,11 @@
       "door_end": "11:57",
       "duration_min": 843.3,
       "occ_start": "22:06",
-      "occ_end": "12:00",
+      "occ_end": "11:57",
       "tipo": "Express",
       "payment": "mp",
       "ci_diff": -12.9,
-      "co_diff": -2.9,
+      "co_diff": 0.1,
       "co_alert": false
     }
   ]
