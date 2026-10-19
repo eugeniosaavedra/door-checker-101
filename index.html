@@ -43,6 +43,7 @@
     --shadow:    0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.05);
     --radius:    10px;
     --font:      'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color-scheme: light;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
@@ -77,6 +78,7 @@
       --sev2:      #fb923c;
       --sev3:      #f87171;
       --shadow:    0 1px 3px rgba(0,0,0,.4);
+      color-scheme: dark;
     }
   }
   :root[data-theme="dark"] {
@@ -90,6 +92,7 @@
     --cont:#94a3b8; --cont-bg:#171a23; --cont-bdr:#334155;
     --sev0:#34d399; --sev1:#fbbf24; --sev2:#fb923c; --sev3:#f87171;
     --shadow:0 1px 3px rgba(0,0,0,.4);
+    color-scheme: dark;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -120,6 +123,14 @@
   .header-logo { font-size: 1.25rem; }
   .header-title { font-weight: 700; font-size: 1rem; }
   .header-sub { font-size: 0.75rem; color: var(--sub); }
+  /* Selector claro / oscuro. Sin elegir, sigue al sistema. */
+  .theme-toggle { display: inline-flex; border: 1px solid var(--border); border-radius: 20px; overflow: hidden; }
+  .theme-toggle button {
+    appearance: none; background: var(--surface); border: 0; color: var(--sub);
+    font: inherit; font-size: .78rem; font-weight: 600; padding: 6px 11px; cursor: pointer;
+  }
+  .theme-toggle button.on { background: var(--text); color: var(--bg); }
+  .theme-toggle button:focus-visible { outline: 2px solid var(--info); outline-offset: -2px; }
 
   /* ── Timeline de días ─────────────────────── */
   .timeline {
@@ -635,6 +646,11 @@
       <div class="header-sub" id="headerSub">Grupo Now</div>
     </div>
   </div>
+  <div class="theme-toggle" id="themeToggle" role="group" aria-label="Tema">
+    <button data-t="light" title="Fondo blanco">☀️ Claro</button>
+    <button data-t="auto"  title="Seguir al sistema">Auto</button>
+    <button data-t="dark"  title="Fondo negro">🌙 Oscuro</button>
+  </div>
 </header>
 
 <nav class="tabs" id="tabs"></nav>
@@ -668,6 +684,26 @@
 </main>
 
 <script>
+// ─────────────────────────────────────────────────────────────
+//  Tema claro / oscuro
+//  'light' y 'dark' fuerzan el tema vía data-theme en <html>; 'auto'
+//  lo quita y vuelve a mandar prefers-color-scheme. La elección se
+//  guarda en este navegador (localStorage, si se puede).
+// ─────────────────────────────────────────────────────────────
+function aplicarTema(t) {
+  if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+  else { delete document.documentElement.dataset.theme; t = 'auto'; }
+  document.querySelectorAll('#themeToggle button').forEach(b => b.classList.toggle('on', b.dataset.t === t));
+  try { if (t === 'auto') localStorage.removeItem('tema'); else localStorage.setItem('tema', t); } catch (e) {}
+}
+(function () {
+  let t = 'auto';
+  try { t = localStorage.getItem('tema') || 'auto'; } catch (e) {}
+  aplicarTema(t);
+  document.querySelectorAll('#themeToggle button').forEach(b =>
+    b.addEventListener('click', () => aplicarTema(b.dataset.t)));
+})();
+
 // ─────────────────────────────────────────────────────────────
 //  Estado
 // ─────────────────────────────────────────────────────────────
