@@ -478,7 +478,9 @@
   .gantt-lanes { position: relative; height: 46px; }
   .gantt-lanes .grid { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--border); }
   .gantt-lanes .grid.mid { background: var(--sub); width: 2px; }
-  .bar { position: absolute; height: 14px; border-radius: 3px; cursor: default; }
+  .bar { position: absolute; height: 14px; border-radius: 3px; cursor: pointer; }
+  .bar:hover { filter: brightness(1.12); }
+  .bar:focus-visible, .bar.sel { outline: 2px solid var(--text); outline-offset: 2px; z-index: 2; }
   .bar.door { top: 6px; background: var(--text); opacity: .85; }
   .bar.door.k-ok     { background: var(--ok); }
   .bar.door.k-door   { background: var(--alert); }
@@ -495,6 +497,32 @@
   .bar.sale.k-occ   { background: var(--warn-bg); border-color: var(--warn); }
   .bar.sale.k-ayer  { border-style: dashed; }
   .bar.gap { top: 2px; height: 22px; border-radius: 2px; background: repeating-linear-gradient(135deg, transparent 0 3px, var(--open) 3px 4px); opacity: .6; }
+  /* Detalle al hacer clic en una barra: marcas verticales en todas las
+     filas del mismo gantt (inicio sólido, fin punteado) y una tarjeta con
+     los minutos exactos para ir a buscar el registro en las cámaras. */
+  .gantt-lanes .mark { position: absolute; top: 0; bottom: 0; width: 0; border-left: 2px solid var(--text); opacity: .7; pointer-events: none; z-index: 1; }
+  .gantt-lanes .mark.fin { border-left-style: dashed; }
+  .bar-pop {
+    position: absolute; z-index: 60; width: 310px; max-width: calc(100vw - 16px);
+    background: var(--surface); color: var(--text); border: 1px solid var(--border);
+    border-top: 3px solid var(--pop-c, var(--text)); border-radius: 12px;
+    box-shadow: 0 12px 32px rgba(0,0,0,.22); padding: 11px 14px 10px; font-size: .8rem;
+  }
+  .bp-h { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .bp-tipo { font-weight: 700; font-size: .92rem; }
+  .bp-x { appearance: none; border: 0; background: transparent; color: var(--sub); font-size: 1.25rem; line-height: 1; cursor: pointer; padding: 0 2px; }
+  .bp-x:hover { color: var(--text); }
+  .bp-sub { color: var(--sub); margin-top: 2px; }
+  .bp-times { display: grid; grid-template-columns: 1fr auto 1fr; gap: 8px; align-items: center; margin: 12px 0 10px; }
+  .bp-times small { display: block; text-transform: uppercase; letter-spacing: .06em; font-size: .58rem; color: var(--sub); margin-bottom: 2px; }
+  .bp-times b { display: block; font-size: 1.6rem; line-height: 1.05; font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+  .bp-times span { display: block; color: var(--sub); font-size: .7rem; white-space: nowrap; margin-top: 2px; }
+  .bp-times span em { font-style: normal; color: var(--text); font-weight: 600; }
+  .bp-arrow { color: var(--sub); font-size: 1.1rem; }
+  .bp-foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; border-top: 1px solid var(--border); padding-top: 8px; color: var(--sub); }
+  .bp-copy { appearance: none; font: inherit; font-size: .72rem; font-weight: 600; border: 1px solid var(--border); background: var(--bg); color: var(--text); border-radius: 14px; padding: 4px 11px; cursor: pointer; white-space: nowrap; }
+  .bp-copy:hover { border-color: var(--text); }
+  .bp-copy.ok { border-color: var(--ok); color: var(--ok); }
   .gantt-legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: .7rem; color: var(--sub); margin-top: 10px; }
   .gantt-legend i { display: inline-block; width: 14px; height: 8px; border-radius: 2px; vertical-align: middle; margin-right: 4px; }
 
@@ -1277,6 +1305,7 @@ function detalleAlerta(row) {
 }
 
 function renderResumen() {
+  cerrarPop();
   const date = currentDate;
 
   const porMotel = MOTELES.map(m => {
@@ -1394,6 +1423,7 @@ function renderResumen() {
 //  Detalle de un motel
 // ─────────────────────────────────────────────────────────────
 function renderMotel() {
+  cerrarPop();
   const date = dates[currentIdx];
   const data = cache[date];
   const rows = data.rows || [];
@@ -1566,6 +1596,17 @@ function renderGantt(data, roomsVisibles, opts) {
   const CLS = { ok: 'k-ok', door_only: 'k-door', over: 'k-over', early: 'k-early', abierta: 'k-open', cont: 'k-cont', tardio: 'k-tardio', ctardio: 'k-ctardio', aseo: 'k-aseo', short: 'k-short', next: 'k-next' };
   const NOMBRE = { ok: 'Emparejada', door_only: 'Sin venta', over: 'Sobrequedada', early: 'Salida anticipada', abierta: 'Puerta abierta a mitad de estadía', cont: 'Continuación de ayer', tardio: 'Registro tardío', ctardio: 'Cierre tardío', aseo: 'Posible aseo', short: 'Cierre breve (<15 min, no se cruza)', next: 'Cierre del día siguiente (se evalúa en ese día)' };
 
+  // Datos que viaja en cada barra para el detalle al hacer clic (abrirPop)
+  const motelNombre = (data.motel && data.motel.nombre) || '';
+  const popAttr = o => `data-pop="${encodeURIComponent(JSON.stringify(Object.assign({ room: '', motel: motelNombre, dia: fecha }, o)))}"`;
+  const desdeMinutos = min => {
+    const [y, m, d] = fecha.split('-').map(Number);
+    const dt = new Date(y, m - 1, d, 0, Math.round(min));
+    const z = n => String(n).padStart(2, '0');
+    return `${dt.getFullYear()}-${z(dt.getMonth() + 1)}-${z(dt.getDate())} ${z(dt.getHours())}:${z(dt.getMinutes())}`;
+  };
+  const COLOR = { ok: 'var(--ok)', door_only: 'var(--alert)', over: 'var(--info)', early: 'var(--early)', abierta: 'var(--open)', cont: 'var(--cont)', tardio: 'var(--tardio)', ctardio: 'var(--ctardio)', aseo: 'var(--aseo)', short: 'var(--sub)', next: 'var(--sub)' };
+
   const filas = roomsVisibles.map(room => {
     const ev = eventos[room] || { cierres: [], ventas: [] };
     let bars = '';
@@ -1574,7 +1615,9 @@ function renderGantt(data, roomsVisibles, opts) {
       const b = e ? minutosDesde(fecha, e) : total;
       if (a == null || b <= 0 || a >= total) return;
       const k = kindDoor(room, s, e, dur);
-      bars += `<div class="bar door ${CLS[k] || ''}" style="left:${pct(a)};width:${pct(Math.max(b - a, 4))}"
+      const pop = popAttr({ tipo: 'Puerta cerrada', icono: '🚪', room, ini: s, fin: e || null, finTxt: 'sigue cerrada',
+                            dur, estado: NOMBRE[k] || k, color: COLOR[k], a, b: e ? b : null });
+      bars += `<div class="bar door ${CLS[k] || ''}" style="left:${pct(a)};width:${pct(Math.max(b - a, 4))}" ${pop} tabindex="0" role="button"
         title="Puerta cerrada ${s.slice(11)} – ${e ? e.slice(11) : 'sigue cerrada'} (${fmtDur(dur)}) · ${NOMBRE[k] || k}"></div>`;
     });
     ev.ventas.forEach(([s, e, tipo, pago]) => {
@@ -1582,7 +1625,11 @@ function renderGantt(data, roomsVisibles, opts) {
       const b = e ? minutosDesde(fecha, e) : total;
       if (a == null || b <= 0 || a >= total) return;
       const k = kindSale(room, s);
-      bars += `<div class="bar sale k-${k}" style="left:${pct(Math.max(a, 0))};width:${pct(Math.max(Math.min(b, total) - Math.max(a, 0), 4))}"
+      const pop = popAttr({ tipo: 'Venta PMS', icono: '🧾', room, ini: s, fin: e || null, finTxt: 'sin salida registrada',
+                            dur: e ? b - a : null, color: k === 'occ' ? 'var(--warn)' : 'var(--info)',
+                            estado: k === 'occ' ? 'Venta sin cierre de puerta' : (k === 'ayer' ? 'Entró el día anterior' : 'Venta registrada'),
+                            extra: [tipo, pago].filter(Boolean).join(' · '), a, b: e ? b : null });
+      bars += `<div class="bar sale k-${k}" style="left:${pct(Math.max(a, 0))};width:${pct(Math.max(Math.min(b, total) - Math.max(a, 0), 4))}" ${pop} tabindex="0" role="button"
         title="Venta PMS ${s.slice(11)} – ${e ? e.slice(11) : '?'}${s.startsWith(fecha) ? '' : ' (entró el ' + s.slice(0, 10) + ')'} · ${tipo || ''} · ${pago || ''}${k === 'occ' ? ' · sin cierre de puerta' : ''}"></div>`;
     });
     // Aperturas intermedias absorbidas: rayado entre fragmentos
@@ -1591,7 +1638,11 @@ function renderGantt(data, roomsVisibles, opts) {
       const s = `${fecha} ${ap.start}`;
       let a = minutosDesde(fecha, s); if (ap.start < base) a += 1440;
       let b = a + Math.round(ap.min);
-      bars += `<div class="bar gap" style="left:${pct(a)};width:${pct(Math.max(b - a, 3))}"
+      const pop = popAttr({ tipo: 'Puerta abierta a mitad de la estadía', icono: '🚪', room,
+                            ini: desdeMinutos(a), fin: `${desdeMinutos(b).slice(0, 10)} ${ap.end}`,
+                            dur: ap.min, estado: kindOf(r) === 'abierta' ? 'Apertura larga (≥90 min)' : 'Apertura breve absorbida',
+                            color: 'var(--open)', a, b });
+      bars += `<div class="bar gap" style="left:${pct(a)};width:${pct(Math.max(b - a, 3))}" ${pop} tabindex="0" role="button"
         title="Puerta abierta ${fmtDur(ap.min)} a mitad de la estadía (${ap.start}–${ap.end})"></div>`;
     }));
     const CORTO = { door_only: 'sin venta', occ_only: 'sin cierre', over: 'sobrequedada', early: 'anticipada', tardio: 'registro tardío', ctardio: 'cierre tardío', abierta: 'puerta abierta', aseo: 'posible aseo' };
@@ -1609,6 +1660,103 @@ function renderGantt(data, roomsVisibles, opts) {
     ${opts.leyenda === false ? '' : ganttLeyenda()}
   </div>`;
 }
+
+// ─────────────────────────────────────────────────────────────
+//  Detalle de una barra de la línea de tiempo (clic o Enter)
+//  Marca el inicio y el fin en todas las filas del mismo gantt y abre
+//  una tarjeta con la hora exacta, para ir directo a las cámaras.
+// ─────────────────────────────────────────────────────────────
+let POP = null;
+
+function fmtMomento(s) {   // 'YYYY-MM-DD HH:MM' → { hora, fecha, dia }
+  const [d, t] = s.split(' ');
+  const [y, m, dd] = d.split('-').map(Number);
+  const dt = new Date(y, m - 1, dd);
+  const dias  = ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'];
+  const meses = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+  return { hora: t, fecha: `${dias[dt.getDay()]} ${dd} ${meses[m - 1]}`, dia: d };
+}
+
+function cerrarPop() {
+  if (POP) { POP.remove(); POP = null; }
+  document.querySelectorAll('.bar.sel').forEach(b => b.classList.remove('sel'));
+  document.querySelectorAll('.gantt-lanes .mark').forEach(m => m.remove());
+}
+
+function abrirPop(bar) {
+  cerrarPop();
+  let o;
+  try { o = JSON.parse(decodeURIComponent(bar.dataset.pop)); } catch (e) { return; }
+  bar.classList.add('sel');
+
+  // Marcas verticales de inicio y fin en todas las habitaciones del gantt
+  const total = GANTT_HORAS * 60;
+  const pct = min => `${Math.max(0, Math.min(100, (min / total) * 100)).toFixed(2)}%`;
+  const gantt = bar.closest('.gantt');
+  if (gantt) gantt.querySelectorAll('.gantt-lanes').forEach(l => {
+    [[o.a, 'ini'], [o.b, 'fin']].forEach(([min, cls]) => {
+      if (min == null || min < 0 || min > total) return;
+      const m = document.createElement('div');
+      m.className = `mark ${cls}`; m.style.left = pct(min); l.appendChild(m);
+    });
+  });
+
+  const ini = fmtMomento(o.ini);
+  const fin = o.fin ? fmtMomento(o.fin) : null;
+  const diaTag = f => f.dia === o.dia ? '' : ` · <em>${f.dia > o.dia ? 'día siguiente' : 'día anterior'}</em>`;
+  const copia = `${o.motel ? o.motel + ' · ' : ''}Hab. ${o.room} · ${o.tipo}: ${o.ini} → ${o.fin || o.finTxt}`;
+  const el = document.createElement('div');
+  el.className = 'bar-pop';
+  el.setAttribute('role', 'dialog');
+  if (o.color) el.style.setProperty('--pop-c', o.color);
+  el.innerHTML = `
+    <div class="bp-h"><span class="bp-tipo">${o.icono || ''} ${o.tipo}</span><button class="bp-x" aria-label="Cerrar">×</button></div>
+    <div class="bp-sub">${o.motel ? o.motel + ' · ' : ''}Hab. ${o.room}${o.estado ? ' · ' + o.estado : ''}</div>
+    <div class="bp-times">
+      <div><small>Inicio</small><b>${ini.hora}</b><span>${ini.fecha}${diaTag(ini)}</span></div>
+      <div class="bp-arrow">→</div>
+      <div><small>Fin</small><b>${fin ? fin.hora : '—'}</b><span>${fin ? fin.fecha + diaTag(fin) : o.finTxt}</span></div>
+    </div>
+    <div class="bp-foot">
+      <span>${o.dur != null ? 'Duración ' + fmtDur(o.dur) : ''}${o.extra ? (o.dur != null ? ' · ' : '') + o.extra : ''}</span>
+      <button class="bp-copy" data-copia="${copia.replace(/"/g, '&quot;')}">Copiar</button>
+    </div>`;
+  document.body.appendChild(el);
+  POP = el;
+
+  // Ubicación: centrada bajo la barra; si no cabe, encima. Siempre dentro de la ventana.
+  const r = bar.getBoundingClientRect();
+  const w = el.offsetWidth, h = el.offsetHeight;
+  let left = r.left + r.width / 2 - w / 2;
+  left = Math.max(8, Math.min(left, window.innerWidth - w - 8));
+  let top = r.bottom + 10;
+  if (top + h > window.innerHeight - 8 && r.top - h - 10 > 8) top = r.top - h - 10;
+  el.style.left = `${left + window.scrollX}px`;
+  el.style.top  = `${top + window.scrollY}px`;
+}
+
+function copiarPop(btn) {
+  const txt = btn.dataset.copia || '';
+  const ok = () => { btn.textContent = 'Copiado ✓'; btn.classList.add('ok'); setTimeout(() => { btn.textContent = 'Copiar'; btn.classList.remove('ok'); }, 1600); };
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(ok, () => {});
+  else { const ta = document.createElement('textarea'); ta.value = txt; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); ok(); } catch (e) {} ta.remove(); }
+}
+
+document.addEventListener('click', e => {
+  if (e.target.closest('.bar-pop')) {
+    if (e.target.closest('.bp-x')) cerrarPop();
+    else if (e.target.closest('.bp-copy')) copiarPop(e.target.closest('.bp-copy'));
+    return;
+  }
+  const bar = e.target.closest('.bar[data-pop]');
+  if (bar) { abrirPop(bar); return; }
+  cerrarPop();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { cerrarPop(); return; }
+  if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('.bar[data-pop]')) { e.preventDefault(); abrirPop(e.target); }
+});
+window.addEventListener('resize', cerrarPop);
 
 function renderRow(row) {
   const st = BY_KEY[kindOf(row)];
