@@ -5,7 +5,7 @@
     "nombre": "Ciento Once",
     "motel_id": 181
   },
-  "generated": "2026-10-23 14:20",
+  "generated": "2026-10-23 18:33",
   "summary": {
     "total_matched": 5,
     "total_door_only": 2,
@@ -161,18 +161,57 @@
     }
   ],
   "eventos": {
-    "50 Aire": {
+    "41 Aire": {
+      "cierres": [],
+      "ventas": [
+        [
+          "2026-10-21 20:45",
+          "2026-10-21 23:39",
+          "Sin Reserva",
+          "tarjeta"
+        ]
+      ]
+    },
+    "47 Aire": {
+      "cierres": [
+        [
+          "2026-10-21 01:07",
+          "2026-10-21 01:51",
+          43.7
+        ]
+      ],
+      "ventas": []
+    },
+    "12 Aire": {
+      "cierres": [
+        [
+          "2026-10-22 13:56",
+          null,
+          3.0
+        ]
+      ],
+      "ventas": []
+    },
+    "23 Aire": {
       "cierres": [],
       "ventas": []
     },
-    "35 Aire": {
+    "46 Aire": {
       "cierres": [
         [
-          "2026-10-22 10:05",
-          "2026-10-22 13:20",
-          195.0
+          "2026-10-21 00:20",
+          "2026-10-21 00:41",
+          21.1
         ]
       ],
+      "ventas": []
+    },
+    "25 Aire": {
+      "cierres": [],
+      "ventas": []
+    },
+    "11 Aire": {
+      "cierres": [],
       "ventas": []
     },
     "53 Aire": {
@@ -185,6 +224,14 @@
           "mp"
         ]
       ]
+    },
+    "31 Aire": {
+      "cierres": [],
+      "ventas": []
+    },
+    "32 Aire": {
+      "cierres": [],
+      "ventas": []
     },
     "44 Aire": {
       "cierres": [
@@ -202,87 +249,6 @@
           "tarjeta"
         ]
       ]
-    },
-    "51 Aire": {
-      "cierres": [],
-      "ventas": []
-    },
-    "25 Aire": {
-      "cierres": [],
-      "ventas": []
-    },
-    "36 Aire": {
-      "cierres": [
-        [
-          "2026-10-21 11:49",
-          "2026-10-21 18:00",
-          371.3
-        ]
-      ],
-      "ventas": [
-        [
-          "2026-10-21 11:47",
-          "2026-10-21 17:59",
-          "Express",
-          "mp"
-        ]
-      ]
-    },
-    "48 Aire": {
-      "cierres": [],
-      "ventas": []
-    },
-    "42 Aire": {
-      "cierres": [],
-      "ventas": [
-        [
-          "2026-10-21 23:58",
-          "2026-10-22 01:55",
-          "Sin Reserva",
-          "tarjeta"
-        ]
-      ]
-    },
-    "52 Aire": {
-      "cierres": [
-        [
-          "2026-10-21 04:54",
-          "2026-10-21 11:38",
-          403.9
-        ]
-      ],
-      "ventas": [
-        [
-          "2026-10-21 04:50",
-          "2026-10-21 10:55",
-          "Express",
-          "tarjeta"
-        ]
-      ]
-    },
-    "23 Aire": {
-      "cierres": [],
-      "ventas": []
-    },
-    "24 Aire": {
-      "cierres": [],
-      "ventas": []
-    },
-    "31 Aire": {
-      "cierres": [],
-      "ventas": []
-    },
-    "54 Aire": {
-      "cierres": [],
-      "ventas": []
-    },
-    "14 Aire": {
-      "cierres": [],
-      "ventas": []
-    },
-    "32 Aire": {
-      "cierres": [],
-      "ventas": []
     },
     "33 Aire": {
       "cierres": [
@@ -312,30 +278,73 @@
         ]
       ]
     },
+    "48 Aire": {
+      "cierres": [],
+      "ventas": []
+    },
     "49 Aire": {
       "cierres": [],
       "ventas": []
     },
-    "46 Aire": {
+    "50 Aire": {
+      "cierres": [],
+      "ventas": []
+    },
+    "14 Aire": {
+      "cierres": [],
+      "ventas": []
+    },
+    "51 Aire": {
+      "cierres": [],
+      "ventas": []
+    },
+    "36 Aire": {
       "cierres": [
         [
-          "2026-10-21 00:20",
-          "2026-10-21 00:41",
-          21.1
+          "2026-10-21 11:49",
+          "2026-10-21 18:00",
+          371.3
+        ]
+      ],
+      "ventas": [
+        [
+          "2026-10-21 11:47",
+          "2026-10-21 17:59",
+          "Express",
+          "mp"
+        ]
+      ]
+    },
+    "35 Aire": {
+      "cierres": [
+        [
+          "2026-10-22 10:05",
+          "2026-10-22 13:20",
+          195.0
         ]
       ],
       "ventas": []
     },
-    "41 Aire": {
-      "cierres": [],
+    "52 Aire": {
+      "cierres": [
+        [
+          "2026-10-21 04:54",
+          "2026-10-21 11:38",
+          403.9
+        ]
+      ],
       "ventas": [
         [
-          "2026-10-21 20:45",
-          "2026-10-21 23:39",
-          "Sin Reserva",
+          "2026-10-21 04:50",
+          "2026-10-21 10:55",
+          "Express",
           "tarjeta"
         ]
       ]
+    },
+    "24 Aire": {
+      "cierres": [],
+      "ventas": []
     },
     "34 Aire": {
       "cierres": [
@@ -354,29 +363,20 @@
         ]
       ]
     },
-    "47 Aire": {
-      "cierres": [
-        [
-          "2026-10-21 01:07",
-          "2026-10-21 01:51",
-          43.7
-        ]
-      ],
-      "ventas": []
-    },
-    "12 Aire": {
-      "cierres": [
-        [
-          "2026-10-22 13:56",
-          null,
-          3.0
-        ]
-      ],
-      "ventas": []
-    },
-    "11 Aire": {
+    "54 Aire": {
       "cierres": [],
       "ventas": []
+    },
+    "42 Aire": {
+      "cierres": [],
+      "ventas": [
+        [
+          "2026-10-21 23:58",
+          "2026-10-22 01:55",
+          "Sin Reserva",
+          "tarjeta"
+        ]
+      ]
     },
     "45 Aire": {
       "cierres": [
