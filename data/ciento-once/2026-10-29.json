@@ -1,0 +1,703 @@
+{
+  "date": "2026-10-29",
+  "motel": {
+    "slug": "ciento-once",
+    "nombre": "Ciento Once",
+    "motel_id": 181
+  },
+  "generated": "2026-10-30 15:07",
+  "summary": {
+    "total_matched": 1,
+    "total_door_only": 0,
+    "total_occ_only": 22,
+    "total_co_alert": 1,
+    "total_continuacion": 0,
+    "total_open_alert": 0,
+    "total_late_close": 0,
+    "total_late_reg": 0,
+    "total_aseo": 0,
+    "alert_count": 22
+  },
+  "rows": [
+    {
+      "room": "23 Aire",
+      "status": "occ_only",
+      "door_start": null,
+      "door_end": null,
+      "duration_min": null,
+      "occ_start": "00:25",
+      "occ_end": "10:10",
+      "tipo": "Sin Reserva",
+      "payment": "tarjeta",
+      "ci_diff": null,
+      "co_diff": null,
+      "co_alert": false
+    },
+    {
+      "room": "34 Aire",
+      "status": "co_alert",
+      "door_start": "21:28",
+      "door_end": "10:48",
+      "duration_min": 799.8,
+      "occ_start": "21:29",
+      "occ_end": "12:00",
+      "tipo": "Express",
+      "payment": "mp",
+      "ci_diff": -0.2,
+      "co_diff": -71.4,
+      "co_alert": true
+    },
+    {
+      "room": "41 Aire",
+      "status": "occ_only",
+      "door_start": null,
+      "door_end": null,
+      "duration_min": null,
+      "occ_start": "16:33",
+      "occ_end": "22:05",
+      "tipo": "Express",
+      "payment": "mp",
+      "ci_diff": null,
+      "co_diff": null,
+      "co_alert": false
+    },
+    {
+      "room": "42 Aire",
+      "status": "occ_only",
+      "door_start": null,
+      "door_end": null,
+      "duration_min": null,
+      "occ_start": "17:43",
+      "occ_end": "20:44",
+      "tipo": "Sin Reserva",
+      "payment": "tarjeta",
+      "ci_diff": null,
+      "co_diff": null,
+      "co_alert": false
+    },
+    {
+      "room": "44 Aire",
+      "status": "occ_only",
+      "door_start": null,
+      "door_end": null,
+      "duration_min": null,
+      "occ_start": "14:29",
+      "occ_end": "17:38",
+      "tipo": "Sin Reserva",
+      "payment": "tarjeta",
+      "ci_diff": null,
+      "co_diff": null,
+      "co_alert": false
+    },
+    {
+      "room": "44 Aire",
+      "status": "occ_only",
+      "door_start": null,
+      "door_end": null,
+      "duration_min": null,
+      "occ_start": "21:22",
+      "occ_end": "22:24",
+      "tipo": "Sin Reserva",
+      "payment": "tarjeta",
+      "ci_diff": null,
+      "co_diff": null,
+      "co_alert": false
+    },
+    {
+      "room": "45 Aire",
+      "status": "occ_only",
+      "door_start": null,
+      "door_end": null,
+      "duration_min": null,
+      "occ_start": "19:58",
+      "occ_end": "22:36",
+      "tipo": "Sin Reserva",
+      "payment": "tarjeta",
+      "ci_diff": null,
+      "co_diff": null,
+      "co_alert": false
+    },
+    {
+      "room": "46 Aire",
+      "status": "occ_only",
+      "door_start": null,
+      "door_end": null,
+      "duration_min": null,
+      "occ_start": "09:42",
+      "occ_end": "14:07",
+      "tipo": "Express",
+      "payment": "mp",
+      "ci_diff": null,
+      "co_diff": null,
+      "co_alert": false
+    },
+    {
+      "room": "46 Aire",
+      "status": "occ_only",
+      "door_start": null,
+      "door_end": null,
+      "duration_min": null,
+      "occ_start": "21:08",
+      "occ_end": "23:02",
+      "tipo": "Sin Reserva",
+      "payment": "efectivo",
+      "ci_diff": null,
+      "co_diff": null,
+      "co_alert": false
+    },
+    {
+      "room": "47 Aire",
+      "status": "occ_only",
+      "door_start": null,
+      "door_end": null,
+      "duration_min": null,
+      "occ_start": "18:20",
+      "occ_end": "20:35",
+      "tipo": "Sin Reserva",
+      "payment": "tarjeta",
+      "ci_diff": null,
+      "co_diff": null,
+      "co_alert": false
+    },
+    {
+      "room": "48 Aire",
+      "status": "occ_only",
+      "door_start": null,
+      "door_end": null,
+      "duration_min": null,
+      "occ_start": "13:30",
+      "occ_end": "15:37",
+      "tipo": "Sin Reserva",
+      "payment": "tarjeta",
+      "ci_diff": null,
+      "co_diff": null,
+      "co_alert": false
+    },
+    {
+      "room": "48 Aire",
+      "status": "occ_only",
+      "door_start": null,
+      "door_end": null,
+      "duration_min": null,
+      "occ_start": "21:34",
+      "occ_end": "12:00",
+      "tipo": "Express",
+      "payment": "tarjeta",
+      "ci_diff": null,
+      "co_diff": null,
+      "co_alert": false
+    },
+    {
+      "room": "49 Aire",
+      "status": "occ_only",
+      "door_start": null,
+      "door_end": null,
+      "duration_min": null,
+      "occ_start": "21:42",
+      "occ_end": "00:45",
+      "tipo": "Sin Reserva",
+      "payment": "tarjeta",
+      "ci_diff": null,
+      "co_diff": null,
+      "co_alert": false
+    },
+    {
+      "room": "50 Aire",
+      "status": "occ_only",
+      "door_start": null,
+      "door_end": null,
+      "duration_min": null,
+      "occ_start": "14:56",
+      "occ_end": "17:54",
+      "tipo": "Sin Reserva",
+      "payment": "tarjeta",
+      "ci_diff": null,
+      "co_diff": null,
+      "co_alert": false
+    },
+    {
+      "room": "51 Aire",
+      "status": "occ_only",
+      "door_start": null,
+      "door_end": null,
+      "duration_min": null,
+      "occ_start": "11:47",
+      "occ_end": "12:13",
+      "tipo": "Sin Reserva",
+      "payment": "efectivo",
+      "ci_diff": null,
+      "co_diff": null,
+      "co_alert": false
+    },
+    {
+      "room": "52 Aire",
+      "status": "occ_only",
+      "door_start": null,
+      "door_end": null,
+      "duration_min": null,
+      "occ_start": "18:16",
+      "occ_end": "20:49",
+      "tipo": "Sin Reserva",
+      "payment": "tarjeta",
+      "ci_diff": null,
+      "co_diff": null,
+      "co_alert": false
+    },
+    {
+      "room": "53 Aire",
+      "status": "occ_only",
+      "door_start": null,
+      "door_end": null,
+      "duration_min": null,
+      "occ_start": "00:02",
+      "occ_end": "06:02",
+      "tipo": "Express",
+      "payment": "tarjeta",
+      "ci_diff": null,
+      "co_diff": null,
+      "co_alert": false
+    },
+    {
+      "room": "53 Aire",
+      "status": "occ_only",
+      "door_start": null,
+      "door_end": null,
+      "duration_min": null,
+      "occ_start": "10:46",
+      "occ_end": "14:39",
+      "tipo": "Express",
+      "payment": "mp",
+      "ci_diff": null,
+      "co_diff": null,
+      "co_alert": false
+    },
+    {
+      "room": "53 Aire",
+      "status": "occ_only",
+      "door_start": null,
+      "door_end": null,
+      "duration_min": null,
+      "occ_start": "16:13",
+      "occ_end": "18:11",
+      "tipo": "Express",
+      "payment": "tarjeta",
+      "ci_diff": null,
+      "co_diff": null,
+      "co_alert": false
+    },
+    {
+      "room": "53 Aire",
+      "status": "occ_only",
+      "door_start": null,
+      "door_end": null,
+      "duration_min": null,
+      "occ_start": "22:56",
+      "occ_end": "23:59",
+      "tipo": "Sin Reserva",
+      "payment": "tarjeta",
+      "ci_diff": null,
+      "co_diff": null,
+      "co_alert": false
+    },
+    {
+      "room": "54 Aire",
+      "status": "occ_only",
+      "door_start": null,
+      "door_end": null,
+      "duration_min": null,
+      "occ_start": "00:49",
+      "occ_end": "07:06",
+      "tipo": "Sin Reserva",
+      "payment": "efectivo",
+      "ci_diff": null,
+      "co_diff": null,
+      "co_alert": false
+    },
+    {
+      "room": "54 Aire",
+      "status": "occ_only",
+      "door_start": null,
+      "door_end": null,
+      "duration_min": null,
+      "occ_start": "14:18",
+      "occ_end": "16:25",
+      "tipo": "Express",
+      "payment": "tarjeta",
+      "ci_diff": null,
+      "co_diff": null,
+      "co_alert": false
+    },
+    {
+      "room": "54 Aire",
+      "status": "occ_only",
+      "door_start": null,
+      "door_end": null,
+      "duration_min": null,
+      "occ_start": "23:30",
+      "occ_end": "04:30",
+      "tipo": "Sin Reserva",
+      "payment": "tarjeta",
+      "ci_diff": null,
+      "co_diff": null,
+      "co_alert": false
+    }
+  ],
+  "eventos": {
+    "45 Aire": {
+      "cierres": [],
+      "ventas": [
+        [
+          "2026-10-29 19:58",
+          "2026-10-29 22:36",
+          "Sin Reserva",
+          "tarjeta"
+        ]
+      ]
+    },
+    "46 Aire": {
+      "cierres": [],
+      "ventas": [
+        [
+          "2026-10-29 09:42",
+          "2026-10-29 14:07",
+          "Express",
+          "mp"
+        ],
+        [
+          "2026-10-29 21:08",
+          "2026-10-29 23:02",
+          "Sin Reserva",
+          "efectivo"
+        ]
+      ]
+    },
+    "25 Aire": {
+      "cierres": [
+        [
+          "2026-10-29 01:07",
+          "2026-10-29 01:10",
+          3.1
+        ]
+      ],
+      "ventas": []
+    },
+    "31 Aire": {
+      "cierres": [
+        [
+          "2026-10-28 23:00",
+          null,
+          1500.0
+        ]
+      ],
+      "ventas": []
+    },
+    "47 Aire": {
+      "cierres": [],
+      "ventas": [
+        [
+          "2026-10-29 18:20",
+          "2026-10-29 20:35",
+          "Sin Reserva",
+          "tarjeta"
+        ]
+      ]
+    },
+    "12 Aire": {
+      "cierres": [],
+      "ventas": []
+    },
+    "23 Aire": {
+      "cierres": [
+        [
+          "2026-10-28 23:00",
+          "2026-10-29 09:31",
+          631.7
+        ],
+        [
+          "2026-10-29 09:44",
+          "2026-10-29 09:49",
+          5.1
+        ],
+        [
+          "2026-10-29 14:11",
+          "2026-10-29 14:12",
+          0.2
+        ],
+        [
+          "2026-10-30 00:34",
+          "2026-10-30 08:56",
+          501.5
+        ]
+      ],
+      "ventas": [
+        [
+          "2026-10-28 12:09",
+          "2026-10-29 00:24",
+          "Express",
+          "tarjeta"
+        ],
+        [
+          "2026-10-29 00:25",
+          "2026-10-29 10:10",
+          "Sin Reserva",
+          "tarjeta"
+        ]
+      ]
+    },
+    "32 Aire": {
+      "cierres": [],
+      "ventas": []
+    },
+    "50 Aire": {
+      "cierres": [],
+      "ventas": [
+        [
+          "2026-10-29 14:56",
+          "2026-10-29 17:54",
+          "Sin Reserva",
+          "tarjeta"
+        ]
+      ]
+    },
+    "42 Aire": {
+      "cierres": [
+        [
+          "2026-10-28 23:00",
+          "2026-10-28 23:47",
+          47.2
+        ]
+      ],
+      "ventas": [
+        [
+          "2026-10-29 17:43",
+          "2026-10-29 20:44",
+          "Sin Reserva",
+          "tarjeta"
+        ]
+      ]
+    },
+    "36 Aire": {
+      "cierres": [],
+      "ventas": []
+    },
+    "51 Aire": {
+      "cierres": [],
+      "ventas": [
+        [
+          "2026-10-29 11:47",
+          "2026-10-29 12:13",
+          "Sin Reserva",
+          "efectivo"
+        ]
+      ]
+    },
+    "44 Aire": {
+      "cierres": [
+        [
+          "2026-10-28 23:18",
+          null,
+          309.4
+        ]
+      ],
+      "ventas": [
+        [
+          "2026-10-28 23:16",
+          "2026-10-29 12:16",
+          "Sin Reserva",
+          "tarjeta"
+        ],
+        [
+          "2026-10-29 14:29",
+          "2026-10-29 17:38",
+          "Sin Reserva",
+          "tarjeta"
+        ],
+        [
+          "2026-10-29 21:22",
+          "2026-10-29 22:24",
+          "Sin Reserva",
+          "tarjeta"
+        ]
+      ]
+    },
+    "11 Aire": {
+      "cierres": [],
+      "ventas": []
+    },
+    "49 Aire": {
+      "cierres": [
+        [
+          "2026-10-28 23:05",
+          null,
+          171.2
+        ]
+      ],
+      "ventas": [
+        [
+          "2026-10-28 23:18",
+          "2026-10-29 11:41",
+          "Express",
+          "tarjeta"
+        ],
+        [
+          "2026-10-29 21:42",
+          "2026-10-30 00:45",
+          "Sin Reserva",
+          "tarjeta"
+        ]
+      ]
+    },
+    "24 Aire": {
+      "cierres": [
+        [
+          "2026-10-30 12:22",
+          null,
+          0.0
+        ]
+      ],
+      "ventas": []
+    },
+    "14 Aire": {
+      "cierres": [],
+      "ventas": []
+    },
+    "48 Aire": {
+      "cierres": [
+        [
+          "2026-10-28 23:00",
+          "2026-10-28 23:08",
+          8.4
+        ],
+        [
+          "2026-10-29 00:51",
+          "2026-10-29 01:02",
+          10.6
+        ]
+      ],
+      "ventas": [
+        [
+          "2026-10-29 13:30",
+          "2026-10-29 15:37",
+          "Sin Reserva",
+          "tarjeta"
+        ],
+        [
+          "2026-10-29 21:34",
+          "2026-10-30 12:00",
+          "Express",
+          "tarjeta"
+        ]
+      ]
+    },
+    "53 Aire": {
+      "cierres": [],
+      "ventas": [
+        [
+          "2026-10-29 00:02",
+          "2026-10-29 06:02",
+          "Express",
+          "tarjeta"
+        ],
+        [
+          "2026-10-29 10:46",
+          "2026-10-29 14:39",
+          "Express",
+          "mp"
+        ],
+        [
+          "2026-10-29 16:13",
+          "2026-10-29 18:11",
+          "Express",
+          "tarjeta"
+        ],
+        [
+          "2026-10-29 22:56",
+          "2026-10-29 23:59",
+          "Sin Reserva",
+          "tarjeta"
+        ]
+      ]
+    },
+    "35 Aire": {
+      "cierres": [
+        [
+          "2026-10-30 00:52",
+          "2026-10-30 09:07",
+          495.2
+        ]
+      ],
+      "ventas": []
+    },
+    "52 Aire": {
+      "cierres": [],
+      "ventas": [
+        [
+          "2026-10-29 18:16",
+          "2026-10-29 20:49",
+          "Sin Reserva",
+          "tarjeta"
+        ]
+      ]
+    },
+    "34 Aire": {
+      "cierres": [
+        [
+          "2026-10-29 14:19",
+          "2026-10-29 14:25",
+          5.9
+        ],
+        [
+          "2026-10-29 21:28",
+          "2026-10-30 10:48",
+          799.8
+        ]
+      ],
+      "ventas": [
+        [
+          "2026-10-29 21:29",
+          "2026-10-30 12:00",
+          "Express",
+          "mp"
+        ]
+      ]
+    },
+    "41 Aire": {
+      "cierres": [],
+      "ventas": [
+        [
+          "2026-10-29 16:33",
+          "2026-10-29 22:05",
+          "Express",
+          "mp"
+        ]
+      ]
+    },
+    "54 Aire": {
+      "cierres": [],
+      "ventas": [
+        [
+          "2026-10-29 00:49",
+          "2026-10-29 07:06",
+          "Sin Reserva",
+          "efectivo"
+        ],
+        [
+          "2026-10-29 14:18",
+          "2026-10-29 16:25",
+          "Express",
+          "tarjeta"
+        ],
+        [
+          "2026-10-29 23:30",
+          "2026-10-30 04:30",
+          "Sin Reserva",
+          "tarjeta"
+        ]
+      ]
+    },
+    "33 Aire": {
+      "cierres": [],
+      "ventas": []
+    }
+  }
+}
