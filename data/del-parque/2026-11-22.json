@@ -1,0 +1,494 @@
+{
+  "date": "2026-11-22",
+  "motel": {
+    "slug": "del-parque",
+    "nombre": "Del Parque",
+    "motel_id": 192
+  },
+  "generated": "2026-11-23 21:09",
+  "summary": {
+    "total_matched": 0,
+    "total_door_only": 17,
+    "total_occ_only": 0,
+    "total_co_alert": 0,
+    "total_continuacion": 0,
+    "total_open_alert": 0,
+    "total_late_close": 0,
+    "total_late_reg": 0,
+    "total_aseo": 0,
+    "alert_count": 17
+  },
+  "rows": [
+    {
+      "room": "15 Aire",
+      "status": "door_only",
+      "door_start": "12:43",
+      "door_end": "14:17",
+      "duration_min": 94.0,
+      "occ_start": null,
+      "occ_end": null,
+      "tipo": null,
+      "payment": null,
+      "ci_diff": null,
+      "co_diff": null,
+      "co_alert": false
+    },
+    {
+      "room": "16",
+      "status": "door_only",
+      "door_start": "19:17",
+      "door_end": null,
+      "duration_min": 1065.6,
+      "occ_start": null,
+      "occ_end": null,
+      "tipo": null,
+      "payment": null,
+      "ci_diff": null,
+      "co_diff": null,
+      "co_alert": false
+    },
+    {
+      "room": "25",
+      "status": "door_only",
+      "door_start": "15:40",
+      "door_end": "18:06",
+      "duration_min": 145.5,
+      "occ_start": null,
+      "occ_end": null,
+      "tipo": null,
+      "payment": null,
+      "ci_diff": null,
+      "co_diff": null,
+      "co_alert": false
+    },
+    {
+      "room": "26 Aire",
+      "status": "door_only",
+      "door_start": "01:30",
+      "door_end": "11:36",
+      "duration_min": 605.9,
+      "occ_start": null,
+      "occ_end": null,
+      "tipo": null,
+      "payment": null,
+      "ci_diff": null,
+      "co_diff": null,
+      "co_alert": false
+    },
+    {
+      "room": "26 Aire",
+      "status": "door_only",
+      "door_start": "18:00",
+      "door_end": "21:19",
+      "duration_min": 199.1,
+      "occ_start": null,
+      "occ_end": null,
+      "tipo": null,
+      "payment": null,
+      "ci_diff": null,
+      "co_diff": null,
+      "co_alert": false
+    },
+    {
+      "room": "26 Aire",
+      "status": "door_only",
+      "door_start": "22:35",
+      "door_end": "06:43",
+      "duration_min": 487.6,
+      "occ_start": null,
+      "occ_end": null,
+      "tipo": null,
+      "payment": null,
+      "ci_diff": null,
+      "co_diff": null,
+      "co_alert": false
+    },
+    {
+      "room": "27 Aire",
+      "status": "door_only",
+      "door_start": "02:24",
+      "door_end": "07:51",
+      "duration_min": 327.7,
+      "occ_start": null,
+      "occ_end": null,
+      "tipo": null,
+      "payment": null,
+      "ci_diff": null,
+      "co_diff": null,
+      "co_alert": false
+    },
+    {
+      "room": "27 Aire",
+      "status": "door_only",
+      "door_start": "12:31",
+      "door_end": "15:22",
+      "duration_min": 171.1,
+      "occ_start": null,
+      "occ_end": null,
+      "tipo": null,
+      "payment": null,
+      "ci_diff": null,
+      "co_diff": null,
+      "co_alert": false
+    },
+    {
+      "room": "27 Aire",
+      "status": "door_only",
+      "door_start": "21:54",
+      "door_end": "12:07",
+      "duration_min": 852.7,
+      "occ_start": null,
+      "occ_end": null,
+      "tipo": null,
+      "payment": null,
+      "ci_diff": null,
+      "co_diff": null,
+      "co_alert": false
+    },
+    {
+      "room": "28 Aire",
+      "status": "door_only",
+      "door_start": "00:01",
+      "door_end": "03:12",
+      "duration_min": 191.1,
+      "occ_start": null,
+      "occ_end": null,
+      "tipo": null,
+      "payment": null,
+      "ci_diff": null,
+      "co_diff": null,
+      "co_alert": false
+    },
+    {
+      "room": "28 Aire",
+      "status": "door_only",
+      "door_start": "04:13",
+      "door_end": "12:23",
+      "duration_min": 490.2,
+      "occ_start": null,
+      "occ_end": null,
+      "tipo": null,
+      "payment": null,
+      "ci_diff": null,
+      "co_diff": null,
+      "co_alert": false
+    },
+    {
+      "room": "28 Aire",
+      "status": "door_only",
+      "door_start": "15:52",
+      "door_end": "20:42",
+      "duration_min": 289.9,
+      "occ_start": null,
+      "occ_end": null,
+      "tipo": null,
+      "payment": null,
+      "ci_diff": null,
+      "co_diff": null,
+      "co_alert": false
+    },
+    {
+      "room": "28 Aire",
+      "status": "door_only",
+      "door_start": "22:50",
+      "door_end": "11:46",
+      "duration_min": 776.2,
+      "occ_start": null,
+      "occ_end": null,
+      "tipo": null,
+      "payment": null,
+      "ci_diff": null,
+      "co_diff": null,
+      "co_alert": false
+    },
+    {
+      "room": "29 Aire",
+      "status": "door_only",
+      "door_start": "14:58",
+      "door_end": "17:25",
+      "duration_min": 147.4,
+      "occ_start": null,
+      "occ_end": null,
+      "tipo": null,
+      "payment": null,
+      "ci_diff": null,
+      "co_diff": null,
+      "co_alert": false
+    },
+    {
+      "room": "36 Aire",
+      "status": "door_only",
+      "door_start": "02:38",
+      "door_end": "14:38",
+      "duration_min": 720.1,
+      "occ_start": null,
+      "occ_end": null,
+      "tipo": null,
+      "payment": null,
+      "ci_diff": null,
+      "co_diff": null,
+      "co_alert": false
+    },
+    {
+      "room": "41 Aire",
+      "status": "door_only",
+      "door_start": "09:51",
+      "door_end": "16:09",
+      "duration_min": 378.1,
+      "occ_start": null,
+      "occ_end": null,
+      "tipo": null,
+      "payment": null,
+      "ci_diff": null,
+      "co_diff": null,
+      "co_alert": false
+    },
+    {
+      "room": "43",
+      "status": "door_only",
+      "door_start": "20:02",
+      "door_end": "23:30",
+      "duration_min": 208.0,
+      "occ_start": null,
+      "occ_end": null,
+      "tipo": null,
+      "payment": null,
+      "ci_diff": null,
+      "co_diff": null,
+      "co_alert": false
+    }
+  ],
+  "eventos": {
+    "29 Aire": {
+      "cierres": [
+        [
+          "2026-11-21 23:01",
+          "2026-11-22 12:54",
+          832.5
+        ],
+        [
+          "2026-11-22 14:58",
+          "2026-11-22 17:25",
+          147.4
+        ]
+      ],
+      "ventas": []
+    },
+    "26 Aire": {
+      "cierres": [
+        [
+          "2026-11-22 01:30",
+          "2026-11-22 11:36",
+          605.9
+        ],
+        [
+          "2026-11-22 18:00",
+          "2026-11-22 21:19",
+          199.1
+        ],
+        [
+          "2026-11-22 22:35",
+          "2026-11-23 06:43",
+          487.6
+        ]
+      ],
+      "ventas": []
+    },
+    "17": {
+      "cierres": [
+        [
+          "2026-11-21 23:10",
+          "2026-11-22 06:57",
+          467.2
+        ]
+      ],
+      "ventas": []
+    },
+    "37 Aire": {
+      "cierres": [],
+      "ventas": []
+    },
+    "44 Aire": {
+      "cierres": [],
+      "ventas": []
+    },
+    "38": {
+      "cierres": [],
+      "ventas": []
+    },
+    "41 Aire": {
+      "cierres": [
+        [
+          "2026-11-22 09:51",
+          "2026-11-22 16:09",
+          378.1
+        ]
+      ],
+      "ventas": []
+    },
+    "45": {
+      "cierres": [
+        [
+          "2026-11-21 23:00",
+          "2026-11-22 11:51",
+          771.6
+        ]
+      ],
+      "ventas": []
+    },
+    "15 Aire": {
+      "cierres": [
+        [
+          "2026-11-22 12:43",
+          "2026-11-22 14:17",
+          94.0
+        ]
+      ],
+      "ventas": []
+    },
+    "35": {
+      "cierres": [
+        [
+          "2026-11-21 23:00",
+          "2026-11-22 08:53",
+          593.6
+        ]
+      ],
+      "ventas": []
+    },
+    "42 Aire": {
+      "cierres": [],
+      "ventas": []
+    },
+    "18": {
+      "cierres": [
+        [
+          "2026-11-21 23:41",
+          "2026-11-22 04:46",
+          304.8
+        ]
+      ],
+      "ventas": []
+    },
+    "16": {
+      "cierres": [
+        [
+          "2026-11-21 23:00",
+          "2026-11-22 18:17",
+          1157.9
+        ],
+        [
+          "2026-11-22 19:17",
+          null,
+          1065.6
+        ]
+      ],
+      "ventas": []
+    },
+    "43": {
+      "cierres": [
+        [
+          "2026-11-21 23:00",
+          "2026-11-22 12:12",
+          792.3
+        ],
+        [
+          "2026-11-22 20:02",
+          "2026-11-22 23:30",
+          208.0
+        ]
+      ],
+      "ventas": []
+    },
+    "28 Aire": {
+      "cierres": [
+        [
+          "2026-11-22 00:01",
+          "2026-11-22 03:12",
+          191.1
+        ],
+        [
+          "2026-11-22 04:13",
+          "2026-11-22 12:23",
+          490.2
+        ],
+        [
+          "2026-11-22 15:52",
+          "2026-11-22 20:42",
+          289.9
+        ],
+        [
+          "2026-11-22 22:50",
+          "2026-11-23 11:46",
+          776.2
+        ]
+      ],
+      "ventas": []
+    },
+    "27 Aire": {
+      "cierres": [
+        [
+          "2026-11-22 02:24",
+          "2026-11-22 07:51",
+          327.7
+        ],
+        [
+          "2026-11-22 12:31",
+          "2026-11-22 15:22",
+          171.1
+        ],
+        [
+          "2026-11-22 21:54",
+          "2026-11-23 12:07",
+          852.7
+        ],
+        [
+          "2026-11-23 13:32",
+          null,
+          0.0
+        ]
+      ],
+      "ventas": []
+    },
+    "39 Aire": {
+      "cierres": [
+        [
+          "2026-11-21 23:00",
+          "2026-11-22 10:55",
+          715.6
+        ]
+      ],
+      "ventas": []
+    },
+    "25": {
+      "cierres": [
+        [
+          "2026-11-21 23:00",
+          "2026-11-22 11:16",
+          736.3
+        ],
+        [
+          "2026-11-22 15:40",
+          "2026-11-22 18:06",
+          145.5
+        ]
+      ],
+      "ventas": []
+    },
+    "36 Aire": {
+      "cierres": [
+        [
+          "2026-11-22 02:38",
+          "2026-11-22 14:38",
+          720.1
+        ],
+        [
+          "2026-11-23 11:48",
+          "2026-11-23 12:37",
+          49.6
+        ]
+      ],
+      "ventas": []
+    }
+  }
+}
